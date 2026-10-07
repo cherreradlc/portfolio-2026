@@ -16,8 +16,8 @@ export default function Home() {
     <main>
       <Hero />
 
-      <section aria-label="Especialidades" className="border-y border-line py-6">
-        <Marquee items={BAND} className="text-[clamp(2rem,5vw,4rem)] font-medium tracking-[-0.03em]" />
+      <section aria-label="Especialidades" className="border-y border-line py-3.5">
+        <Marquee items={BAND} className="text-[clamp(1rem,1.8vw,1.4rem)] font-medium tracking-[-0.01em]" />
       </section>
 
       <section id="proyectos" className="mx-auto max-w-7xl scroll-mt-24 px-4 pt-28 sm:px-6 md:pt-40">

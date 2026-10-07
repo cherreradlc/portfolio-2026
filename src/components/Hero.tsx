@@ -76,19 +76,19 @@ export default function Hero() {
           <span className="text-[13px] text-muted">Portafolio 2026</span>
         </motion.div>
 
-        <h1 className="leading-[0.88] font-medium tracking-[-0.045em]">
+        <h1 className="font-display leading-[0.9] tracking-[-0.04em]">
           <SplitWords
             text="Consuelo"
             immediate
             delay={0.3}
-            className="block font-serif text-[clamp(4rem,12vw,11rem)] font-normal italic tracking-[-0.02em]"
+            className="block text-[clamp(4rem,12vw,11rem)] font-extrabold"
           />
           <SplitWords
             text="Herrera De La Calle"
             immediate
             delay={0.45}
             stagger={0.08}
-            className="block text-[clamp(2.6rem,7.6vw,7.4rem)]"
+            className="block text-[clamp(2.4rem,7vw,6.8rem)] font-light"
           />
         </h1>
 

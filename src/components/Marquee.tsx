@@ -42,7 +42,7 @@ export default function Marquee({
   });
 
   const row = items.map((t) => (
-    <span key={t} className="flex items-center gap-8 pr-8">
+    <span key={t} className="flex items-center gap-5 pr-5">
       <span>{t}</span>
       <span className="text-tangerine" aria-hidden="true">✦</span>
     </span>
