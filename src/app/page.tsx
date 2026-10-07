@@ -56,7 +56,7 @@ export default function Home() {
 
       <section
         id="contacto"
-        className="scroll-mt-0 rounded-t-[36px] bg-ink px-4 pt-24 pb-8 text-paper sm:px-6 md:rounded-t-[56px] md:pt-36"
+        className="scroll-mt-0 rounded-t-[36px] bg-brand-deep px-4 pt-24 pb-8 text-paper sm:px-6 md:rounded-t-[56px] md:pt-36"
       >
         <div className="mx-auto max-w-7xl">
           <Contact />

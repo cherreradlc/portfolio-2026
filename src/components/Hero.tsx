@@ -70,7 +70,7 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
         >
           <span className="flex items-center gap-2.5 rounded-full border border-line bg-paper/60 px-4 py-2 text-[13px] backdrop-blur">
-            <span className="h-2 w-2 rounded-full bg-sage [animation:pulse-dot_1.6s_ease-out_infinite]" />
+            <span className="h-2 w-2 rounded-full bg-online [animation:pulse-dot_1.6s_ease-out_infinite]" />
             {SITE.availability}
           </span>
           <span className="text-[13px] text-muted">Portafolio 2026</span>
@@ -130,9 +130,9 @@ export default function Hero() {
               <a
                 href="#proyectos"
                 data-cursor="Ver"
-                className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-ink py-4 pr-4 pl-7 text-[15px] text-paper"
+                className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-brand py-4 pr-4 pl-7 text-[15px] text-paper"
               >
-                <span className="absolute inset-0 origin-bottom scale-y-0 rounded-full bg-tangerine transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:scale-y-100" />
+                <span className="absolute inset-0 origin-bottom scale-y-0 rounded-full bg-brand-deep transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:scale-y-100" />
                 <span className="relative">Ver proyectos</span>
                 <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-paper text-ink transition-transform duration-500 group-hover:rotate-90">
                   ↓
@@ -144,7 +144,7 @@ export default function Hero() {
                 href={SITE.cv}
                 target="_blank"
                 rel="noreferrer"
-                className="group flex items-center gap-2 rounded-full border border-ink/25 px-6 py-4 text-[15px] transition-colors duration-300 hover:border-ink hover:bg-ink hover:text-paper"
+                className="group flex items-center gap-2 rounded-full border border-ink/25 px-6 py-4 text-[15px] transition-colors duration-300 hover:border-brand hover:bg-brand hover:text-paper"
               >
                 Ver CV
                 <span className="transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>

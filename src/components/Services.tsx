@@ -24,7 +24,7 @@ export default function Services() {
             onPointerEnter={(e) => e.pointerType === "mouse" && setOpen(i)}
           >
             <motion.div
-              className="absolute inset-0 origin-left bg-ink"
+              className="absolute inset-0 origin-left bg-brand-deep"
               initial={false}
               animate={{ scaleX: active ? 1 : 0 }}
               transition={{ duration: 0.7, ease: EASE }}
@@ -46,7 +46,7 @@ export default function Services() {
               </span>
               <motion.span
                 className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-[22px] ${
-                  active ? "bg-tangerine text-paper" : "border border-ink/25"
+                  active ? "bg-sky text-brand-deep" : "border border-ink/25"
                 }`}
                 animate={{ rotate: active ? 45 : 0 }}
                 transition={{ duration: 0.5, ease: EASE }}

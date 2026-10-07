@@ -111,7 +111,7 @@ function BlockView({ block: b, onZoom }: { block: Block; onZoom: (img: Img) => v
           <ul className="mt-12 grid gap-4 sm:grid-cols-2">
             {b.items.map((it, i) => (
               <FadeUp key={it.title} delay={i * 0.07}>
-                <li className="group h-full rounded-[22px] border border-line bg-paper-2/50 p-7 transition-all duration-500 ease-[var(--ease-fluid)] hover:-translate-y-1 hover:border-ink hover:bg-ink hover:text-paper">
+                <li className="group h-full rounded-[22px] border border-line bg-paper-2/50 p-7 transition-all duration-500 ease-[var(--ease-fluid)] hover:-translate-y-1 hover:border-brand hover:bg-brand hover:text-paper">
                   <span className="text-[13px] text-muted transition-colors group-hover:text-paper/50">
                     {String(i + 1).padStart(2, "0")}
                   </span>
@@ -289,7 +289,7 @@ function PhoneRail({
         type="button"
         onClick={() => onZoom(img)}
         data-cursor="Ampliar"
-        className="relative block aspect-[390/844] w-full overflow-hidden rounded-[30px] border-[6px] border-ink bg-ink shadow-[0_30px_60px_-30px_rgb(31_42_34/0.55)] transition-transform duration-700 ease-[var(--ease-fluid)] hover:-translate-y-2"
+        className="relative block aspect-[390/844] w-full overflow-hidden rounded-[30px] border-[6px] border-ink bg-ink shadow-[0_30px_60px_-30px_rgb(23_32_54/0.55)] transition-transform duration-700 ease-[var(--ease-fluid)] hover:-translate-y-2"
         aria-label={`Ampliar: ${img.alt}`}
       >
         <Image

@@ -30,7 +30,7 @@ export default function PhoneFan({
         return (
           <motion.div
             key={`${src}-${i}`}
-            className={`relative aspect-[390/844] overflow-hidden rounded-[clamp(18px,2.4vw,32px)] border-[clamp(4px,0.5vw,7px)] border-ink bg-ink shadow-[0_40px_80px_-30px_rgb(31_42_34/0.55)] transition-transform duration-[1.2s] ease-[var(--ease-fluid)] ${
+            className={`relative aspect-[390/844] overflow-hidden rounded-[clamp(18px,2.4vw,32px)] border-[clamp(4px,0.5vw,7px)] border-ink bg-ink shadow-[0_40px_80px_-30px_rgb(23_32_54/0.55)] transition-transform duration-[1.2s] ease-[var(--ease-fluid)] ${
               side === 0
                 ? "z-10 group-hover:-translate-y-2 group-hover:rotate-0"
                 : side < 0

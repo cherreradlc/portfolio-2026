@@ -56,12 +56,12 @@ export default function Nav() {
             open
               ? "border-transparent"
               : solid
-                ? "border-line bg-paper/75 shadow-[0_8px_30px_-12px_rgb(31_42_34/0.18)] backdrop-blur-xl"
+                ? "border-line bg-paper/75 shadow-[0_8px_30px_-12px_rgb(23_32_54/0.18)] backdrop-blur-xl"
                 : "border-transparent"
           }`}
         >
           <Link href="/" className="group flex items-center gap-2.5" aria-label="Inicio">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink font-serif text-[17px] italic text-paper transition-transform duration-500 group-hover:rotate-[360deg]">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand font-serif text-[17px] italic text-paper transition-transform duration-500 group-hover:rotate-[360deg]">
               ch
             </span>
             <span className="hidden text-[14px] font-medium tracking-tight sm:inline">Consuelo Herrera</span>
@@ -89,9 +89,9 @@ export default function Nav() {
             <Magnetic className="hidden sm:inline-block">
               <Link
                 href="/#contacto"
-                className="group relative flex items-center gap-2 overflow-hidden rounded-full bg-ink px-5 py-2.5 text-[14px] text-paper"
+                className="group relative flex items-center gap-2 overflow-hidden rounded-full bg-brand px-5 py-2.5 text-[14px] text-paper"
               >
-                <span className="absolute inset-0 translate-y-full rounded-full bg-tangerine transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:translate-y-0" />
+                <span className="absolute inset-0 translate-y-full rounded-full bg-brand-deep transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:translate-y-0" />
                 <span className="relative">Hablemos</span>
                 <span className="relative transition-transform duration-500 group-hover:rotate-45">↗</span>
               </Link>
@@ -101,7 +101,7 @@ export default function Nav() {
               onClick={() => setOpen((o) => !o)}
               aria-expanded={open}
               aria-label={open ? "Cerrar menú" : "Abrir menú"}
-              className="relative flex h-11 w-11 items-center justify-center rounded-full bg-ink md:hidden"
+              className="relative flex h-11 w-11 items-center justify-center rounded-full bg-brand md:hidden"
             >
               <motion.span
                 className="absolute h-[1.5px] w-5 bg-paper"
@@ -119,7 +119,7 @@ export default function Nav() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-40 flex flex-col justify-between bg-ink px-6 pt-28 pb-[max(2rem,env(safe-area-inset-bottom))] text-paper md:hidden"
+            className="fixed inset-0 z-40 flex flex-col justify-between bg-brand-deep px-6 pt-28 pb-[max(2rem,env(safe-area-inset-bottom))] text-paper md:hidden"
             initial={{ clipPath: "circle(0% at 92% 6%)" }}
             animate={{ clipPath: "circle(150% at 92% 6%)" }}
             exit={{ clipPath: "circle(0% at 92% 6%)" }}

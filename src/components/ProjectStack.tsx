@@ -11,12 +11,12 @@ import { isSmall, naturalWidth } from "./SizedImage";
 
 /** Card colours: a soft tint of each project's accent, or ink for the dark one. */
 export const ACCENT_STYLES: Record<Accent, { card: string; chip: string; dark?: boolean }> = {
-  // terracota, ocre, salvia y arcilla: tintes claros de la paleta bosque y arena
-  tangerine: { card: "bg-[#ecc8b8]", chip: "bg-tangerine text-paper" },
-  violet: { card: "bg-[#ead9b4]", chip: "bg-violet text-ink" },
-  sage: { card: "bg-[#d7dcc8]", chip: "bg-sage text-paper" },
-  wine: { card: "bg-[#e3cbbf]", chip: "bg-wine text-paper" },
-  ink: { card: "bg-ink text-paper", chip: "bg-paper text-ink", dark: true },
+  // tintes claros de azules distintos, para que cada proyecto tenga su tono
+  tangerine: { card: "bg-[#dbe4ff]", chip: "bg-brand text-paper" },
+  violet: { card: "bg-[#e4e2ff]", chip: "bg-violet text-paper" },
+  sage: { card: "bg-[#d9ebf8]", chip: "bg-sage text-paper" },
+  wine: { card: "bg-[#dfe3f6]", chip: "bg-wine text-paper" },
+  ink: { card: "bg-brand-deep text-paper", chip: "bg-sky text-brand-deep", dark: true },
 };
 
 /**
@@ -63,7 +63,7 @@ function Card({
     <div className="sticky top-0 flex min-h-[100svh] items-start justify-center pt-[12svh] sm:pt-[14vh]">
       <motion.article
         style={{ scale, top: `${index * 14}px` }}
-        className={`relative w-full origin-top overflow-hidden rounded-[28px] ${style.card} shadow-[0_-20px_60px_-30px_rgb(31_42_34/0.35)]`}
+        className={`relative w-full origin-top overflow-hidden rounded-[28px] ${style.card} shadow-[0_-20px_60px_-30px_rgb(23_32_54/0.35)]`}
       >
         <Link
           href={`/proyectos/${p.slug}`}
@@ -105,7 +105,7 @@ function Card({
               </ul>
               <span
                 className={`flex items-center gap-2 rounded-full px-5 py-3 text-[14px] transition-all duration-500 ease-[var(--ease-fluid)] group-hover:gap-4 ${
-                  style.dark ? "bg-paper text-ink" : "bg-ink text-paper"
+                  style.dark ? "bg-paper text-brand-deep" : "bg-brand text-paper"
                 }`}
               >
                 Ver caso <span aria-hidden="true">→</span>
@@ -139,7 +139,7 @@ function Card({
                     fill
                     sizes="(max-width: 768px) 90vw, 45vw"
                     unoptimized={isSmall(p.cover)}
-                    className="object-contain drop-shadow-[0_24px_40px_rgb(31_42_34/0.25)]"
+                    className="object-contain drop-shadow-[0_24px_40px_rgb(23_32_54/0.25)]"
                   />
                 </div>
               </div>
@@ -147,7 +147,7 @@ function Card({
           </div>
         </Link>
         <motion.div
-          className="pointer-events-none absolute inset-0 bg-ink"
+          className="pointer-events-none absolute inset-0 bg-brand-deep"
           style={{ opacity: dim }}
           aria-hidden="true"
         />

@@ -35,7 +35,7 @@ export default function About() {
             rx.set(0);
             ry.set(0);
           }}
-          className="relative rotate-[-3deg] rounded-[22px] bg-paper p-3 pb-14 shadow-[0_30px_60px_-25px_rgb(31_42_34/0.45)]"
+          className="relative rotate-[-3deg] rounded-[22px] bg-paper p-3 pb-14 shadow-[0_30px_60px_-25px_rgb(23_32_54/0.45)]"
         >
           <div className="relative aspect-[248/252] overflow-hidden rounded-[14px]">
             <Image src="/consuelo.jpg" alt="Consuelo Herrera De La Calle" fill sizes="248px" unoptimized className="object-cover" />
@@ -72,7 +72,7 @@ export default function About() {
               {SOFTWARE.map((t) => (
                 <li
                   key={t}
-                  className="rounded-full bg-ink px-4 py-2 text-[14px] text-paper transition-all duration-300 hover:-translate-y-0.5 hover:bg-tangerine"
+                  className="rounded-full bg-brand px-4 py-2 text-[14px] text-paper transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-deep"
                 >
                   {t}
                 </li>
@@ -85,7 +85,7 @@ export default function About() {
               {SKILLS.map((t) => (
                 <li
                   key={t}
-                  className="rounded-full border border-ink/20 px-4 py-2 text-[14px] transition-all duration-300 hover:-translate-y-0.5 hover:border-ink hover:bg-ink hover:text-paper"
+                  className="rounded-full border border-ink/20 px-4 py-2 text-[14px] transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-paper"
                 >
                   {t}
                 </li>

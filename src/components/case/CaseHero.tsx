@@ -67,9 +67,9 @@ export default function CaseHero({ project: p }: { project: Project }) {
                   target="_blank"
                   rel="noreferrer"
                   data-cursor="Abrir"
-                  className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-ink py-3.5 pr-3.5 pl-6 text-[15px] text-paper"
+                  className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-brand py-3.5 pr-3.5 pl-6 text-[15px] text-paper"
                 >
-                  <span className="absolute inset-0 origin-bottom scale-y-0 bg-tangerine transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:scale-y-100" />
+                  <span className="absolute inset-0 origin-bottom scale-y-0 bg-brand-deep transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:scale-y-100" />
                   <span className="relative">{p.live.label}</span>
                   <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-paper text-ink transition-transform duration-500 group-hover:rotate-45">
                     ↗
@@ -107,7 +107,7 @@ export default function CaseHero({ project: p }: { project: Project }) {
                 alt={p.coverAlt}
                 maxHeight={720}
                 priority
-                className="rounded-[12px] shadow-[0_30px_70px_-35px_rgb(31_42_34/0.5)]"
+                className="rounded-[12px] shadow-[0_30px_70px_-35px_rgb(23_32_54/0.5)]"
               />
             </motion.div>
           )}

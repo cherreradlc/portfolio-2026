@@ -18,7 +18,7 @@ export default function NextProject({ project: p }: { project: Project }) {
     <Link
       href={`/proyectos/${p.slug}`}
       data-cursor="Siguiente"
-      className="group relative block overflow-hidden rounded-[28px] bg-ink px-6 py-16 text-paper sm:px-10 md:py-24"
+      className="group relative block overflow-hidden rounded-[28px] bg-brand-deep px-6 py-16 text-paper sm:px-10 md:py-24"
     >
       <div
         className="absolute inset-y-0 right-0 hidden w-1/2 opacity-0 transition-opacity duration-700 group-hover:opacity-60 md:block"
@@ -37,14 +37,14 @@ export default function NextProject({ project: p }: { project: Project }) {
             }`}
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-deep via-brand-deep/40 to-transparent" />
       </div>
       <p className="relative text-[13px] tracking-[0.22em] text-paper/50">SIGUIENTE PROYECTO</p>
       <p className="relative mt-5 flex items-end justify-between gap-6 text-[clamp(2.4rem,6.5vw,6rem)] leading-[0.92] font-medium tracking-[-0.045em]">
         <span className="max-w-4xl transition-transform duration-700 ease-[var(--ease-fluid)] group-hover:translate-x-3">
           {p.title}
         </span>
-        <span className="hidden shrink-0 text-tangerine transition-transform duration-700 ease-[var(--ease-fluid)] group-hover:translate-x-3 sm:inline">
+        <span className="hidden shrink-0 text-sky transition-transform duration-700 ease-[var(--ease-fluid)] group-hover:translate-x-3 sm:inline">
           →
         </span>
       </p>

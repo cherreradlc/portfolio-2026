@@ -17,7 +17,7 @@ export default function Process() {
   return (
     <div ref={ref} className="relative">
       <div className="absolute top-[22px] right-0 left-0 hidden h-px bg-line md:block" aria-hidden="true">
-        <motion.div className="h-full bg-ink" style={{ width }} />
+        <motion.div className="h-full bg-brand" style={{ width }} />
       </div>
       <ol className="grid gap-10 md:grid-cols-4 md:gap-8">
         {PROCESS.map((s, i) => (
@@ -38,14 +38,14 @@ function Step({
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
 }) {
   const at = index / PROCESS.length;
-  const bg = useTransform(progress, [at, at + 0.08], ["#efe9dd", "#1f2a22"]);
-  const color = useTransform(progress, [at, at + 0.08], ["#1f2a22", "#efe9dd"]);
+  const bg = useTransform(progress, [at, at + 0.08], ["#f3f5f9", "#2f54eb"]);
+  const color = useTransform(progress, [at, at + 0.08], ["#2f54eb", "#ffffff"]);
 
   return (
     <li className="group relative">
       <FadeUp delay={index * 0.08}>
         <motion.span
-          className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full border border-ink text-[13px] font-medium transition-transform duration-500 group-hover:scale-110"
+          className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full border border-brand text-[13px] font-medium transition-transform duration-500 group-hover:scale-110"
           style={{ backgroundColor: bg, color }}
         >
           {step.n}

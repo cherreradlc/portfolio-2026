@@ -1,22 +1,28 @@
 @import "tailwindcss";
 
 /*
- * Forest & sand: sand paper, deep forest-green ink, terracotta as the one
- * loud accent and ochre / moss as quieter companions. Everything else is a
- * tint of ink. (Token names kept from the first palette: `tangerine` is the
- * main accent, `violet` the second one.)
+ * Blues: a cool off-white paper, navy text (never pure black), cobalt
+ * `brand` for buttons, the logo and highlights, and a deep `brand-deep` for
+ * large dark areas. Periwinkle and sky blue are the quieter companions; the
+ * only non-blue is the green "available" dot.
+ * (Token names kept from the first palette: `tangerine` is the main accent,
+ * `violet` the second one.)
  */
 @theme {
-  --color-paper: #efe9dd;
-  --color-paper-2: #e5dece;
-  --color-ink: #1f2a22;
-  --color-ink-soft: #3a473d;
-  --color-muted: #6b7266;
-  --color-line: rgb(31 42 34 / 0.13);
-  --color-tangerine: #c8553d;
-  --color-violet: #c9973f;
-  --color-sage: #6e8063;
-  --color-wine: #8a3b2e;
+  --color-paper: #f3f5f9;
+  --color-paper-2: #e7ebf3;
+  --color-ink: #172036;
+  --color-ink-soft: #343e58;
+  --color-muted: #646e86;
+  --color-line: rgb(23 32 54 / 0.12);
+  --color-brand: #2f54eb;
+  --color-brand-deep: #1a2c7a;
+  --color-sky: #a9c8ff;
+  --color-online: #2fa36b;
+  --color-tangerine: #2f54eb;
+  --color-violet: #7c8cf8;
+  --color-sage: #6fa8dc;
+  --color-wine: #3e4fb8;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
@@ -84,8 +90,8 @@ body {
 }
 
 @keyframes pulse-dot {
-  0% { box-shadow: 0 0 0 0 rgb(110 128 99 / 0.55); }
-  100% { box-shadow: 0 0 0 10px rgb(110 128 99 / 0); }
+  0% { box-shadow: 0 0 0 0 rgb(47 163 107 / 0.55); }
+  100% { box-shadow: 0 0 0 10px rgb(47 163 107 / 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {

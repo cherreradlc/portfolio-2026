@@ -113,13 +113,13 @@ export default function Cursor() {
             scale: pressed ? 0.8 : 1,
             // La etiqueta va en tinta: así se lee también sobre botones mandarina.
             backgroundColor: label
-              ? "rgb(31 42 34 / 1)"
+              ? "rgb(26 44 122 / 1)"
               : hovering
-                ? "rgb(200 85 61 / 0.12)"
-                : "rgb(200 85 61 / 1)",
+                ? "rgb(47 84 235 / 0.12)"
+                : "rgb(47 84 235 / 1)",
             borderWidth: hovering && !label ? 1.5 : 0,
           }}
-          style={{ borderColor: "rgb(200 85 61 / 0.9)", borderStyle: "solid" }}
+          style={{ borderColor: "rgb(47 84 235 / 0.9)", borderStyle: "solid" }}
           transition={{ type: "spring", stiffness: 320, damping: 24 }}
         />
       </motion.div>

@@ -38,7 +38,7 @@ export default function Contact() {
       <p className="text-[13px] tracking-[0.22em] text-paper/50">¿TIENES UN PROYECTO O UNA VACANTE?</p>
       <h2 className="mt-6 text-[clamp(3.4rem,12vw,11rem)] leading-[0.88] font-medium tracking-[-0.05em]">
         <SplitWords text="Creemos algo" className="block" />
-        <SplitWords text="memorable." delay={0.15} className="block font-serif font-normal italic text-tangerine" />
+        <SplitWords text="memorable." delay={0.15} className="block font-serif font-normal italic text-sky" />
       </h2>
 
       <div className="mt-14 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
@@ -48,11 +48,11 @@ export default function Contact() {
               type="button"
               onClick={copy}
               data-cursor={copied ? "¡Listo!" : "Copiar"}
-              className="group relative flex items-center gap-4 overflow-hidden rounded-full border border-paper/25 py-3 pr-3 pl-6 text-left text-[clamp(1.05rem,2.6vw,1.6rem)] tracking-tight transition-colors duration-500 hover:border-tangerine"
+              className="group relative flex items-center gap-4 overflow-hidden rounded-full border border-paper/25 py-3 pr-3 pl-6 text-left text-[clamp(1.05rem,2.6vw,1.6rem)] tracking-tight transition-colors duration-500 hover:border-sky"
             >
-              <span className="absolute inset-0 origin-left scale-x-0 bg-tangerine transition-transform duration-700 ease-[var(--ease-fluid)] group-hover:scale-x-100" />
+              <span className="absolute inset-0 origin-left scale-x-0 bg-brand transition-transform duration-700 ease-[var(--ease-fluid)] group-hover:scale-x-100" />
               <span className="relative">{SITE.email}</span>
-              <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-paper text-[15px] text-ink">
+              <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-paper text-[15px] text-brand-deep">
                 {copied ? "✓" : "⧉"}
               </span>
             </button>
