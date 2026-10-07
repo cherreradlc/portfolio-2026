@@ -5,7 +5,7 @@ export const SITE = {
   role: "Diseñadora gráfica & UX/UI",
   location: "Chile",
   timezone: "America/Santiago",
-  email: "c.herrera.dlc@gmail.com",
+  email: "contact.consudesign@gmail.com",
   availability: "Disponible · presencial o remoto · full-time o freelance",
   // PDF dentro del propio sitio (public/), así no depende de un enlace externo.
   cv: "/cv-consuelo-herrera.pdf",

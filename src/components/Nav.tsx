@@ -147,7 +147,7 @@ export default function Nav() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              c.herrera.dlc@gmail.com
+              contact.consudesign@gmail.com
             </motion.p>
           </motion.div>
         )}
