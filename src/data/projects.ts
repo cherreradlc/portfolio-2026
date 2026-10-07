@@ -259,42 +259,6 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
-    slug: "etiquetas-de-vino",
-    title: "Etiquetas de vino de edición especial",
-    short: "Etiquetas personalizadas para celebrar momentos: un Gran Reserva que se convierte en regalo con mensaje propio.",
-    category: "Packaging · Diseño editorial",
-    tags: ["Packaging", "Editorial", "Ilustración"],
-    year: "2026",
-    role: "Diseño de etiqueta frontal y contraetiqueta",
-    tools: ["Illustrator", "Photoshop"],
-    accent: "wine",
-    cover: "/projects/vino/frente.jpg",
-    coverAlt: "Etiqueta de vino Guillermo Gran Reserva edición 60 años",
-    intro:
-      "Un vino se transforma en un regalo único cuando la etiqueta cuenta una historia. Diseñé etiquetas de edición especial que mantienen el lenguaje clásico del vino chileno y suman un mensaje personal en la contraetiqueta.",
-    blocks: [
-      { type: "image", src: "/projects/vino/etiquetas.jpg", alt: "Etiqueta frontal y contraetiqueta" },
-      {
-        type: "list",
-        eyebrow: "Decisiones",
-        title: "Clásico por fuera, personal por dentro",
-        items: [
-          { title: "Lenguaje de bodega", body: "Escudo, serifas clásicas y ornamentos finos para que la botella se sienta auténtica en la mesa." },
-          { title: "La historia en la contraetiqueta", body: "Un mensaje de cumpleaños escrito como nota de cata: el sol, la calidez y el nombre como notas del vino." },
-          { title: "Paisaje del Valle del Elqui", body: "La ilustración del viñedo ancla el regalo a un lugar real y querido." },
-        ],
-      },
-      {
-        type: "gallery",
-        columns: 2,
-        images: [
-          { src: "/projects/vino/frente.jpg", alt: "Etiqueta frontal" },
-          { src: "/projects/vino/reverso.jpg", alt: "Contraetiqueta con mensaje de cumpleaños" },
-        ],
-      },
-    ],
-  },
-  {
     slug: "campanas-electorales",
     title: "Desarrollo visual para campañas electorales",
     short: "Piezas de comunicación para candidaturas regionales en Chile, con sistemas visuales consistentes y orientados a resultados.",

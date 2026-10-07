@@ -7,7 +7,8 @@ export const SITE = {
   timezone: "America/Santiago",
   email: "c.herrera.dlc@gmail.com",
   availability: "Disponible · presencial o remoto · full-time o freelance",
-  cv: "https://acrobat.adobe.com/id/urn:aaid:sc:US:272f25bc-291b-44d0-9ba5-e05f9897ee89",
+  // PDF dentro del propio sitio (public/), así no depende de un enlace externo.
+  cv: "/cv-consuelo-herrera.pdf",
   linkedin: "https://www.linkedin.com/in/consuelo-herrera-de-la-calle-43452b19b/",
 };
 
