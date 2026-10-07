@@ -8,9 +8,7 @@ export const SITE = {
   email: "c.herrera.dlc@gmail.com",
   availability: "Disponible · presencial o remoto · full-time o freelance",
   cv: "https://acrobat.adobe.com/id/urn:aaid:sc:US:272f25bc-291b-44d0-9ba5-e05f9897ee89",
-  // Pendientes: Consuelo los enviará. Mientras estén vacíos se muestran como "pronto".
-  linkedin: "",
-  instagram: "",
+  linkedin: "https://www.linkedin.com/in/consuelo-herrera-de-la-calle-43452b19b/",
 };
 
 export const SERVICES = [

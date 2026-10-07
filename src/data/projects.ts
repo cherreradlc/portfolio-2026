@@ -27,7 +27,8 @@ export type Block =
   | { type: "image"; src: string; alt: string; caption?: string }
   | { type: "gallery"; eyebrow?: string; title?: string; feature?: Img; images: Img[]; columns?: 2 | 3 | 4 }
   | { type: "phones"; eyebrow: string; title: string; images: (Img & { caption: string })[] }
-  | { type: "quote"; text: string };
+  | { type: "quote"; text: string }
+  | { type: "manual"; eyebrow: string; title: string; folder: string; pages: number; lowRes?: number[] };
 
 export type Project = {
   slug: string;
@@ -236,18 +237,13 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
-        type: "gallery",
-        eyebrow: "Identidad",
-        title: "Construcción, tipografía y color",
-        columns: 2,
-        images: [
-          { src: "/projects/hila/construccion.jpg", alt: "Normas de construcción del logo" },
-          { src: "/projects/hila/tipografia.jpg", alt: "Tipografía corporativa Nunito Sans" },
-          { src: "/projects/hila/colores.jpg", alt: "Paleta de colores corporativos" },
-          { src: "/projects/hila/negativo-calido.jpg", alt: "Versiones del logo en negativo sobre colores de marca" },
-          { src: "/projects/hila/negativo-claro.jpg", alt: "Versiones del logo sobre fondos claros" },
-          { src: "/projects/hila/tarjetas-diseno.jpg", alt: "Diseño de tarjetas de presentación" },
-        ],
+        type: "manual",
+        eyebrow: "Manual de marca",
+        title: "El manual completo, página por página",
+        folder: "/projects/hila/manual",
+        pages: 37,
+        // mockups que vienen a baja resolución dentro del archivo original
+        lowRes: [31, 32, 33, 34, 35],
       },
       {
         type: "list",

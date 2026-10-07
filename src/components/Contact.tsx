@@ -29,7 +29,6 @@ export default function Contact() {
 
   const socials = [
     { label: "LinkedIn", href: SITE.linkedin },
-    { label: "Instagram", href: SITE.instagram },
     { label: "Currículum", href: SITE.cv },
   ];
 
