@@ -11,10 +11,11 @@ import { isSmall, naturalWidth } from "./SizedImage";
 
 /** Card colours: a soft tint of each project's accent, or ink for the dark one. */
 export const ACCENT_STYLES: Record<Accent, { card: string; chip: string; dark?: boolean }> = {
-  tangerine: { card: "bg-[#ffd8c6]", chip: "bg-tangerine text-paper" },
-  violet: { card: "bg-[#dcd6ff]", chip: "bg-violet text-paper" },
-  sage: { card: "bg-[#dde1cc]", chip: "bg-sage text-paper" },
-  wine: { card: "bg-[#ecd5d6]", chip: "bg-wine text-paper" },
+  // terracota, ocre, salvia y arcilla: tintes claros de la paleta bosque y arena
+  tangerine: { card: "bg-[#ecc8b8]", chip: "bg-tangerine text-paper" },
+  violet: { card: "bg-[#ead9b4]", chip: "bg-violet text-ink" },
+  sage: { card: "bg-[#d7dcc8]", chip: "bg-sage text-paper" },
+  wine: { card: "bg-[#e3cbbf]", chip: "bg-wine text-paper" },
   ink: { card: "bg-ink text-paper", chip: "bg-paper text-ink", dark: true },
 };
 
@@ -62,7 +63,7 @@ function Card({
     <div className="sticky top-0 flex min-h-[100svh] items-start justify-center pt-[12svh] sm:pt-[14vh]">
       <motion.article
         style={{ scale, top: `${index * 14}px` }}
-        className={`relative w-full origin-top overflow-hidden rounded-[28px] ${style.card} shadow-[0_-20px_60px_-30px_rgb(18_17_16/0.35)]`}
+        className={`relative w-full origin-top overflow-hidden rounded-[28px] ${style.card} shadow-[0_-20px_60px_-30px_rgb(31_42_34/0.35)]`}
       >
         <Link
           href={`/proyectos/${p.slug}`}
@@ -138,7 +139,7 @@ function Card({
                     fill
                     sizes="(max-width: 768px) 90vw, 45vw"
                     unoptimized={isSmall(p.cover)}
-                    className="object-contain drop-shadow-[0_24px_40px_rgb(18_17_16/0.25)]"
+                    className="object-contain drop-shadow-[0_24px_40px_rgb(31_42_34/0.25)]"
                   />
                 </div>
               </div>

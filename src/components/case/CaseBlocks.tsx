@@ -289,7 +289,7 @@ function PhoneRail({
         type="button"
         onClick={() => onZoom(img)}
         data-cursor="Ampliar"
-        className="relative block aspect-[390/844] w-full overflow-hidden rounded-[30px] border-[6px] border-ink bg-ink shadow-[0_30px_60px_-30px_rgb(18_17_16/0.55)] transition-transform duration-700 ease-[var(--ease-fluid)] hover:-translate-y-2"
+        className="relative block aspect-[390/844] w-full overflow-hidden rounded-[30px] border-[6px] border-ink bg-ink shadow-[0_30px_60px_-30px_rgb(31_42_34/0.55)] transition-transform duration-700 ease-[var(--ease-fluid)] hover:-translate-y-2"
         aria-label={`Ampliar: ${img.alt}`}
       >
         <Image

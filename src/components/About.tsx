@@ -35,7 +35,7 @@ export default function About() {
             rx.set(0);
             ry.set(0);
           }}
-          className="relative rotate-[-3deg] rounded-[22px] bg-paper p-3 pb-14 shadow-[0_30px_60px_-25px_rgb(18_17_16/0.45)]"
+          className="relative rotate-[-3deg] rounded-[22px] bg-paper p-3 pb-14 shadow-[0_30px_60px_-25px_rgb(31_42_34/0.45)]"
         >
           <div className="relative aspect-[248/252] overflow-hidden rounded-[14px]">
             <Image src="/consuelo.jpg" alt="Consuelo Herrera De La Calle" fill sizes="248px" unoptimized className="object-cover" />

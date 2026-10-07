@@ -107,7 +107,7 @@ export default function CaseHero({ project: p }: { project: Project }) {
                 alt={p.coverAlt}
                 maxHeight={720}
                 priority
-                className="rounded-[12px] shadow-[0_30px_70px_-35px_rgb(18_17_16/0.5)]"
+                className="rounded-[12px] shadow-[0_30px_70px_-35px_rgb(31_42_34/0.5)]"
               />
             </motion.div>
           )}

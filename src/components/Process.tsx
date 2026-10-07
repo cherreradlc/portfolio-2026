@@ -38,8 +38,8 @@ function Step({
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
 }) {
   const at = index / PROCESS.length;
-  const bg = useTransform(progress, [at, at + 0.08], ["#f3f0ea", "#121110"]);
-  const color = useTransform(progress, [at, at + 0.08], ["#121110", "#f3f0ea"]);
+  const bg = useTransform(progress, [at, at + 0.08], ["#efe9dd", "#1f2a22"]);
+  const color = useTransform(progress, [at, at + 0.08], ["#1f2a22", "#efe9dd"]);
 
   return (
     <li className="group relative">

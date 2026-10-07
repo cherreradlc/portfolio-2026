@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import Magnetic from "./Magnetic";
-import Logo from "./Logo";
 
 const LINKS = [
   { href: "/#proyectos", label: "Proyectos" },
@@ -57,12 +56,14 @@ export default function Nav() {
             open
               ? "border-transparent"
               : solid
-                ? "border-line bg-paper/75 shadow-[0_8px_30px_-12px_rgb(18_17_16/0.18)] backdrop-blur-xl"
+                ? "border-line bg-paper/75 shadow-[0_8px_30px_-12px_rgb(31_42_34/0.18)] backdrop-blur-xl"
                 : "border-transparent"
           }`}
         >
           <Link href="/" className="group flex items-center gap-2.5" aria-label="Inicio">
-            <Logo size={38} />
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink font-serif text-[17px] italic text-paper transition-transform duration-500 group-hover:rotate-[360deg]">
+              ch
+            </span>
             <span className="hidden text-[14px] font-medium tracking-tight sm:inline">Consuelo Herrera</span>
           </Link>
 
