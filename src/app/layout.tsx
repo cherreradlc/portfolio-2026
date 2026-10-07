@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Inter_Tight, Instrument_Serif } from "next/font/google";
+import { Inter_Tight, Instrument_Serif, Syne } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
 import Nav from "@/components/Nav";
@@ -18,9 +18,9 @@ const instrument = Instrument_Serif({
   subsets: ["latin"],
 });
 
-// Solo para el nombre en la portada: grotesca con carácter, de trazo variable.
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+// Solo para el nombre en la portada: geométrica, ancha y expresiva.
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
 });
 
@@ -39,7 +39,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${inter.variable} ${instrument.variable} ${bricolage.variable} antialiased`}>
+    <html lang="es" className={`${inter.variable} ${instrument.variable} ${syne.variable} antialiased`}>
       <body className="grain min-h-dvh bg-paper text-ink">
         <SmoothScroll />
         <Cursor />

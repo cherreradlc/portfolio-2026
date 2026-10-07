@@ -76,19 +76,22 @@ export default function Hero() {
           <span className="text-[13px] text-muted">Portafolio 2026</span>
         </motion.div>
 
-        <h1 className="font-display leading-[0.9] tracking-[-0.04em]">
+        {/* Syne es ancha: tamaños algo menores que con una grotesca normal */}
+        <h1 className="font-[family-name:var(--font-syne)] leading-[0.92] tracking-[-0.035em] uppercase">
           <SplitWords
             text="Consuelo"
             immediate
             delay={0.3}
-            className="block text-[clamp(4rem,12vw,11rem)] font-extrabold"
+            // "CONSUELO" en Syne mide ~9,2 veces su tamaño de letra: 9vw cabe
+            // en un celular de 360 px y el tope de 8rem en la columna de 1232 px.
+            className="block text-[clamp(2rem,9vw,8rem)] font-bold"
           />
           <SplitWords
             text="Herrera De La Calle"
             immediate
             delay={0.45}
             stagger={0.08}
-            className="block text-[clamp(2.4rem,7vw,6.8rem)] font-light"
+            className="mt-2 block text-[clamp(1.25rem,4.6vw,4.2rem)] font-normal tracking-[-0.01em]"
           />
         </h1>
 

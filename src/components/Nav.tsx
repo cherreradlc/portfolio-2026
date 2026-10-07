@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import Magnetic from "./Magnetic";
+import Logo from "./Logo";
 
 const LINKS = [
   { href: "/#proyectos", label: "Proyectos" },
@@ -61,9 +62,7 @@ export default function Nav() {
           }`}
         >
           <Link href="/" className="group flex items-center gap-2.5" aria-label="Inicio">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink font-serif text-[17px] italic text-paper transition-transform duration-500 group-hover:rotate-[360deg]">
-              ch
-            </span>
+            <Logo size={38} />
             <span className="hidden text-[14px] font-medium tracking-tight sm:inline">Consuelo Herrera</span>
           </Link>
 
