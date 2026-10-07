@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
-import { TOOLS } from "@/data/site";
+import { SKILLS, SOFTWARE } from "@/data/site";
 import { FadeUp, ScrollText } from "./Reveal";
 
 /**
@@ -64,19 +64,34 @@ export default function About() {
           </FadeUp>
         </div>
 
-        <FadeUp className="mt-10">
-          <h3 className="text-[12px] tracking-[0.22em] text-muted">HERRAMIENTAS</h3>
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {TOOLS.map((t) => (
-              <li
-                key={t}
-                className="rounded-full border border-ink/20 px-4 py-2 text-[14px] transition-all duration-300 hover:-translate-y-0.5 hover:border-ink hover:bg-ink hover:text-paper"
-              >
-                {t}
-              </li>
-            ))}
-          </ul>
-        </FadeUp>
+        <div className="mt-10 grid gap-8 sm:grid-cols-2">
+          <FadeUp>
+            <h3 className="text-[12px] tracking-[0.22em] text-muted">SOFTWARE</h3>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {SOFTWARE.map((t) => (
+                <li
+                  key={t}
+                  className="rounded-full bg-ink px-4 py-2 text-[14px] text-paper transition-all duration-300 hover:-translate-y-0.5 hover:bg-tangerine"
+                >
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </FadeUp>
+          <FadeUp delay={0.1}>
+            <h3 className="text-[12px] tracking-[0.22em] text-muted">HABILIDADES</h3>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {SKILLS.map((t) => (
+                <li
+                  key={t}
+                  className="rounded-full border border-ink/20 px-4 py-2 text-[14px] transition-all duration-300 hover:-translate-y-0.5 hover:border-ink hover:bg-ink hover:text-paper"
+                >
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </FadeUp>
+        </div>
       </div>
     </div>
   );

@@ -43,4 +43,6 @@ export const PROCESS = [
   { n: "04", title: "Validar", body: "Pruebo con usuarios y heurísticas, mido, ajusto y vuelvo a probar. Diseñar es iterar." },
 ];
 
-export const TOOLS = ["Figma", "Illustrator", "Photoshop", "InDesign", "Prototipado", "Design Thinking", "Accesibilidad", "HTML & CSS"];
+export const SOFTWARE = ["Figma", "Illustrator", "Photoshop", "InDesign"];
+
+export const SKILLS = ["UX Research", "Prototipado", "Design Thinking", "Accesibilidad", "Branding", "HTML & CSS"];
