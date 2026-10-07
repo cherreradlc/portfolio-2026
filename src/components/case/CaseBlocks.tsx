@@ -3,12 +3,12 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
-import type { Block } from "@/data/projects";
+import type { Block, Img } from "@/data/projects";
+import { IMAGE_SIZES } from "@/data/image-sizes";
 import { FadeUp, SplitWords } from "../Reveal";
+import SizedImage, { isSmall, maxCssWidth } from "../SizedImage";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-
-type Img = { src: string; alt: string };
 
 /** Renders a case study's blocks in order; images open in a shared lightbox. */
 export default function CaseBlocks({ blocks }: { blocks: Block[] }) {
@@ -43,10 +43,20 @@ export default function CaseBlocks({ blocks }: { blocks: Block[] }) {
           >
             <motion.div
               layoutId={zoom.src}
-              className="relative h-full w-full"
+              className="relative flex h-full w-full items-center justify-center"
               transition={{ duration: 0.6, ease: EASE }}
             >
-              <Image src={zoom.src} alt={zoom.alt} fill sizes="100vw" className="object-contain" />
+              {/* Ampliada, pero nunca más allá de su tamaño real. */}
+              <Image
+                src={zoom.src}
+                alt={zoom.alt}
+                width={IMAGE_SIZES[zoom.src]?.w ?? 1600}
+                height={IMAGE_SIZES[zoom.src]?.h ?? 1000}
+                sizes="100vw"
+                unoptimized={isSmall(zoom.src)}
+                style={{ maxWidth: `min(100%, ${maxCssWidth(zoom.src, { density: 1, maxWidth: zoom.maxWidth ? zoom.maxWidth * 1.5 : undefined })}px)` }}
+                className="h-auto max-h-full w-auto rounded-[10px] object-contain"
+              />
             </motion.div>
             <button
               type="button"
@@ -144,45 +154,74 @@ function BlockView({ block: b, onZoom }: { block: Block; onZoom: (img: Img) => v
     case "image":
       return (
         <FadeUp>
-          <figure>
-            <ZoomImage img={b} onZoom={onZoom} className={`aspect-[16/10] ${b.tone === "light" ? "bg-white" : "bg-paper-2"}`} />
-            {b.caption && <figcaption className="mt-4 text-[14px] text-muted">{b.caption}</figcaption>}
+          <figure className="flex flex-col items-center">
+            <ZoomImage img={b} onZoom={onZoom} />
+            {b.caption && <figcaption className="mt-4 self-start text-[14px] text-muted">{b.caption}</figcaption>}
           </figure>
         </FadeUp>
       );
 
-    case "grid":
+    case "gallery": {
+      const cols = { 2: "sm:grid-cols-2", 3: "sm:grid-cols-2 lg:grid-cols-3", 4: "grid-cols-2 lg:grid-cols-4" }[b.columns ?? 2];
       return (
-        <section className={`grid gap-4 sm:grid-cols-2 ${b.columns === 3 ? "lg:grid-cols-3" : ""}`}>
-          {b.images.map((img, i) => (
-            <FadeUp key={img.src} delay={(i % 3) * 0.08}>
-              <ZoomImage img={img} onZoom={onZoom} className="aspect-[4/3] bg-white" />
+        <section>
+          {b.eyebrow && (
+            <FadeUp>
+              <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
             </FadeUp>
-          ))}
+          )}
+          {b.title && (
+            <SplitWords
+              as="h2"
+              text={b.title}
+              stagger={0.035}
+              className="mt-5 mb-12 max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)] leading-[1] font-medium tracking-[-0.035em]"
+            />
+          )}
+          {b.feature && (
+            <FadeUp className="mb-4 flex justify-center">
+              <ZoomImage img={b.feature} onZoom={onZoom} />
+            </FadeUp>
+          )}
+          <div className={`grid items-start gap-4 ${cols}`}>
+            {b.images.map((img, i) => (
+              <FadeUp key={img.src} delay={(i % 4) * 0.07} className="flex justify-center">
+                <ZoomImage
+                  img={img}
+                  onZoom={onZoom}
+                  sizes={b.columns === 4 ? "(max-width: 1024px) 50vw, 320px" : "(max-width: 640px) 100vw, 640px"}
+                />
+              </FadeUp>
+            ))}
+          </div>
         </section>
       );
+    }
 
     case "phones":
       return <PhoneRail block={b} onZoom={onZoom} />;
   }
 }
 
-function ZoomImage({ img, onZoom, className }: { img: Img; onZoom: (img: Img) => void; className: string }) {
+/** An image at its real proportions that opens in the lightbox. */
+function ZoomImage({ img, onZoom, sizes }: { img: Img; onZoom: (img: Img) => void; sizes?: string }) {
   return (
     <motion.button
       type="button"
       layoutId={img.src}
       onClick={() => onZoom(img)}
       data-cursor="Ampliar"
-      className={`group relative block w-full overflow-hidden rounded-[20px] ${className}`}
+      className="group block w-full overflow-hidden rounded-[18px] border border-line bg-white"
+      style={{ maxWidth: maxCssWidth(img.src, { maxWidth: img.maxWidth, maxHeight: 860 }) }}
       aria-label={`Ampliar: ${img.alt}`}
     >
-      <Image
+      <SizedImage
         src={img.src}
         alt={img.alt}
-        fill
-        sizes="(max-width: 768px) 100vw, 50vw"
-        className="object-cover transition-transform duration-[1.2s] ease-[var(--ease-fluid)] group-hover:scale-[1.04]"
+        sizes={sizes}
+        maxWidth={img.maxWidth}
+        maxHeight={860}
+        className="!max-w-none transition-transform duration-[1.2s] ease-[var(--ease-fluid)] group-hover:scale-[1.02]"
       />
     </motion.button>
   );
@@ -253,7 +292,14 @@ function PhoneRail({
         className="relative block aspect-[390/844] w-full overflow-hidden rounded-[30px] border-[6px] border-ink bg-ink shadow-[0_30px_60px_-30px_rgb(18_17_16/0.55)] transition-transform duration-700 ease-[var(--ease-fluid)] hover:-translate-y-2"
         aria-label={`Ampliar: ${img.alt}`}
       >
-        <Image src={img.src} alt={img.alt} fill sizes="280px" className="rounded-[24px] object-cover object-top" />
+        <Image
+          src={img.src}
+          alt={img.alt}
+          fill
+          sizes="(max-width: 768px) 70vw, 360px"
+          unoptimized={isSmall(img.src)}
+          className="rounded-[24px] object-cover object-top"
+        />
       </button>
       <figcaption className="mt-4 text-[14.5px] leading-snug text-muted">{img.caption}</figcaption>
     </figure>
@@ -261,7 +307,8 @@ function PhoneRail({
 
   if (!wide) {
     return (
-      <section className="-mx-4 sm:-mx-6">
+      // El ref va también aquí: useScroll lo sigue aunque en celular no se use.
+      <section ref={section} className="-mx-4 sm:-mx-6">
         {header}
         <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:px-6">
           {phones}

@@ -8,13 +8,25 @@
 
 export type Accent = "tangerine" | "violet" | "sage" | "wine" | "ink";
 
+/**
+ * `maxWidth` caps how wide an image is ever drawn, in CSS pixels, for files
+ * whose real detail is lower than their pixel size (e.g. mockups embedded at
+ * low resolution inside a larger artboard).
+ */
+export type Img = { src: string; alt: string; maxWidth?: number };
+
+/**
+ * Images are never cropped or enlarged past their real size (see
+ * IMAGE_SIZES): a gallery keeps each picture's own proportions, and an
+ * optional `feature` image leads it at full width.
+ */
 export type Block =
   | { type: "text"; eyebrow: string; title: string; body: string[] }
   | { type: "list"; eyebrow: string; title: string; items: { title: string; body: string }[] }
   | { type: "stats"; items: { value: string; label: string }[] }
-  | { type: "image"; src: string; alt: string; caption?: string; tone?: "light" | "dark" }
-  | { type: "grid"; images: { src: string; alt: string }[]; columns?: 2 | 3 }
-  | { type: "phones"; eyebrow: string; title: string; images: { src: string; alt: string; caption: string }[] }
+  | { type: "image"; src: string; alt: string; caption?: string }
+  | { type: "gallery"; eyebrow?: string; title?: string; feature?: Img; images: Img[]; columns?: 2 | 3 | 4 }
+  | { type: "phones"; eyebrow: string; title: string; images: (Img & { caption: string })[] }
   | { type: "quote"; text: string };
 
 export type Project = {
@@ -29,8 +41,11 @@ export type Project = {
   accent: Accent;
   cover: string;
   coverAlt: string;
-  /** Phone-shaped covers get a device frame on the home grid. */
-  coverKind?: "image" | "phone";
+  /**
+   * Mobile work is shown on phones rather than as a flat picture: `screens`
+   * lists the screenshots that go inside the device frames, cover first.
+   */
+  screens?: string[];
   live?: { href: string; label: string };
   intro: string;
   blocks: Block[];
@@ -49,7 +64,7 @@ export const PROJECTS: Project[] = [
     accent: "sage",
     cover: "/projects/invitacion/tarjeta.jpg",
     coverAlt: "Sobre verde salvia abierto con la tarjeta Javiera & Diego",
-    coverKind: "phone",
+    screens: ["/projects/invitacion/tarjeta.jpg", "/projects/invitacion/sobre.jpg", "/projects/invitacion/portada.jpg"],
     live: { href: "https://matjavieraydiego.vercel.app", label: "Ver invitación en vivo" },
     intro:
       "Los novios querían una invitación que se sintiera tan especial como una impresa, pero que además resolviera lo más tedioso: saber quién viene, qué no puede comer cada invitado y qué canción no puede faltar.",
@@ -113,8 +128,9 @@ export const PROJECTS: Project[] = [
     role: "Investigación UX, arquitectura de información, prototipado y evaluación",
     tools: ["Entrevistas", "Personas", "Journey map", "Benchmarking", "Heurísticas de Nielsen"],
     accent: "violet",
-    cover: "/projects/ux4all/wireframe-dashboard.jpg",
-    coverAlt: "Boceto del dashboard de UX4ALL",
+    cover: "/projects/ux4all/pantalla-inicio.jpg",
+    coverAlt: "Pantalla de inicio de la app con cursos destacados",
+    screens: ["/projects/ux4all/pantalla-inicio.jpg", "/projects/ux4all/pantalla-curso.jpg", "/projects/ux4all/pantalla-inscripcion.jpg"],
     intro:
       "Las plataformas educativas más usadas resuelven la gestión de cursos, pero dejan la accesibilidad escondida. UX4ALL parte al revés: primero quién estudia y con qué capacidades, después la interfaz.",
     blocks: [
@@ -147,8 +163,10 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
-        type: "grid",
-        columns: 2,
+        type: "gallery",
+        eyebrow: "Bocetos",
+        title: "Primero en papel: estructura antes que estilo",
+        columns: 4,
         images: [
           { src: "/projects/ux4all/wireframe-login.jpg", alt: "Boceto de inicio de sesión con botón de modo accesible" },
           { src: "/projects/ux4all/wireframe-dashboard.jpg", alt: "Boceto del dashboard con cursos y tareas pendientes" },
@@ -166,6 +184,22 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
+        type: "phones",
+        eyebrow: "La interfaz final",
+        title: "Del boceto al prototipo de alta fidelidad",
+        images: [
+          { src: "/projects/ux4all/pantalla-inicio.jpg", alt: "Pantalla de inicio", caption: "Inicio: búsqueda siempre visible, categorías y cursos con duración y nivel." },
+          { src: "/projects/ux4all/pantalla-curso.jpg", alt: "Detalle de curso", caption: "Detalle del curso en bloques cortos y escaneables, con un solo botón principal." },
+          { src: "/projects/ux4all/pantalla-inscripcion.jpg", alt: "Confirmación de inscripción", caption: "Inscripción con un mensaje claro y una acción grande, fácil de tocar." },
+        ],
+      },
+      {
+        type: "image",
+        src: "/projects/ux4all/prototipo-flujo.jpg",
+        alt: "Flujo completo del prototipo con sus conexiones en Figma",
+        caption: "Prototipo navegable en Figma: inicio, detalle, inscripción y comienzo del curso.",
+      },
+      {
         type: "list",
         eyebrow: "Evaluación heurística",
         title: "Las 10 heurísticas de Nielsen como checklist",
@@ -175,7 +209,6 @@ export const PROJECTS: Project[] = [
           { title: "Ayuda y documentación · baja", body: "Botón de ayuda fijo, tooltips contextuales y un centro de ayuda accesible." },
         ],
       },
-      { type: "image", src: "/projects/ux4all/prototipo.jpg", alt: "Flujo del prototipo de alta fidelidad de la app de aprendizaje", caption: "Flujo de alta fidelidad: inscripción a un curso de punta a punta." },
     ],
   },
   {
@@ -193,7 +226,7 @@ export const PROJECTS: Project[] = [
     intro:
       "Hila necesitaba una identidad que transmitiera lo natural y artesanal del producto sin perder frescura. El logo nace de un gajo de naranja deshidratada que se convierte en letra.",
     blocks: [
-      { type: "image", src: "/projects/hila/logo.jpg", alt: "Presentación del logo de Hila", tone: "light" },
+      { type: "image", src: "/projects/hila/logo.jpg", alt: "Presentación del logo de Hila" },
       {
         type: "text",
         eyebrow: "Concepto",
@@ -203,13 +236,17 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
-        type: "grid",
+        type: "gallery",
+        eyebrow: "Identidad",
+        title: "Construcción, tipografía y color",
         columns: 2,
         images: [
           { src: "/projects/hila/construccion.jpg", alt: "Normas de construcción del logo" },
           { src: "/projects/hila/tipografia.jpg", alt: "Tipografía corporativa Nunito Sans" },
           { src: "/projects/hila/colores.jpg", alt: "Paleta de colores corporativos" },
           { src: "/projects/hila/negativo-calido.jpg", alt: "Versiones del logo en negativo sobre colores de marca" },
+          { src: "/projects/hila/negativo-claro.jpg", alt: "Versiones del logo sobre fondos claros" },
+          { src: "/projects/hila/tarjetas-diseno.jpg", alt: "Diseño de tarjetas de presentación" },
         ],
       },
       {
@@ -224,15 +261,16 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
-        type: "grid",
+        type: "gallery",
+        eyebrow: "Aplicaciones",
+        title: "La marca en el mundo real",
         columns: 3,
         images: [
-          { src: "/projects/hila/tarjetas.jpg", alt: "Mockup de tarjetas de presentación" },
-          { src: "/projects/hila/hoja-carta.jpg", alt: "Mockup de hoja carta" },
-          { src: "/projects/hila/pendon.jpg", alt: "Mockup de pendón" },
-          { src: "/projects/hila/letrero.jpg", alt: "Mockup de letrero" },
-          { src: "/projects/hila/furgon.jpg", alt: "Mockup de furgón rotulado" },
-          { src: "/projects/hila/cierre.jpg", alt: "Contraportada del manual de marca" },
+          { src: "/projects/hila/furgon.jpg", alt: "Mockup de furgón rotulado", maxWidth: 380 },
+          { src: "/projects/hila/tarjetas.jpg", alt: "Mockup de tarjetas de presentación sobre madera", maxWidth: 380 },
+          { src: "/projects/hila/letrero.jpg", alt: "Mockup de letrero", maxWidth: 380 },
+          { src: "/projects/hila/pendon.jpg", alt: "Mockup de pendón", maxWidth: 380 },
+          { src: "/projects/hila/hoja-carta.jpg", alt: "Mockup de hoja carta", maxWidth: 380 },
         ],
       },
     ],
@@ -252,7 +290,7 @@ export const PROJECTS: Project[] = [
     intro:
       "Un vino se transforma en un regalo único cuando la etiqueta cuenta una historia. Diseñé etiquetas de edición especial que mantienen el lenguaje clásico del vino chileno y suman un mensaje personal en la contraetiqueta.",
     blocks: [
-      { type: "image", src: "/projects/vino/etiquetas.jpg", alt: "Etiqueta frontal y contraetiqueta", tone: "light" },
+      { type: "image", src: "/projects/vino/etiquetas.jpg", alt: "Etiqueta frontal y contraetiqueta" },
       {
         type: "list",
         eyebrow: "Decisiones",
@@ -264,7 +302,7 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
-        type: "grid",
+        type: "gallery",
         columns: 2,
         images: [
           { src: "/projects/vino/frente.jpg", alt: "Etiqueta frontal" },
@@ -279,16 +317,23 @@ export const PROJECTS: Project[] = [
     short: "Piezas de comunicación para candidaturas regionales en Chile, con sistemas visuales consistentes y orientados a resultados.",
     category: "Diseño gráfico · Comunicación",
     tags: ["Campañas", "Gráfica", "Comunicación"],
-    year: "2025",
+    year: "2024",
     role: "Diseño de piezas gráficas para campaña",
     tools: ["Photoshop", "Illustrator"],
     accent: "ink",
-    cover: "/projects/campana/pieza.jpg",
-    coverAlt: "Pieza de campaña electoral regional",
+    cover: "/projects/campana/historia.jpg",
+    coverAlt: "Historia para redes anunciando una entrevista radial del candidato",
     intro:
       "En una campaña la gráfica tiene segundos para funcionar: el nombre, el número y la propuesta tienen que leerse en la calle, en redes y en impresos sin perder coherencia.",
     blocks: [
-      { type: "image", src: "/projects/campana/pieza.jpg", alt: "Pieza gráfica de campaña con candidatos y números de votación" },
+      {
+        type: "gallery",
+        columns: 2,
+        images: [
+          { src: "/projects/campana/historia.jpg", alt: "Historia vertical para redes con fecha, medios y número de votación", maxWidth: 420 },
+          { src: "/projects/campana/pieza.jpg", alt: "Pieza horizontal con candidaturas del mismo pacto" },
+        ],
+      },
       {
         type: "list",
         eyebrow: "Enfoque",

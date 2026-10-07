@@ -6,6 +6,8 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
 import type { Accent, Project } from "@/data/projects";
 import { SplitWords } from "./Reveal";
+import PhoneFan from "./PhoneFan";
+import { isSmall, naturalWidth } from "./SizedImage";
 
 /** Card colours: a soft tint of each project's accent, or ink for the dark one. */
 export const ACCENT_STYLES: Record<Accent, { card: string; chip: string; dark?: boolean }> = {
@@ -110,17 +112,36 @@ function Card({
             </div>
           </div>
 
-          <div className="relative min-h-[38svh] overflow-hidden rounded-[20px] md:min-h-0">
-            {p.coverKind === "phone" ? (
-              <PhoneCover project={p} />
-            ) : (
+          <div
+            className={`relative min-h-[44svh] overflow-hidden rounded-[20px] md:min-h-0 ${
+              style.dark ? "bg-paper/10" : "bg-paper/45"
+            }`}
+          >
+            {p.screens ? (
+              <PhoneFan screens={p.screens} />
+            ) : naturalWidth(p.cover) >= 1600 ? (
+              // Solo las imágenes grandes llenan el recuadro; el resto se
+              // muestra entera para no estirarla.
               <Image
                 src={p.cover}
                 alt={p.coverAlt}
                 fill
                 sizes="(max-width: 768px) 100vw, 55vw"
-                className="object-cover transition-transform duration-[1.4s] ease-[var(--ease-fluid)] group-hover:scale-[1.06]"
+                className="object-cover transition-transform duration-[1.4s] ease-[var(--ease-fluid)] group-hover:scale-[1.04]"
               />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center p-6 sm:p-10">
+                <div className="relative h-full w-full transition-transform duration-[1.4s] ease-[var(--ease-fluid)] group-hover:scale-[1.03]">
+                  <Image
+                    src={p.cover}
+                    alt={p.coverAlt}
+                    fill
+                    sizes="(max-width: 768px) 90vw, 45vw"
+                    unoptimized={isSmall(p.cover)}
+                    className="object-contain drop-shadow-[0_24px_40px_rgb(18_17_16/0.25)]"
+                  />
+                </div>
+              </div>
             )}
           </div>
         </Link>
@@ -130,20 +151,6 @@ function Card({
           aria-hidden="true"
         />
       </motion.article>
-    </div>
-  );
-}
-
-/** Mobile-first work shown where it lives: inside a phone, tilting on hover. */
-function PhoneCover({ project: p }: { project: Project }) {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#c9cfb2] to-[#eef0e4]">
-      <div className="relative aspect-[390/844] h-[88%] max-h-[560px] rotate-[-6deg] rounded-[34px] border-[7px] border-ink bg-ink shadow-[0_40px_80px_-30px_rgb(18_17_16/0.6)] transition-transform duration-[1.2s] ease-[var(--ease-fluid)] group-hover:rotate-0 group-hover:scale-[1.04]">
-        <div className="absolute top-2 left-1/2 z-10 h-4 w-16 -translate-x-1/2 rounded-full bg-ink" />
-        <div className="relative h-full w-full overflow-hidden rounded-[27px]">
-          <Image src={p.cover} alt={p.coverAlt} fill sizes="320px" className="object-cover object-top" />
-        </div>
-      </div>
     </div>
   );
 }

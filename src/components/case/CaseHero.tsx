@@ -1,13 +1,14 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "motion/react";
 import type { Project } from "@/data/projects";
 import { ACCENT_STYLES } from "../ProjectStack";
 import Magnetic from "../Magnetic";
 import { FadeUp, SplitWords } from "../Reveal";
+import PhoneFan from "../PhoneFan";
+import SizedImage from "../SizedImage";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -15,9 +16,9 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 export default function CaseHero({ project: p }: { project: Project }) {
   const cover = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: cover, offset: ["start end", "end start"] });
-  const scale = useTransform(scrollYProgress, [0, 0.5], [0.86, 1]);
-  const radius = useTransform(scrollYProgress, [0, 0.5], [40, 16]);
-  const imgY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
+  const radius = useTransform(scrollYProgress, [0, 0.5], [40, 20]);
+  const imgY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
   const style = ACCENT_STYLES[p.accent];
 
   const facts = [
@@ -91,25 +92,23 @@ export default function CaseHero({ project: p }: { project: Project }) {
       <div ref={cover} className="mt-16 px-2 sm:px-4 md:mt-24">
         <motion.div
           style={{ scale, borderRadius: radius }}
-          className={`relative mx-auto aspect-[16/10] max-w-[1600px] overflow-hidden ${style.card}`}
+          className={`relative mx-auto max-w-[1440px] overflow-hidden ${style.card}`}
         >
-          {p.coverKind === "phone" ? (
-            <div className="absolute inset-0 flex items-center justify-center gap-6 bg-gradient-to-br from-[#c9cfb2] to-[#eef0e4]">
-              {["/projects/invitacion/sobre.jpg", p.cover, "/projects/invitacion/portada.jpg"].map((src, i) => (
-                <motion.div
-                  key={src}
-                  className="relative aspect-[390/844] h-[78%] overflow-hidden rounded-[28px] border-[6px] border-ink bg-ink shadow-[0_40px_80px_-30px_rgb(18_17_16/0.6)] max-sm:[&:not(:nth-child(2))]:hidden"
-                  initial={{ y: 80, opacity: 0, rotate: (i - 1) * 6 }}
-                  animate={{ y: i === 1 ? -20 : 20, opacity: 1, rotate: (i - 1) * 6 }}
-                  transition={{ duration: 1.1, ease: EASE, delay: 0.5 + i * 0.12 }}
-                >
-                  <Image src={src} alt="" fill sizes="300px" className="rounded-[22px] object-cover object-top" priority />
-                </motion.div>
-              ))}
+          {p.screens ? (
+            <div className="relative aspect-[4/3] sm:aspect-[16/9]">
+              <PhoneFan screens={p.screens} height="84%" animateIn />
             </div>
           ) : (
-            <motion.div style={{ y: imgY }} className="absolute -inset-[8%]">
-              <Image src={p.cover} alt={p.coverAlt} fill priority sizes="100vw" className="object-cover" />
+            // La imagen se presenta entera y a su tamaño real sobre el color
+            // del proyecto; solo se desplaza un poco, nunca se agranda.
+            <motion.div style={{ y: imgY }} className="flex justify-center px-4 py-8 sm:px-10 sm:py-14">
+              <SizedImage
+                src={p.cover}
+                alt={p.coverAlt}
+                maxHeight={720}
+                priority
+                className="rounded-[12px] shadow-[0_30px_70px_-35px_rgb(18_17_16/0.5)]"
+              />
             </motion.div>
           )}
         </motion.div>
