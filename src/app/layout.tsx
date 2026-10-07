@@ -1,20 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, Hanken_Grotesk } from "next/font/google";
+import { Inter_Tight, Instrument_Serif, Syne } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
+import Cursor from "@/components/Cursor";
 import Nav from "@/components/Nav";
 import { SITE } from "@/data/site";
 import "./globals.css";
 
-// Texto: grotesca neutra y legible.
-const hanken = Hanken_Grotesk({
-  variable: "--font-hanken",
+const inter = Inter_Tight({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-// Titulares: serif de alto contraste, la voz editorial del sitio.
-const bodoni = Bodoni_Moda({
-  variable: "--font-bodoni",
+const instrument = Instrument_Serif({
+  variable: "--font-instrument",
+  weight: "400",
   style: ["normal", "italic"],
+  subsets: ["latin"],
+});
+
+// Solo para el nombre en la portada: geométrica, ancha y expresiva.
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
 });
 
@@ -33,9 +39,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${hanken.variable} ${bodoni.variable} antialiased`}>
-      <body className="min-h-dvh bg-paper text-ink">
+    <html lang="es" className={`${inter.variable} ${instrument.variable} ${syne.variable} antialiased`}>
+      <body className="grain min-h-dvh bg-paper text-ink">
         <SmoothScroll />
+        <Cursor />
         <Nav />
         {children}
       </body>

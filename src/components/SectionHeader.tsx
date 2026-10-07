@@ -1,10 +1,6 @@
-import { FadeUp, Rule, SplitWords } from "./Reveal";
+import { FadeUp, SplitWords } from "./Reveal";
 
-/**
- * Section opener in the magazine style: a rule that draws across, a small
- * label with the section number on the left and the title in the display
- * serif. No eyebrow-dash-number pattern; just the folio and the headline.
- */
+/** Numbered eyebrow, big headline and an optional aside, shared by every section. */
 export default function SectionHeader({
   index,
   eyebrow,
@@ -19,29 +15,25 @@ export default function SectionHeader({
   dark?: boolean;
 }) {
   return (
-    <div className="mb-12 md:mb-16">
-      <Rule className={dark ? "text-paper/30" : "text-ink"} />
-      <div className="mt-4 grid gap-6 md:grid-cols-12">
-        <FadeUp y={10} className="md:col-span-3">
-          <p className={`label ${dark ? "text-sky" : "text-muted"}`}>
-            {eyebrow} <span className="ml-2 font-serif text-[13px] tracking-normal normal-case italic">({index})</span>
+    <div className="mb-14 grid gap-6 md:mb-20 md:grid-cols-[1fr_auto] md:items-end">
+      <div>
+        <FadeUp y={14}>
+          <p className={`flex items-center gap-3 text-[13px] tracking-[0.22em] ${dark ? "text-paper/50" : "text-muted"}`}>
+            <span className={`h-px w-8 ${dark ? "bg-paper/40" : "bg-ink/40"}`} />
+            {index} — {eyebrow.toUpperCase()}
           </p>
         </FadeUp>
-        <div className="md:col-span-9">
-          <SplitWords
-            as="h2"
-            text={title}
-            className="font-serif text-[clamp(2.4rem,5.6vw,5.2rem)] leading-[0.98] tracking-[-0.02em]"
-          />
-          {aside && (
-            <FadeUp delay={0.15}>
-              <p className={`mt-5 max-w-xl text-[16.5px] leading-relaxed ${dark ? "text-paper/70" : "text-ink-soft"}`}>
-                {aside}
-              </p>
-            </FadeUp>
-          )}
-        </div>
+        <SplitWords
+          as="h2"
+          text={title}
+          className="mt-5 text-[clamp(2.6rem,7vw,6.2rem)] leading-[0.92] font-medium tracking-[-0.045em]"
+        />
       </div>
+      {aside && (
+        <FadeUp delay={0.2}>
+          <p className={`max-w-xs text-[16px] leading-relaxed ${dark ? "text-paper/65" : "text-muted"}`}>{aside}</p>
+        </FadeUp>
+      )}
     </div>
   );
 }

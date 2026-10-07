@@ -2,88 +2,97 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
 import { SKILLS, SOFTWARE } from "@/data/site";
-import { FadeUp, Rule } from "./Reveal";
-
-const EASE = [0.22, 1, 0.36, 1] as const;
+import { FadeUp, ScrollText } from "./Reveal";
 
 /**
- * Laid out like a magazine profile: a pull quote in the display serif, a
- * small captioned portrait that unveils from a plum frame, and short columns
- * of facts. The quote drifts slightly slower than the page as you scroll.
+ * Portrait card that tilts toward the pointer and drifts on scroll, next to a
+ * bio that fills in word by word.
  */
 export default function About() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const drift = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const drift = useTransform(scrollYProgress, [0, 1], [60, -60]);
+
+  const rx = useMotionValue(0);
+  const ry = useMotionValue(0);
+  const srx = useSpring(rx, { stiffness: 150, damping: 15 });
+  const sry = useSpring(ry, { stiffness: 150, damping: 15 });
 
   return (
-    <div ref={ref} className="grid gap-14 md:grid-cols-12 md:gap-8">
-      <motion.blockquote style={{ y: drift }} className="md:col-span-7">
-        <FadeUp>
-          <p className="font-serif text-[clamp(1.9rem,3.6vw,3.3rem)] leading-[1.1] tracking-[-0.01em]">
-            <span className="text-pink">“</span>Vengo del diseño gráfico. Hoy diseño productos digitales con la misma
-            obsesión por el detalle, pero empezando siempre por{" "}
-            <em className="italic">las personas que los van a usar.</em>
-            <span className="text-pink">”</span>
-          </p>
-        </FadeUp>
-      </motion.blockquote>
-
-      <figure className="md:col-span-4 md:col-start-9">
-        {/* El marco (siempre visible) dispara la animación: un elemento
-            recortado a altura cero nunca cuenta como "en pantalla". */}
-        <motion.div
-          className="relative w-full max-w-[248px] overflow-hidden bg-brand"
-          initial="hidden"
-          whileInView="shown"
-          viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+    <div ref={ref} className="grid items-start gap-14 md:grid-cols-[0.8fr_1.2fr] md:gap-20">
+      {/* La foto mide 248 px: la tarjeta la muestra a su tamaño real, sin estirarla. */}
+      <motion.div style={{ y: drift }} className="mx-auto w-full max-w-[260px] [perspective:900px]">
+        <motion.figure
+          style={{ rotateX: srx, rotateY: sry }}
+          onPointerMove={(e) => {
+            const r = e.currentTarget.getBoundingClientRect();
+            ry.set(((e.clientX - r.left) / r.width - 0.5) * 16);
+            rx.set(-((e.clientY - r.top) / r.height - 0.5) * 16);
+          }}
+          onPointerLeave={() => {
+            rx.set(0);
+            ry.set(0);
+          }}
+          className="relative rotate-[-3deg] rounded-[22px] bg-paper p-3 pb-14 shadow-[0_30px_60px_-25px_rgb(58_16_48/0.45)]"
         >
-          <motion.div
-            className="relative aspect-[248/252]"
-            variants={{
-              hidden: { clipPath: "inset(0 0 100% 0)", scale: 1.12 },
-              shown: { clipPath: "inset(0 0 0% 0)", scale: 1 },
-            }}
-            transition={{ duration: 1.3, ease: EASE }}
-          >
-            <Image
-              src="/consuelo.jpg"
-              alt="Consuelo Herrera De La Calle"
-              fill
-              sizes="248px"
-              unoptimized
-              loading="eager"
-              className="object-cover"
-            />
-          </motion.div>
-        </motion.div>
-        <figcaption className="mt-3 flex items-baseline justify-between gap-4 text-[13px] text-muted">
-          <span className="font-serif text-[16px] text-ink italic">Consuelo Herrera</span>
-          <span>Coquimbo, Chile</span>
-        </figcaption>
-      </figure>
+          <div className="relative aspect-[248/252] overflow-hidden rounded-[14px]">
+            <Image src="/consuelo.jpg" alt="Consuelo Herrera De La Calle" fill sizes="248px" unoptimized className="object-cover" />
+          </div>
+          <figcaption className="absolute bottom-4 left-5 font-serif text-[22px] italic">Hola, soy Consu ✶</figcaption>
+        </motion.figure>
+      </motion.div>
 
-      <div className="grid gap-10 sm:grid-cols-2 md:col-span-12 md:grid-cols-4 md:gap-8">
-        {[
-          {
-            title: "Hoy",
-            body: "Diseñadora UX/UI con base en diseño gráfico: investigación, prototipado e interfaces accesibles.",
-          },
-          {
-            title: "Antes",
-            body: "Manuales de marca, identidades corporativas y piezas para campañas políticas en Chile.",
-          },
-          { title: "Herramientas", body: SOFTWARE.join(", ") + "." },
-          { title: "Enfoque", body: SKILLS.join(", ") + "." },
-        ].map((c, i) => (
-          <FadeUp key={c.title} delay={i * 0.08}>
-            <Rule className="text-line" delay={i * 0.08} />
-            <h3 className="label mt-4 text-brand">{c.title}</h3>
-            <p className="mt-3 text-[15.5px] leading-relaxed text-ink-soft">{c.body}</p>
+      <div>
+        <ScrollText
+          className="text-[clamp(1.6rem,3.2vw,2.6rem)] leading-[1.18] font-medium tracking-[-0.025em]"
+          text="Convierto problemas complejos en experiencias simples. Vengo del diseño gráfico, donde aprendí a construir marcas y sistemas visuales consistentes, y hoy uso esa mirada para diseñar productos digitales claros, accesibles y centrados en las personas."
+        />
+
+        <div className="mt-12 grid gap-8 sm:grid-cols-2">
+          <FadeUp>
+            <h3 className="text-[12px] tracking-[0.22em] text-muted">EXPERIENCIA</h3>
+            <p className="mt-3 text-[16px] leading-relaxed text-ink-soft">
+              Diseñadora gráfica para empresas nuevas: manuales de marca, identidades corporativas y piezas para campañas políticas en Chile.
+            </p>
           </FadeUp>
-        ))}
+          <FadeUp delay={0.1}>
+            <h3 className="text-[12px] tracking-[0.22em] text-muted">FORMACIÓN</h3>
+            <p className="mt-3 text-[16px] leading-relaxed text-ink-soft">
+              Diseño, con especialización en UX/UI: investigación, arquitectura de información, usabilidad y diseño de interfaces.
+            </p>
+          </FadeUp>
+        </div>
+
+        <div className="mt-10 grid gap-8 sm:grid-cols-2">
+          <FadeUp>
+            <h3 className="text-[12px] tracking-[0.22em] text-muted">SOFTWARE</h3>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {SOFTWARE.map((t) => (
+                <li
+                  key={t}
+                  className="rounded-full bg-brand px-4 py-2 text-[14px] text-paper transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-deep"
+                >
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </FadeUp>
+          <FadeUp delay={0.1}>
+            <h3 className="text-[12px] tracking-[0.22em] text-muted">HABILIDADES</h3>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {SKILLS.map((t) => (
+                <li
+                  key={t}
+                  className="rounded-full border border-ink/20 px-4 py-2 text-[14px] transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-paper"
+                >
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </FadeUp>
+        </div>
       </div>
     </div>
   );

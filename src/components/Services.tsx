@@ -1,42 +1,86 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { SERVICES } from "@/data/site";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 /**
- * Services on the plum spread, as a definition list: name in the serif on the
- * left, what it covers on the right. Hovering a row slides a pink marker in
- * front of the name.
+ * Rows that open on hover (desktop) or tap (phones) to show what each service
+ * covers. A colour wipe runs under the row as it opens.
  */
 export default function Services() {
+  const [open, setOpen] = useState<number | null>(0);
+
   return (
-    <dl className="border-t border-paper/25">
-      {SERVICES.map((s, i) => (
-        <motion.div
-          key={s.title}
-          className="group grid gap-4 border-b border-paper/25 py-8 md:grid-cols-12 md:gap-8 md:py-10"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "0px 0px -8% 0px" }}
-          transition={{ duration: 0.9, ease: EASE, delay: i * 0.07 }}
-        >
-          <dt className="flex items-center gap-4 md:col-span-5">
-            <span
+    <ul className="border-t border-line">
+      {SERVICES.map((s, i) => {
+        const active = open === i;
+        return (
+          <li
+            key={s.title}
+            className="relative overflow-hidden border-b border-line"
+            onPointerEnter={(e) => e.pointerType === "mouse" && setOpen(i)}
+          >
+            <motion.div
+              className="absolute inset-0 origin-left bg-brand-deep"
+              initial={false}
+              animate={{ scaleX: active ? 1 : 0 }}
+              transition={{ duration: 0.7, ease: EASE }}
               aria-hidden="true"
-              className="h-3 w-0 bg-pink transition-all duration-500 ease-[var(--ease-fluid)] group-hover:w-8"
             />
-            <span className="font-serif text-[clamp(2rem,3.6vw,3.2rem)] leading-none transition-transform duration-500 group-hover:translate-x-1">
-              {s.title}
-            </span>
-          </dt>
-          <dd className="md:col-span-7">
-            <p className="max-w-xl text-[16.5px] leading-relaxed text-paper/80">{s.body}</p>
-            <p className="label mt-4 text-sky">{s.tags.join(" · ")}</p>
-          </dd>
-        </motion.div>
-      ))}
-    </dl>
+            <button
+              type="button"
+              onClick={() => setOpen(active ? null : i)}
+              aria-expanded={active}
+              className={`relative flex w-full items-center justify-between gap-6 px-2 py-7 text-left transition-colors duration-500 sm:px-6 ${
+                active ? "text-paper" : ""
+              }`}
+            >
+              <span className="flex items-baseline gap-5">
+                <span className={`text-[13px] ${active ? "text-paper/50" : "text-muted"}`}>0{i + 1}</span>
+                <span className="text-[clamp(1.8rem,4.5vw,3.6rem)] leading-none font-medium tracking-[-0.035em]">
+                  {s.title}
+                </span>
+              </span>
+              <motion.span
+                className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-[22px] ${
+                  active ? "bg-sky text-brand-deep" : "border border-ink/25"
+                }`}
+                animate={{ rotate: active ? 45 : 0 }}
+                transition={{ duration: 0.5, ease: EASE }}
+                aria-hidden="true"
+              >
+                +
+              </motion.span>
+            </button>
+            <AnimatePresence initial={false}>
+              {active && (
+                <motion.div
+                  key="body"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.6, ease: EASE }}
+                  className="relative overflow-hidden"
+                >
+                  <div className="flex flex-col gap-5 px-2 pb-8 text-paper sm:flex-row sm:items-end sm:justify-between sm:px-6 sm:pl-[4.5rem]">
+                    <p className="max-w-lg text-[16.5px] leading-relaxed text-paper/75">{s.body}</p>
+                    <ul className="flex flex-wrap gap-2">
+                      {s.tags.map((t) => (
+                        <li key={t} className="rounded-full border border-paper/25 px-3 py-1 text-[13px]">
+                          {t}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
