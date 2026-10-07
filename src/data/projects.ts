@@ -55,7 +55,7 @@ export type Project = {
 export const PROJECTS: Project[] = [
   {
     slug: "invitacion-digital",
-    title: "Invitación digital Javiera & Diego",
+    title: "Invitación digital de matrimonio",
     short: "Una invitación de matrimonio que se abre como un sobre real y deja a los novios gestionar a sus invitados desde el celular.",
     category: "UX/UI · Producto digital",
     tags: ["UX/UI", "Dirección de arte", "Web"],
@@ -64,7 +64,7 @@ export const PROJECTS: Project[] = [
     tools: ["Diseño UI", "Ilustración vectorial", "Next.js", "Supabase", "Vercel"],
     accent: "sage",
     cover: "/projects/invitacion/tarjeta.jpg",
-    coverAlt: "Sobre verde salvia abierto con la tarjeta Javiera & Diego",
+    coverAlt: "Sobre verde salvia abierto con la tarjeta de la invitación",
     screens: ["/projects/invitacion/tarjeta.jpg", "/projects/invitacion/sobre.jpg", "/projects/invitacion/portada.jpg"],
     live: { href: "https://matjavieraydiego.vercel.app", label: "Ver invitación en vivo" },
     intro:
