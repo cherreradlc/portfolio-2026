@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
 import type { Block, Img } from "@/data/projects";
 import { IMAGE_SIZES } from "@/data/image-sizes";
-import { FadeUp, SplitWords } from "../Reveal";
+import { FadeUp, Rule, SplitWords } from "../Reveal";
 import SizedImage, { isSmall, maxCssWidth } from "../SizedImage";
 import ManualViewer from "./ManualViewer";
 
@@ -79,14 +79,14 @@ function BlockView({ block: b, onZoom }: { block: Block; onZoom: (img: Img) => v
       return (
         <section className="grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
           <FadeUp>
-            <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
+            <p className="label text-brand">{b.eyebrow}</p>
           </FadeUp>
           <div>
             <SplitWords
               as="h2"
               text={b.title}
               stagger={0.035}
-              className="text-[clamp(2rem,4.4vw,3.6rem)] leading-[1] font-medium tracking-[-0.035em]"
+              className="text-[clamp(2rem,4.4vw,3.6rem)] font-serif leading-[1.02] tracking-[-0.015em]"
             />
             {b.body.map((p, i) => (
               <FadeUp key={i} delay={0.1 + i * 0.08}>
@@ -101,25 +101,28 @@ function BlockView({ block: b, onZoom }: { block: Block; onZoom: (img: Img) => v
       return (
         <section>
           <FadeUp>
-            <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
+            <p className="label text-brand">{b.eyebrow}</p>
           </FadeUp>
           <SplitWords
             as="h2"
             text={b.title}
             stagger={0.035}
-            className="mt-5 max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)] leading-[1] font-medium tracking-[-0.035em]"
+            className="mt-5 max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)] font-serif leading-[1.02] tracking-[-0.015em]"
           />
-          <ul className="mt-12 grid gap-4 sm:grid-cols-2">
+          <ul className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2">
             {b.items.map((it, i) => (
               <FadeUp key={it.title} delay={i * 0.07}>
-                <li className="group h-full rounded-[22px] border border-line bg-paper-2/50 p-7 transition-all duration-500 ease-[var(--ease-fluid)] hover:-translate-y-1 hover:border-brand hover:bg-brand hover:text-paper">
-                  <span className="text-[13px] text-muted transition-colors group-hover:text-paper/50">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="mt-4 text-[22px] leading-tight font-medium tracking-tight">{it.title}</h3>
-                  <p className="mt-3 text-[15.5px] leading-relaxed text-muted transition-colors group-hover:text-paper/70">
-                    {it.body}
-                  </p>
+                <li className="group">
+                  <Rule className="text-ink" delay={i * 0.07} />
+                  <div className="mt-4 flex items-baseline gap-4">
+                    <span className="font-serif text-[15px] text-pink italic transition-colors duration-300 group-hover:text-brand">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 className="font-serif text-[26px] leading-tight">{it.title}</h3>
+                      <p className="mt-2 text-[15.5px] leading-relaxed text-ink-soft">{it.body}</p>
+                    </div>
+                  </div>
                 </li>
               </FadeUp>
             ))}
@@ -129,11 +132,12 @@ function BlockView({ block: b, onZoom }: { block: Block; onZoom: (img: Img) => v
 
     case "stats":
       return (
-        <section className="grid gap-px overflow-hidden rounded-[24px] border border-line bg-line sm:grid-cols-3">
+        <section className="grid gap-10 sm:grid-cols-3 sm:gap-8">
           {b.items.map((s, i) => (
-            <FadeUp key={s.label} delay={i * 0.08} className="bg-paper p-8">
-              <p className="font-serif text-[clamp(3.4rem,7vw,5.5rem)] leading-none italic">{s.value}</p>
-              <p className="mt-4 max-w-[16rem] text-[15px] leading-snug text-muted">{s.label}</p>
+            <FadeUp key={s.label} delay={i * 0.1}>
+              <Rule className="text-ink" delay={i * 0.1} />
+              <p className="mt-5 font-serif text-[clamp(3.6rem,7vw,6rem)] leading-none text-brand italic">{s.value}</p>
+              <p className="mt-4 max-w-[16rem] text-[15px] leading-snug text-ink-soft">{s.label}</p>
             </FadeUp>
           ))}
         </section>
@@ -142,7 +146,7 @@ function BlockView({ block: b, onZoom }: { block: Block; onZoom: (img: Img) => v
     case "quote":
       return (
         <section className="mx-auto max-w-4xl text-center">
-          <span className="font-serif text-[90px] leading-none text-tangerine" aria-hidden="true">“</span>
+          <span className="font-serif text-[90px] leading-none text-pink" aria-hidden="true">“</span>
           <SplitWords
             as="p"
             text={b.text}
@@ -168,7 +172,7 @@ function BlockView({ block: b, onZoom }: { block: Block; onZoom: (img: Img) => v
         <section>
           {b.eyebrow && (
             <FadeUp>
-              <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
+              <p className="label text-brand">{b.eyebrow}</p>
             </FadeUp>
           )}
           {b.title && (
@@ -176,7 +180,7 @@ function BlockView({ block: b, onZoom }: { block: Block; onZoom: (img: Img) => v
               as="h2"
               text={b.title}
               stagger={0.035}
-              className="mt-5 mb-12 max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)] leading-[1] font-medium tracking-[-0.035em]"
+              className="mt-5 mb-12 max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)] font-serif leading-[1.02] tracking-[-0.015em]"
             />
           )}
           {b.feature && (
@@ -215,7 +219,7 @@ function ZoomImage({ img, onZoom, sizes }: { img: Img; onZoom: (img: Img) => voi
       layoutId={img.src}
       onClick={() => onZoom(img)}
       data-cursor="Ampliar"
-      className="group block w-full overflow-hidden rounded-[18px] border border-line bg-white"
+      className="group block w-full overflow-hidden border border-line bg-white"
       style={{ maxWidth: maxCssWidth(img.src, { maxWidth: img.maxWidth, maxHeight: 860 }) }}
       aria-label={`Ampliar: ${img.alt}`}
     >
@@ -275,12 +279,12 @@ function PhoneRail({
 
   const header = (
     <div className="mb-10 px-4 sm:px-6">
-      <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
+      <p className="label text-brand">{b.eyebrow}</p>
       <SplitWords
         as="h2"
         text={b.title}
         stagger={0.035}
-        className="mt-5 max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)] leading-[1] font-medium tracking-[-0.035em]"
+        className="mt-5 max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)] font-serif leading-[1.02] tracking-[-0.015em]"
       />
     </div>
   );
@@ -293,7 +297,7 @@ function PhoneRail({
         type="button"
         onClick={() => onZoom(img)}
         data-cursor="Ampliar"
-        className="relative block aspect-[390/844] w-full overflow-hidden rounded-[30px] border-[6px] border-ink bg-ink shadow-[0_30px_60px_-30px_rgb(43_52_69/0.55)] transition-transform duration-700 ease-[var(--ease-fluid)] hover:-translate-y-2"
+        className="relative block aspect-[390/844] w-full overflow-hidden rounded-[30px] border-[6px] border-ink bg-ink shadow-[0_30px_60px_-30px_rgb(58_16_48/0.55)] transition-transform duration-700 ease-[var(--ease-fluid)] hover:-translate-y-2"
         aria-label={`Ampliar: ${img.alt}`}
       >
         <Image

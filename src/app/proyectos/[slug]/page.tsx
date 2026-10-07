@@ -28,8 +28,8 @@ export default function ProjectPage({ params }: PageProps<"/proyectos/[slug]">) 
       <Suspense fallback={<div className="min-h-[100svh]" aria-busy="true" />}>
         <CaseStudy params={params} />
       </Suspense>
-      <div className="mt-10 bg-brand-deep px-4 pt-2 pb-8 sm:px-6">
-        <div className="mx-auto max-w-7xl">
+      <div className="mt-10 bg-brand-deep px-4 pt-2 pb-8 text-paper sm:px-8">
+        <div className="mx-auto max-w-[1400px]">
           <Footer />
         </div>
       </div>
@@ -45,7 +45,7 @@ async function CaseStudy({ params }: { params: PageProps<"/proyectos/[slug]">["p
   return (
     <>
       <CaseHero project={project} />
-      <div className="mx-auto max-w-7xl px-4 pt-24 sm:px-6 md:pt-36">
+      <div className="mx-auto max-w-[1400px] px-4 pt-24 sm:px-8 md:pt-36">
         <CaseBlocks blocks={project.blocks} />
         <div className="mt-32 md:mt-44">
           <NextProject project={nextProject(project.slug)} />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { motion, useInView, useScroll, useTransform, type MotionValue } from "motion/react";
+import { motion, useInView } from "motion/react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -10,7 +10,7 @@ export function FadeUp({
   children,
   delay = 0,
   className,
-  y = 40,
+  y = 28,
 }: {
   children: ReactNode;
   delay?: number;
@@ -31,14 +31,13 @@ export function FadeUp({
 }
 
 /**
- * Splits a line into words that rise out of a mask one after another, the way
- * editorial sites bring in headlines. Screen readers get the plain sentence.
+ * A heading that rises out of a mask as one block, the way a magazine page
+ * turns into view. (Kept under its old name; it used to split into words.)
  */
 export function SplitWords({
   text,
   className,
   delay = 0,
-  stagger = 0.06,
   as: Tag = "span",
   immediate = false,
 }: {
@@ -52,59 +51,33 @@ export function SplitWords({
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
   const show = immediate || inView;
-  const words = text.split(" ");
 
   return (
-    <Tag ref={ref as never} className={className} aria-label={text}>
-      {words.map((w, i) => (
-        <span key={i} aria-hidden="true" className="inline-block overflow-hidden pb-[0.12em] align-bottom">
-          <motion.span
-            className="inline-block"
-            initial={{ y: "110%", rotate: 4 }}
-            animate={show ? { y: "0%", rotate: 0 } : undefined}
-            transition={{ duration: 1, ease: EASE, delay: delay + i * stagger }}
-          >
-            {w}
-            {i < words.length - 1 ? " " : ""}
-          </motion.span>
-        </span>
-      ))}
+    <Tag ref={ref as never} className={className}>
+      <span className="block overflow-hidden pb-[0.08em]">
+        <motion.span
+          className="block"
+          initial={{ y: "105%" }}
+          animate={show ? { y: "0%" } : undefined}
+          transition={{ duration: 1.1, ease: EASE, delay }}
+        >
+          {text}
+        </motion.span>
+      </span>
     </Tag>
   );
 }
 
-/**
- * A paragraph whose words light up from faint to full ink as it scrolls
- * through the viewport — reading pace follows scrolling pace.
- */
-export function ScrollText({ text, className }: { text: string; className?: string }) {
-  const ref = useRef<HTMLParagraphElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 85%", "end 45%"] });
-  const words = text.split(" ");
+/** A hairline rule that draws itself from the left when it scrolls into view. */
+export function Rule({ className = "", delay = 0 }: { className?: string; delay?: number }) {
   return (
-    <p ref={ref} className={className} aria-label={text}>
-      {words.map((w, i) => (
-        <Word key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]}>
-          {w}
-        </Word>
-      ))}
-    </p>
-  );
-}
-
-function Word({
-  children,
-  progress,
-  range,
-}: {
-  children: string;
-  progress: MotionValue<number>;
-  range: [number, number];
-}) {
-  const opacity = useTransform(progress, range, [0.16, 1]);
-  return (
-    <motion.span aria-hidden="true" style={{ opacity }} className="inline">
-      {children}{" "}
-    </motion.span>
+    <motion.span
+      aria-hidden="true"
+      className={`block h-px origin-left bg-current ${className}`}
+      initial={{ scaleX: 0 }}
+      whileInView={{ scaleX: 1 }}
+      viewport={{ once: true, margin: "0px 0px -8% 0px" }}
+      transition={{ duration: 1.2, ease: EASE, delay }}
+    />
   );
 }

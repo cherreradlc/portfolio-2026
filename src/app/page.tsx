@@ -1,6 +1,5 @@
 import Hero from "@/components/Hero";
-import Marquee from "@/components/Marquee";
-import ProjectStack from "@/components/ProjectStack";
+import ProjectIndex from "@/components/ProjectIndex";
 import Process from "@/components/Process";
 import About from "@/components/About";
 import Services from "@/components/Services";
@@ -9,56 +8,52 @@ import Footer from "@/components/Footer";
 import SectionHeader from "@/components/SectionHeader";
 import { PROJECTS } from "@/data/projects";
 
-const BAND = ["UX Research", "Diseño UI", "Branding", "Accesibilidad", "Prototipado", "Diseño gráfico", "Packaging", "Design systems"];
-
 export default function Home() {
   return (
     <main>
       <Hero />
 
-      <section aria-label="Especialidades" className="border-y border-line py-3.5">
-        <Marquee items={BAND} className="text-[clamp(1rem,1.8vw,1.4rem)] font-medium tracking-[-0.01em]" />
+      <section id="proyectos" className="scroll-mt-20 px-4 pt-28 sm:px-8 md:pt-40">
+        <div className="mx-auto max-w-[1400px]">
+          <SectionHeader
+            index="01"
+            eyebrow="Proyectos"
+            title="Trabajo seleccionado"
+            aside="Casos de UX/UI, branding y diseño gráfico. Cada uno cuenta el problema, las decisiones y el resultado."
+          />
+          <ProjectIndex projects={PROJECTS} />
+        </div>
       </section>
 
-      <section id="proyectos" className="mx-auto max-w-7xl scroll-mt-24 px-4 pt-28 sm:px-6 md:pt-40">
-        <SectionHeader
-          index="01"
-          eyebrow="Trabajo seleccionado"
-          title="Proyectos que cuentan su proceso"
-          aside="Casos de UX/UI, branding y diseño gráfico. Cada uno muestra el problema, las decisiones y el resultado."
-        />
-        <ProjectStack projects={PROJECTS} />
+      <section id="sobre-mi" className="scroll-mt-20 px-4 pt-28 sm:px-8 md:pt-40">
+        <div className="mx-auto max-w-[1400px]">
+          <SectionHeader index="02" eyebrow="Sobre mí" title="Entre la gráfica y lo digital" />
+          <About />
+        </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pt-28 pb-10 sm:px-6 md:pt-40">
-        <SectionHeader
-          index="02"
-          eyebrow="Cómo trabajo"
-          title="Diseñar es entender, probar y volver a probar"
-        />
-        <Process />
+      <section className="px-4 pt-28 pb-28 sm:px-8 md:pt-40 md:pb-40">
+        <div className="mx-auto max-w-[1400px]">
+          <SectionHeader index="03" eyebrow="Proceso" title="Cómo trabajo" />
+          <Process />
+        </div>
       </section>
 
-      <section id="sobre-mi" className="mx-auto max-w-7xl scroll-mt-24 px-4 pt-28 sm:px-6 md:pt-40">
-        <SectionHeader index="03" eyebrow="Sobre mí" title="Entre la gráfica y lo digital" />
-        <About />
+      <section id="servicios" className="scroll-mt-0 bg-brand px-4 py-24 text-paper sm:px-8 md:py-36">
+        <div className="mx-auto max-w-[1400px]">
+          <SectionHeader
+            dark
+            index="04"
+            eyebrow="Servicios"
+            title="En qué puedo aportar"
+            aside="Para equipos que buscan una diseñadora en planta, presencial o remota, y para proyectos freelance."
+          />
+          <Services />
+        </div>
       </section>
 
-      <section id="servicios" className="mx-auto max-w-7xl scroll-mt-24 px-4 pt-28 pb-28 sm:px-6 md:pt-40 md:pb-40">
-        <SectionHeader
-          index="04"
-          eyebrow="Servicios"
-          title="En qué te puedo ayudar"
-          aside="Para equipos que buscan una diseñadora en planta, presencial o remota, y para proyectos freelance."
-        />
-        <Services />
-      </section>
-
-      <section
-        id="contacto"
-        className="scroll-mt-0 rounded-t-[36px] bg-brand-deep px-4 pt-24 pb-8 text-paper sm:px-6 md:rounded-t-[56px] md:pt-36"
-      >
-        <div className="mx-auto max-w-7xl">
+      <section id="contacto" className="scroll-mt-0 bg-brand-deep px-4 pt-24 pb-8 text-paper sm:px-8 md:pt-36">
+        <div className="mx-auto max-w-[1400px]">
           <Contact />
           <div className="mt-24 md:mt-36">
             <Footer />

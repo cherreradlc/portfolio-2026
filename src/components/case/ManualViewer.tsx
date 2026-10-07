@@ -68,19 +68,19 @@ export default function ManualViewer({
   return (
     <section ref={section}>
       <FadeUp>
-        <p className="text-[13px] tracking-[0.22em] text-muted">{eyebrow.toUpperCase()}</p>
+        <p className="label text-brand">{eyebrow}</p>
       </FadeUp>
       <div className="mt-5 mb-10 flex flex-wrap items-end justify-between gap-4">
         <SplitWords
           as="h2"
           text={title}
           stagger={0.035}
-          className="max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)] leading-[1] font-medium tracking-[-0.035em]"
+          className="max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)] font-serif leading-[1.02] tracking-[-0.015em]"
         />
         <p className="text-[14px] text-muted">Usa las flechas o desliza para pasar las páginas</p>
       </div>
 
-      <div className="relative overflow-hidden rounded-[24px] bg-paper-2 px-4 py-8 sm:px-16 sm:py-12">
+      <div className="relative overflow-hidden bg-paper-2 px-4 py-8 sm:px-16 sm:py-12">
         <div className="relative flex min-h-[min(62vw,calc(100svh-260px))] items-center justify-center">
           <AnimatePresence mode="popLayout" initial={false} custom={dir}>
             <motion.div
@@ -115,7 +115,7 @@ export default function ManualViewer({
                 unoptimized
                 draggable={false}
                 priority={page === 1}
-                className="h-auto w-full rounded-[10px] shadow-[0_30px_60px_-30px_rgb(43_52_69/0.45)] select-none"
+                className="h-auto w-full shadow-[0_30px_60px_-30px_rgb(58_16_48/0.45)] select-none"
               />
             </motion.div>
           </AnimatePresence>
@@ -128,7 +128,7 @@ export default function ManualViewer({
             onClick={() => go(page + (k === "next" ? 1 : -1))}
             disabled={k === "prev" ? page === 1 : page === pages}
             aria-label={k === "next" ? "Página siguiente" : "Página anterior"}
-            className={`absolute top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-brand text-[18px] text-paper transition-all duration-300 hover:scale-110 disabled:opacity-25 disabled:hover:scale-100 sm:flex ${
+            className={`absolute top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center bg-brand text-[18px] text-paper transition-all duration-300 hover:scale-110 disabled:opacity-25 disabled:hover:scale-100 sm:flex ${
               k === "next" ? "right-4" : "left-4"
             }`}
           >
