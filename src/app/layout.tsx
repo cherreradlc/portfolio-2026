@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight, Instrument_Serif, Syne } from "next/font/google";
+import { Fraunces, Inter_Tight, Instrument_Serif } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
 import Nav from "@/components/Nav";
@@ -18,9 +18,10 @@ const instrument = Instrument_Serif({
   subsets: ["latin"],
 });
 
-// Solo para el nombre en la portada: geométrica, ancha y expresiva.
-const syne = Syne({
-  variable: "--font-syne",
+// Solo para el nombre en la portada: serif de carácter, redonda y cursiva.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  style: ["normal", "italic"],
   subsets: ["latin"],
 });
 
@@ -39,7 +40,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${inter.variable} ${instrument.variable} ${syne.variable} antialiased`}>
+    <html lang="es" className={`${inter.variable} ${instrument.variable} ${fraunces.variable} antialiased`}>
       <body className="grain min-h-dvh bg-paper text-ink">
         <SmoothScroll />
         <Cursor />

@@ -76,23 +76,12 @@ export default function Hero() {
           <span className="text-[13px] text-muted">Portafolio 2026</span>
         </motion.div>
 
-        {/* Syne es ancha: tamaños algo menores que con una grotesca normal */}
-        <h1 className="font-[family-name:var(--font-syne)] leading-[0.92] tracking-[-0.035em] uppercase">
-          <SplitWords
-            text="Consuelo"
-            immediate
-            delay={0.3}
-            // "CONSUELO" en Syne mide ~9,2 veces su tamaño de letra: 9vw cabe
-            // en un celular de 360 px y el tope de 8rem en la columna de 1232 px.
-            className="block text-[clamp(2rem,9vw,8rem)] font-bold"
-          />
-          <SplitWords
-            text="Herrera De La Calle"
-            immediate
-            delay={0.45}
-            stagger={0.08}
-            className="mt-2 block text-[clamp(1.25rem,4.6vw,4.2rem)] font-normal tracking-[-0.01em]"
-          />
+        {/* Fraunces: "Consuelo" en redonda y "Herrera" en cursiva, mismo cuerpo.
+            Cada palabra mide ~4,5 veces su tamaño de letra: 15vw cabe en un
+            celular de 360 px y el tope de 11rem en la columna de escritorio. */}
+        <h1 className="font-[family-name:var(--font-fraunces)] text-[clamp(3.4rem,15vw,11rem)] leading-[0.9] tracking-[-0.03em]">
+          <SplitWords text="Consuelo" immediate delay={0.3} className="block font-semibold" />
+          <SplitWords text="Herrera" immediate delay={0.45} className="block pl-[0.6em] font-light italic text-brand" />
         </h1>
 
         <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
