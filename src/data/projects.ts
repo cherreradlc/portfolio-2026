@@ -260,19 +260,6 @@ export const PROJECTS: Project[] = [
           { title: "Usos correctos e incorrectos", body: "Ejemplos claros de qué hacer y qué evitar al aplicar el logo sobre fotografía." },
         ],
       },
-      {
-        type: "gallery",
-        eyebrow: "Aplicaciones",
-        title: "La marca en el mundo real",
-        columns: 3,
-        images: [
-          { src: "/projects/hila/furgon.jpg", alt: "Mockup de furgón rotulado", maxWidth: 380 },
-          { src: "/projects/hila/tarjetas.jpg", alt: "Mockup de tarjetas de presentación sobre madera", maxWidth: 380 },
-          { src: "/projects/hila/letrero.jpg", alt: "Mockup de letrero", maxWidth: 380 },
-          { src: "/projects/hila/pendon.jpg", alt: "Mockup de pendón", maxWidth: 380 },
-          { src: "/projects/hila/hoja-carta.jpg", alt: "Mockup de hoja carta", maxWidth: 380 },
-        ],
-      },
     ],
   },
   {

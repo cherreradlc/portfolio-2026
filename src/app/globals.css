@@ -1,28 +1,29 @@
 @import "tailwindcss";
 
 /*
- * Blues: a cool off-white paper, navy text (never pure black), cobalt
- * `brand` for buttons, the logo and highlights, and a deep `brand-deep` for
- * large dark areas. Periwinkle and sky blue are the quieter companions; the
- * only non-blue is the green "available" dot.
+ * Ivory, steel blue & champagne: warm ivory paper, slate-blue text (never
+ * black), steel blue `brand` for buttons and the logo, a deeper slate
+ * `brand-deep` for large dark areas, and champagne gold as the accent for
+ * highlights and the cursor (`sky` is its light version, for dark grounds).
+ * Dusty blue, sage-grey and clay are the quiet companions on project cards.
  * (Token names kept from the first palette: `tangerine` is the main accent,
  * `violet` the second one.)
  */
 @theme {
-  --color-paper: #f3f5f9;
-  --color-paper-2: #e7ebf3;
-  --color-ink: #172036;
-  --color-ink-soft: #343e58;
-  --color-muted: #646e86;
-  --color-line: rgb(23 32 54 / 0.12);
-  --color-brand: #2f54eb;
-  --color-brand-deep: #1a2c7a;
-  --color-sky: #a9c8ff;
-  --color-online: #2fa36b;
-  --color-tangerine: #2f54eb;
-  --color-violet: #7c8cf8;
-  --color-sage: #6fa8dc;
-  --color-wine: #3e4fb8;
+  --color-paper: #f7f4ef;
+  --color-paper-2: #ede8df;
+  --color-ink: #2b3445;
+  --color-ink-soft: #4a5468;
+  --color-muted: #7a8294;
+  --color-line: rgb(43 52 69 / 0.12);
+  --color-brand: #3d5a80;
+  --color-brand-deep: #2b4162;
+  --color-sky: #e6d3b3;
+  --color-online: #4f9a6e;
+  --color-tangerine: #b08d57;
+  --color-violet: #8fa6c1;
+  --color-sage: #93a294;
+  --color-wine: #9c6b5e;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
@@ -90,8 +91,8 @@ body {
 }
 
 @keyframes pulse-dot {
-  0% { box-shadow: 0 0 0 0 rgb(47 163 107 / 0.55); }
-  100% { box-shadow: 0 0 0 10px rgb(47 163 107 / 0); }
+  0% { box-shadow: 0 0 0 0 rgb(79 154 110 / 0.55); }
+  100% { box-shadow: 0 0 0 10px rgb(79 154 110 / 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {

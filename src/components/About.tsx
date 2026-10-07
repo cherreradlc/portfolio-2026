@@ -23,7 +23,7 @@ export default function About() {
   return (
     <div ref={ref} className="grid items-start gap-14 md:grid-cols-[0.8fr_1.2fr] md:gap-20">
       {/* La foto mide 248 px: la tarjeta la muestra a su tamaño real, sin estirarla. */}
-      <motion.div style={{ y: drift }} className="mx-auto w-full max-w-[272px] [perspective:900px]">
+      <motion.div style={{ y: drift }} className="mx-auto w-full max-w-[260px] [perspective:900px]">
         <motion.figure
           style={{ rotateX: srx, rotateY: sry }}
           onPointerMove={(e) => {
@@ -35,7 +35,7 @@ export default function About() {
             rx.set(0);
             ry.set(0);
           }}
-          className="relative rotate-[-3deg] rounded-[22px] bg-paper p-3 pb-14 shadow-[0_30px_60px_-25px_rgb(23_32_54/0.45)]"
+          className="relative rotate-[-3deg] rounded-[22px] bg-paper p-3 pb-14 shadow-[0_30px_60px_-25px_rgb(43_52_69/0.45)]"
         >
           <div className="relative aspect-[248/252] overflow-hidden rounded-[14px]">
             <Image src="/consuelo.jpg" alt="Consuelo Herrera De La Calle" fill sizes="248px" unoptimized className="object-cover" />

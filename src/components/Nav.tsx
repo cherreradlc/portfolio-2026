@@ -56,7 +56,7 @@ export default function Nav() {
             open
               ? "border-transparent"
               : solid
-                ? "border-line bg-paper/75 shadow-[0_8px_30px_-12px_rgb(23_32_54/0.18)] backdrop-blur-xl"
+                ? "border-line bg-paper/75 shadow-[0_8px_30px_-12px_rgb(43_52_69/0.18)] backdrop-blur-xl"
                 : "border-transparent"
           }`}
         >
