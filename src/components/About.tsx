@@ -22,8 +22,8 @@ export default function About() {
 
   return (
     <div ref={ref} className="grid items-start gap-14 md:grid-cols-[0.8fr_1.2fr] md:gap-20">
-      {/* La foto mide 248 px: la tarjeta la muestra a su tamaño real, sin estirarla. */}
-      <motion.div style={{ y: drift }} className="mx-auto w-full max-w-[260px] [perspective:900px]">
+      {/* Foto de 900 × 1147 px: nítida incluso al doble de densidad. */}
+      <motion.div style={{ y: drift }} className="mx-auto w-full max-w-[340px] [perspective:900px]">
         <motion.figure
           style={{ rotateX: srx, rotateY: sry }}
           onPointerMove={(e) => {
@@ -37,8 +37,8 @@ export default function About() {
           }}
           className="relative rotate-[-3deg] rounded-[22px] bg-paper p-3 pb-14 shadow-[0_30px_60px_-25px_rgb(58_16_48/0.45)]"
         >
-          <div className="relative aspect-[248/252] overflow-hidden rounded-[14px]">
-            <Image src="/consuelo.jpg" alt="Consuelo Herrera De La Calle" fill sizes="248px" unoptimized className="object-cover" />
+          <div className="relative aspect-[900/1147] overflow-hidden rounded-[14px]">
+            <Image src="/consuelo.jpg" alt="Consuelo Herrera De La Calle" fill sizes="340px" className="object-cover" />
           </div>
           <figcaption className="absolute bottom-4 left-5 font-serif text-[22px] italic">Hola, soy Consu ✶</figcaption>
         </motion.figure>
