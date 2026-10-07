@@ -5,6 +5,7 @@ import {
   AnimatePresence,
   motion,
   useMotionValue,
+  useMotionValueEvent,
   useSpring,
   useTransform,
   useVelocity,
@@ -31,12 +32,22 @@ export default function Cursor() {
   const y = sy;
 
   // Estiramiento según la velocidad: más rápido, más alargada la gota.
+  // A baja velocidad no hay estiramiento ni giro: la dirección de un
+  // movimiento lento cambia de un cuadro a otro y hacía temblar la gota.
   const vx = useVelocity(sx);
   const vy = useVelocity(sy);
-  const speed = useTransform(() => Math.min(Math.hypot(vx.get(), vy.get()) / 1600, 0.6));
-  const angle = useTransform(() => (Math.atan2(vy.get(), vx.get()) * 180) / Math.PI);
-  const stretchX = useSpring(useTransform(speed, (s) => 1 + s), { stiffness: 400, damping: 30 });
-  const stretchY = useSpring(useTransform(speed, (s) => 1 - s * 0.45), { stiffness: 400, damping: 30 });
+  const speed = useTransform(() => {
+    const v = Math.hypot(vx.get(), vy.get());
+    return v < 450 ? 0 : Math.min((v - 450) / 1600, 0.5);
+  });
+  const angle = useMotionValue(0);
+  useMotionValueEvent(speed, "change", (s) => {
+    // el ángulo solo se actualiza cuando el movimiento es claro, y se queda
+    // quieto mientras tanto
+    if (s > 0.05) angle.set((Math.atan2(vy.get(), vx.get()) * 180) / Math.PI);
+  });
+  const stretchX = useSpring(useTransform(speed, (s) => 1 + s), { stiffness: 260, damping: 32 });
+  const stretchY = useSpring(useTransform(speed, (s) => 1 - s * 0.4), { stiffness: 260, damping: 32 });
 
   useEffect(() => {
     const fine = window.matchMedia("(pointer: fine)");
@@ -51,10 +62,24 @@ export default function Cursor() {
     if (!enabled) return;
     document.documentElement.classList.add("has-custom-cursor");
 
+    // Entrar a un botón es inmediato; salir espera un instante. Los botones
+    // magnéticos se mueven bajo el puntero y, en su borde, el cursor entraba
+    // y salía muchas veces por segundo, creciendo y encogiéndose.
+    let leaveTimer = 0;
     const inspect = (target: Element | null) => {
       const el = target?.closest<HTMLElement>("[data-cursor], a, button");
-      setLabel(el?.dataset.cursor ?? null);
-      setHovering(Boolean(el));
+      if (el) {
+        window.clearTimeout(leaveTimer);
+        leaveTimer = 0;
+        setLabel(el.dataset.cursor ?? null);
+        setHovering(true);
+      } else if (!leaveTimer) {
+        leaveTimer = window.setTimeout(() => {
+          leaveTimer = 0;
+          setLabel(null);
+          setHovering(false);
+        }, 120);
+      }
     };
     const move = (e: PointerEvent) => {
       x.set(e.clientX);
@@ -80,6 +105,7 @@ export default function Cursor() {
       document.removeEventListener("pointerleave", leave);
       window.removeEventListener("pointerdown", down);
       window.removeEventListener("pointerup", up);
+      window.clearTimeout(leaveTimer);
     };
   }, [enabled, x, y]);
 
@@ -95,9 +121,10 @@ export default function Cursor() {
         style={{
           x: sx,
           y: sy,
-          rotate: label ? 0 : angle,
-          scaleX: label ? 1 : stretchX,
-          scaleY: label ? 1 : stretchY,
+          // sobre un botón la gota es un círculo quieto: sin giro ni estiramiento
+          rotate: hovering ? 0 : angle,
+          scaleX: hovering ? 1 : stretchX,
+          scaleY: hovering ? 1 : stretchY,
         }}
       >
         {/* centrada con márgenes que siguen al tamaño, no con translate en %:
