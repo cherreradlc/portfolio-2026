@@ -5,9 +5,15 @@ import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTrans
 import Magnetic from "./Magnetic";
 import { SplitWords } from "./Reveal";
 import { SITE } from "@/data/site";
+import { useLang } from "@/i18n/lang";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const ROTATING = ["marcas con carácter", "interfaces accesibles", "experiencias claras", "ideas que se entienden"];
+const ROTATING = [
+  { en: "brands with character", es: "marcas con carácter" },
+  { en: "accessible interfaces", es: "interfaces accesibles" },
+  { en: "clear experiences", es: "experiencias claras" },
+  { en: "ideas people get", es: "ideas que se entienden" },
+];
 
 /**
  * Opening screen. Three blurred colour fields drift on their own and lean
@@ -15,6 +21,7 @@ const ROTATING = ["marcas con carácter", "interfaces accesibles", "experiencias
  * The headline sinks and fades as you leave, handing over to the work.
  */
 export default function Hero() {
+  const { t } = useLang();
   const [word, setWord] = useState(0);
   useEffect(() => {
     const id = window.setInterval(() => setWord((w) => (w + 1) % ROTATING.length), 2600);
@@ -71,9 +78,9 @@ export default function Hero() {
         >
           <span className="flex items-center gap-2.5 rounded-full border border-line bg-paper/60 px-4 py-2 text-[13px] backdrop-blur">
             <span className="h-2 w-2 rounded-full bg-online [animation:pulse-dot_1.6s_ease-out_infinite]" />
-            {SITE.availability}
+            {t(SITE.availability)}
           </span>
-          <span className="text-[13px] text-muted">Portafolio 2026</span>
+          <span className="text-[13px] text-muted">{t({ en: "Portfolio 2026", es: "Portafolio 2026" })}</span>
         </motion.div>
 
         {/* Fraunces: "Consuelo" en redonda y "Herrera" en cursiva, mismo cuerpo.
@@ -91,18 +98,18 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: EASE, delay: 1 }}
           >
-            Diseñadora gráfica &amp; UX/UI. Diseño{" "}
+            {t({ en: "Graphic & UX/UI designer. I design", es: "Diseñadora gráfica & UX/UI. Diseño" })}{" "}
             <span className="relative inline-flex h-[1.25em] overflow-hidden align-bottom">
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.span
-                  key={ROTATING[word]}
+                  key={t(ROTATING[word])}
                   className="inline-block font-serif text-[1.15em] italic text-tangerine"
                   initial={{ y: "100%", opacity: 0 }}
                   animate={{ y: "0%", opacity: 1 }}
                   exit={{ y: "-100%", opacity: 0 }}
                   transition={{ duration: 0.7, ease: EASE }}
                 >
-                  {ROTATING[word]}
+                  {t(ROTATING[word])}
                 </motion.span>
               </AnimatePresence>
             </span>
@@ -118,11 +125,11 @@ export default function Hero() {
             <Magnetic>
               <a
                 href="#proyectos"
-                data-cursor="Ver"
+                data-cursor={t({ en: "View", es: "Ver" })}
                 className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-brand py-4 pr-4 pl-7 text-[15px] text-paper"
               >
                 <span className="absolute inset-0 origin-bottom scale-y-0 rounded-full bg-brand-deep transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:scale-y-100" />
-                <span className="relative">Ver proyectos</span>
+                <span className="relative">{t({ en: "See my work", es: "Ver proyectos" })}</span>
                 <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-paper text-ink transition-transform duration-500 group-hover:rotate-90">
                   ↓
                 </span>
@@ -135,7 +142,7 @@ export default function Hero() {
                 rel="noreferrer"
                 className="group flex items-center gap-2 rounded-full border border-ink/25 px-6 py-4 text-[15px] transition-colors duration-300 hover:border-brand hover:bg-brand hover:text-paper"
               >
-                Ver CV
+                {t({ en: "View CV", es: "Ver CV" })}
                 <span className="transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
               </a>
             </Magnetic>

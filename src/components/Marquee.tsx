@@ -11,6 +11,7 @@ import {
   useVelocity,
   wrap,
 } from "motion/react";
+import { useLang, type T } from "@/i18n/lang";
 
 /**
  * An endless band of words whose speed and direction follow the scroll:
@@ -22,10 +23,12 @@ export default function Marquee({
   baseVelocity = -2,
   className,
 }: {
-  items: string[];
+  items: T[];
   baseVelocity?: number;
   className?: string;
 }) {
+  const { t } = useLang();
+  const labels = items.map(t);
   const baseX = useMotionValue(0);
   const { scrollY } = useScroll();
   const velocity = useSpring(useVelocity(scrollY), { damping: 50, stiffness: 400 });
@@ -41,15 +44,15 @@ export default function Marquee({
     baseX.set(baseX.get() + move);
   });
 
-  const row = items.map((t) => (
-    <span key={t} className="flex items-center gap-5 pr-5">
-      <span>{t}</span>
+  const row = labels.map((label) => (
+    <span key={label} className="flex items-center gap-5 pr-5">
+      <span>{label}</span>
       <span className="text-tangerine" aria-hidden="true">✦</span>
     </span>
   ));
 
   return (
-    <div className={`flex overflow-hidden whitespace-nowrap ${className ?? ""}`} aria-label={items.join(", ")}>
+    <div className={`flex overflow-hidden whitespace-nowrap ${className ?? ""}`} aria-label={labels.join(", ")}>
       <motion.div className="flex" style={{ x }} aria-hidden="true">
         {[0, 1, 2, 3].map((n) => (
           <span key={n} className="flex">

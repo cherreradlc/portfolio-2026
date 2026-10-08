@@ -7,6 +7,7 @@ import type { Project } from "@/data/projects";
 import { ACCENT_STYLES } from "../ProjectStack";
 import Magnetic from "../Magnetic";
 import { FadeUp, SplitWords } from "../Reveal";
+import { useLang } from "@/i18n/lang";
 import PhoneFan from "../PhoneFan";
 import SizedImage from "../SizedImage";
 
@@ -19,12 +20,13 @@ export default function CaseHero({ project: p }: { project: Project }) {
   const scale = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
   const radius = useTransform(scrollYProgress, [0, 0.5], [40, 20]);
   const imgY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
+  const { t } = useLang();
   const style = ACCENT_STYLES[p.accent];
 
   const facts = [
-    { k: "Rol", v: p.role },
-    { k: "Año", v: p.year },
-    { k: "Enfoque", v: p.tools.join(" · ") },
+    { k: t({ en: "Role", es: "Rol" }), v: p.role },
+    { k: t({ en: "Year", es: "Año" }), v: p.year },
+    { k: t({ en: "Toolkit", es: "Enfoque" }), v: p.tools.join(" · ") },
   ];
 
   return (
@@ -35,7 +37,7 @@ export default function CaseHero({ project: p }: { project: Project }) {
             href="/#proyectos"
             className="group inline-flex items-center gap-2 text-[14px] text-muted transition-colors hover:text-ink"
           >
-            <span className="transition-transform duration-500 group-hover:-translate-x-1">←</span> Todos los proyectos
+            <span className="transition-transform duration-500 group-hover:-translate-x-1">←</span> {t({ en: "All projects", es: "Todos los proyectos" })}
           </Link>
         </motion.div>
 
@@ -66,7 +68,7 @@ export default function CaseHero({ project: p }: { project: Project }) {
                   href={p.live.href}
                   target="_blank"
                   rel="noreferrer"
-                  data-cursor="Abrir"
+                  data-cursor={t({ en: "Open", es: "Abrir" })}
                   className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-brand py-3.5 pr-3.5 pl-6 text-[15px] text-paper"
                 >
                   <span className="absolute inset-0 origin-bottom scale-y-0 bg-brand-deep transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:scale-y-100" />

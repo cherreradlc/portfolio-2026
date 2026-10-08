@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/data/projects";
 import PhoneFan from "../PhoneFan";
+import { useLang } from "@/i18n/lang";
 import { naturalWidth } from "../SizedImage";
 
 /**
@@ -12,12 +13,13 @@ import { naturalWidth } from "../SizedImage";
  * (filling the panel only when the file is large enough not to stretch).
  */
 export default function NextProject({ project: p }: { project: Project }) {
+  const { t } = useLang();
   const fills = !p.screens && naturalWidth(p.cover) >= 1600;
 
   return (
     <Link
       href={`/proyectos/${p.slug}`}
-      data-cursor="Siguiente"
+      data-cursor={t({ en: "Next", es: "Siguiente" })}
       className="group relative block overflow-hidden rounded-[28px] bg-brand-deep px-6 py-16 text-paper sm:px-10 md:py-24"
     >
       <div
@@ -39,7 +41,7 @@ export default function NextProject({ project: p }: { project: Project }) {
         )}
         <div className="absolute inset-0 bg-gradient-to-r from-brand-deep via-brand-deep/40 to-transparent" />
       </div>
-      <p className="relative text-[13px] tracking-[0.22em] text-paper/50">SIGUIENTE PROYECTO</p>
+      <p className="relative text-[13px] tracking-[0.22em] text-paper/50">{t({ en: "NEXT PROJECT", es: "SIGUIENTE PROYECTO" })}</p>
       <p className="relative mt-5 flex items-end justify-between gap-6 text-[clamp(2.4rem,6.5vw,6rem)] leading-[0.92] font-medium tracking-[-0.045em]">
         <span className="max-w-4xl transition-transform duration-700 ease-[var(--ease-fluid)] group-hover:translate-x-3">
           {p.title}

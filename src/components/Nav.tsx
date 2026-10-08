@@ -5,12 +5,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import Magnetic from "./Magnetic";
+import LangToggle from "./LangToggle";
+import { useLang } from "@/i18n/lang";
 
 const LINKS = [
-  { href: "/#proyectos", label: "Proyectos" },
-  { href: "/#sobre-mi", label: "Sobre mí" },
-  { href: "/#servicios", label: "Servicios" },
-  { href: "/#contacto", label: "Contacto" },
+  { href: "/#proyectos", label: { en: "Work", es: "Proyectos" } },
+  { href: "/#sobre-mi", label: { en: "About", es: "Sobre mí" } },
+  { href: "/#servicios", label: { en: "Services", es: "Servicios" } },
+  { href: "/#contacto", label: { en: "Contact", es: "Contacto" } },
 ];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -22,6 +24,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
  */
 export default function Nav() {
   const pathname = usePathname();
+  const { t } = useLang();
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [solid, setSolid] = useState(false);
@@ -60,7 +63,7 @@ export default function Nav() {
                 : "border-transparent"
           }`}
         >
-          <Link href="/" className="group flex items-center gap-2.5" aria-label="Inicio">
+          <Link href="/" className="group flex items-center gap-2.5" aria-label={t({ en: "Home", es: "Inicio" })}>
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand font-serif text-[17px] italic text-paper transition-transform duration-500 group-hover:rotate-[360deg]">
               ch
             </span>
@@ -75,10 +78,10 @@ export default function Nav() {
                   className="group relative block overflow-hidden rounded-full px-4 py-2 text-[14px]"
                 >
                   <span className="block transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:-translate-y-full">
-                    {l.label}
+                    {t(l.label)}
                   </span>
                   <span className="absolute inset-x-4 top-full block text-tangerine transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:-translate-y-full">
-                    {l.label}
+                    {t(l.label)}
                   </span>
                 </Link>
               </li>
@@ -86,13 +89,14 @@ export default function Nav() {
           </ul>
 
           <div className="flex items-center gap-2">
+            <LangToggle />
             <Magnetic className="hidden sm:inline-block">
               <Link
                 href="/#contacto"
                 className="group relative flex items-center gap-2 overflow-hidden rounded-full bg-brand px-5 py-2.5 text-[14px] text-paper"
               >
                 <span className="absolute inset-0 translate-y-full rounded-full bg-brand-deep transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:translate-y-0" />
-                <span className="relative">Hablemos</span>
+                <span className="relative">{t({ en: "Let's talk", es: "Hablemos" })}</span>
                 <span className="relative transition-transform duration-500 group-hover:rotate-45">↗</span>
               </Link>
             </Magnetic>
@@ -100,7 +104,7 @@ export default function Nav() {
               type="button"
               onClick={() => setOpen((o) => !o)}
               aria-expanded={open}
-              aria-label={open ? "Cerrar menú" : "Abrir menú"}
+              aria-label={open ? t({ en: "Close menu", es: "Cerrar menú" }) : t({ en: "Open menu", es: "Abrir menú" })}
               className="relative flex h-11 w-11 items-center justify-center rounded-full bg-brand md:hidden"
             >
               <motion.span
@@ -135,7 +139,7 @@ export default function Nav() {
                   >
                     <Link href={l.href} onClick={() => setOpen(false)} className="flex items-baseline gap-4 py-2">
                       <span className="text-[13px] text-paper/40">0{i + 1}</span>
-                      <span className="font-serif text-[52px] leading-none italic">{l.label}</span>
+                      <span className="font-serif text-[52px] leading-none italic">{t(l.label)}</span>
                     </Link>
                   </motion.div>
                 </li>

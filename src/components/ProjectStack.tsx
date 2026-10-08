@@ -6,6 +6,8 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
 import type { Accent, Project } from "@/data/projects";
 import { SplitWords } from "./Reveal";
+import { useLang } from "@/i18n/lang";
+import { useProjects } from "@/i18n/projects";
 import PhoneFan from "./PhoneFan";
 import { isSmall, naturalWidth } from "./SizedImage";
 
@@ -24,7 +26,8 @@ export const ACCENT_STYLES: Record<Accent, { card: string; chip: string; dark?: 
  * slides over it while the ones underneath shrink back a little. Reads as a
  * single fluid motion instead of a grid of thumbnails.
  */
-export default function ProjectStack({ projects }: { projects: Project[] }) {
+export default function ProjectStack() {
+  const projects = useProjects();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
@@ -54,6 +57,7 @@ function Card({
   total: number;
   progress: MotionValue<number>;
 }) {
+  const { t } = useLang();
   const style = ACCENT_STYLES[p.accent];
   const start = index / total;
   const scale = useTransform(progress, [start, 1], [1, 1 - (total - index - 1) * 0.04]);
@@ -67,7 +71,7 @@ function Card({
       >
         <Link
           href={`/proyectos/${p.slug}`}
-          data-cursor="Ver caso"
+          data-cursor={t({ en: "View case", es: "Ver caso" })}
           className="group grid min-h-[72svh] gap-6 p-5 sm:p-8 md:grid-cols-[1fr_1.15fr] md:gap-10 md:p-10"
         >
           <div className="flex flex-col justify-between gap-8">
@@ -80,6 +84,7 @@ function Card({
 
             <div>
               <SplitWords
+                key={p.title}
                 as="h3"
                 text={p.title}
                 className="text-[clamp(2rem,4.6vw,4rem)] leading-[0.95] font-medium tracking-[-0.035em]"
@@ -92,14 +97,14 @@ function Card({
 
             <div className="flex flex-wrap items-center justify-between gap-4">
               <ul className="flex flex-wrap gap-2">
-                {p.tags.map((t) => (
+                {p.tags.map((tag) => (
                   <li
-                    key={t}
+                    key={tag}
                     className={`rounded-full border px-3 py-1 text-[12.5px] ${
                       style.dark ? "border-paper/25" : "border-ink/20"
                     }`}
                   >
-                    {t}
+                    {tag}
                   </li>
                 ))}
               </ul>
@@ -108,7 +113,7 @@ function Card({
                   style.dark ? "bg-paper text-brand-deep" : "bg-brand text-paper"
                 }`}
               >
-                Ver caso <span aria-hidden="true">→</span>
+                {t({ en: "View case", es: "Ver caso" })} <span aria-hidden="true">→</span>
               </span>
             </div>
           </div>

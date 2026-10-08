@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { IMAGE_SIZES } from "@/data/image-sizes";
 import { FadeUp, SplitWords } from "../Reveal";
+import { useLang } from "@/i18n/lang";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -28,6 +29,7 @@ export default function ManualViewer({
   pages: number;
   lowRes?: number[];
 }) {
+  const { t } = useLang();
   const [page, setPage] = useState(1);
   const [dir, setDir] = useState(1);
   const section = useRef<HTMLElement>(null);
@@ -77,7 +79,7 @@ export default function ManualViewer({
           stagger={0.035}
           className="max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)] leading-[1] font-medium tracking-[-0.035em]"
         />
-        <p className="text-[14px] text-muted">Usa las flechas o desliza para pasar las páginas</p>
+        <p className="text-[14px] text-muted">{t({ en: "Use the arrows or swipe to turn the pages", es: "Usa las flechas o desliza para pasar las páginas" })}</p>
       </div>
 
       <div className="relative overflow-hidden rounded-[24px] bg-paper-2 px-4 py-8 sm:px-16 sm:py-12">
@@ -108,7 +110,7 @@ export default function ManualViewer({
             >
               <Image
                 src={src}
-                alt={`Manual de marca Hila, página ${page} de ${pages}`}
+                alt={`${t({ en: "Hila brand manual, page", es: "Manual de marca Hila, página" })} ${page} / ${pages}`}
                 width={size.w}
                 height={size.h}
                 sizes={`(max-width: ${maxW}px) 92vw, ${maxW}px`}
@@ -127,7 +129,7 @@ export default function ManualViewer({
             type="button"
             onClick={() => go(page + (k === "next" ? 1 : -1))}
             disabled={k === "prev" ? page === 1 : page === pages}
-            aria-label={k === "next" ? "Página siguiente" : "Página anterior"}
+            aria-label={k === "next" ? t({ en: "Next page", es: "Página siguiente" }) : t({ en: "Previous page", es: "Página anterior" })}
             className={`absolute top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-brand text-[18px] text-paper transition-all duration-300 hover:scale-110 disabled:opacity-25 disabled:hover:scale-100 sm:flex ${
               k === "next" ? "right-4" : "left-4"
             }`}
@@ -137,13 +139,13 @@ export default function ManualViewer({
         ))}
 
         <div className="mt-6 flex items-center justify-center gap-5 text-[14px]">
-          <button type="button" onClick={() => go(page - 1)} disabled={page === 1} className="disabled:opacity-30 sm:hidden" aria-label="Página anterior">
+          <button type="button" onClick={() => go(page - 1)} disabled={page === 1} className="disabled:opacity-30 sm:hidden" aria-label={t({ en: "Previous page", es: "Página anterior" })}>
             ←
           </button>
           <span className="tabular-nums text-muted">
             <span className="text-ink">{pad(page)}</span> / {pad(pages)}
           </span>
-          <button type="button" onClick={() => go(page + 1)} disabled={page === pages} className="disabled:opacity-30 sm:hidden" aria-label="Página siguiente">
+          <button type="button" onClick={() => go(page + 1)} disabled={page === pages} className="disabled:opacity-30 sm:hidden" aria-label={t({ en: "Next page", es: "Página siguiente" })}>
             →
           </button>
         </div>
@@ -156,7 +158,7 @@ export default function ManualViewer({
             type="button"
             data-page={n}
             onClick={() => go(n)}
-            aria-label={`Ir a la página ${n}`}
+            aria-label={`${t({ en: "Go to page", es: "Ir a la página" })} ${n}`}
             aria-current={n === page}
             className={`relative h-16 shrink-0 overflow-hidden rounded-[6px] border-2 transition-all duration-300 ${
               n === page ? "border-tangerine opacity-100" : "border-transparent opacity-55 hover:opacity-100"

@@ -5,11 +5,13 @@ import { AnimatePresence, motion } from "motion/react";
 import Magnetic from "./Magnetic";
 import { SplitWords } from "./Reveal";
 import { SITE } from "@/data/site";
+import { useLang } from "@/i18n/lang";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 /** Closing section: a big invitation to talk and a one-tap way to do it. */
 export default function Contact() {
+  const { t } = useLang();
   const [copied, setCopied] = useState(false);
 
   async function copy() {
@@ -29,15 +31,15 @@ export default function Contact() {
 
   const socials = [
     { label: "LinkedIn", href: SITE.linkedin },
-    { label: "Currículum", href: SITE.cv },
+    { label: t({ en: "Résumé", es: "Currículum" }), href: SITE.cv },
   ];
 
   return (
     <div className="relative">
-      <p className="text-[13px] tracking-[0.22em] text-paper/50">¿TIENES UN PROYECTO O UNA VACANTE?</p>
+      <p className="text-[13px] tracking-[0.22em] text-paper/50">{t({ en: "GOT A PROJECT OR AN OPENING?", es: "¿TIENES UN PROYECTO O UNA VACANTE?" })}</p>
       <h2 className="mt-6 text-[clamp(3.4rem,12vw,11rem)] leading-[0.88] font-medium tracking-[-0.05em]">
-        <SplitWords text="Creemos algo" className="block" />
-        <SplitWords text="memorable." delay={0.15} className="block font-serif font-normal italic text-sky" />
+        <SplitWords key={t({ en: "a", es: "b" })} text={t({ en: "Let's create", es: "Creemos algo" })} className="block" />
+        <SplitWords key={t({ en: "c", es: "d" })} text={t({ en: "something memorable.", es: "memorable." })} delay={0.15} className="block font-serif font-normal italic text-sky" />
       </h2>
 
       <div className="mt-14 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
@@ -46,7 +48,7 @@ export default function Contact() {
             <button
               type="button"
               onClick={copy}
-              data-cursor={copied ? "¡Listo!" : "Copiar"}
+              data-cursor={copied ? t({ en: "Done!", es: "¡Listo!" }) : t({ en: "Copy", es: "Copiar" })}
               className="group relative flex items-center gap-4 overflow-hidden rounded-full border border-paper/25 py-3 pr-3 pl-6 text-left text-[clamp(1.05rem,2.6vw,1.6rem)] tracking-tight transition-colors duration-500 hover:border-sky"
             >
               <span className="absolute inset-0 origin-left scale-x-0 bg-brand transition-transform duration-700 ease-[var(--ease-fluid)] group-hover:scale-x-100" />
@@ -66,7 +68,7 @@ export default function Contact() {
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.4, ease: EASE }}
               >
-                Correo copiado ✓
+                {t({ en: "Email copied ✓", es: "Correo copiado ✓" })}
               </motion.span>
             )}
           </AnimatePresence>
@@ -74,7 +76,7 @@ export default function Contact() {
             href={`mailto:${SITE.email}`}
             className="mt-3 ml-6 inline-block text-[14px] text-paper/55 underline underline-offset-4 transition-colors hover:text-paper"
           >
-            o escríbeme directo
+            {t({ en: "or write to me directly", es: "o escríbeme directo" })}
           </a>
         </div>
 

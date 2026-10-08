@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { SERVICES } from "@/data/site";
+import { useLang } from "@/i18n/lang";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -11,6 +12,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
  * covers. A colour wipe runs under the row as it opens.
  */
 export default function Services() {
+  const { t } = useLang();
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -19,7 +21,7 @@ export default function Services() {
         const active = open === i;
         return (
           <li
-            key={s.title}
+            key={s.title.en}
             className="relative overflow-hidden border-b border-line"
             onPointerEnter={(e) => e.pointerType === "mouse" && setOpen(i)}
           >
@@ -41,7 +43,7 @@ export default function Services() {
               <span className="flex items-baseline gap-5">
                 <span className={`text-[13px] ${active ? "text-paper/50" : "text-muted"}`}>0{i + 1}</span>
                 <span className="text-[clamp(1.8rem,4.5vw,3.6rem)] leading-none font-medium tracking-[-0.035em]">
-                  {s.title}
+                  {t(s.title)}
                 </span>
               </span>
               <motion.span
@@ -66,11 +68,11 @@ export default function Services() {
                   className="relative overflow-hidden"
                 >
                   <div className="flex flex-col gap-5 px-2 pb-8 text-paper sm:flex-row sm:items-end sm:justify-between sm:px-6 sm:pl-[4.5rem]">
-                    <p className="max-w-lg text-[16.5px] leading-relaxed text-paper/75">{s.body}</p>
+                    <p className="max-w-lg text-[16.5px] leading-relaxed text-paper/75">{t(s.body)}</p>
                     <ul className="flex flex-wrap gap-2">
-                      {s.tags.map((t) => (
-                        <li key={t} className="rounded-full border border-paper/25 px-3 py-1 text-[13px]">
-                          {t}
+                      {s.tags.map((tag) => (
+                        <li key={tag.en} className="rounded-full border border-paper/25 px-3 py-1 text-[13px]">
+                          {t(tag)}
                         </li>
                       ))}
                     </ul>

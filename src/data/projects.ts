@@ -295,11 +295,11 @@ export const PROJECTS: Project[] = [
   },
 ];
 
-export function getProject(slug: string) {
-  return PROJECTS.find((p) => p.slug === slug);
+export function getProject(slug: string, list: Project[] = PROJECTS) {
+  return list.find((p) => p.slug === slug);
 }
 
-export function nextProject(slug: string) {
-  const i = PROJECTS.findIndex((p) => p.slug === slug);
-  return PROJECTS[(i + 1) % PROJECTS.length];
+export function nextProject(slug: string, list: Project[] = PROJECTS) {
+  const i = list.findIndex((p) => p.slug === slug);
+  return list[(i + 1) % list.length];
 }

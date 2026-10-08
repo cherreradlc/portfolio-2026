@@ -8,11 +8,13 @@ import { IMAGE_SIZES } from "@/data/image-sizes";
 import { FadeUp, SplitWords } from "../Reveal";
 import SizedImage, { isSmall, maxCssWidth } from "../SizedImage";
 import ManualViewer from "./ManualViewer";
+import { useLang } from "@/i18n/lang";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 /** Renders a case study's blocks in order; images open in a shared lightbox. */
 export default function CaseBlocks({ blocks }: { blocks: Block[] }) {
+  const { t } = useLang();
   const [zoom, setZoom] = useState<Img | null>(null);
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export default function CaseBlocks({ blocks }: { blocks: Block[] }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setZoom(null)}
-            data-cursor="Cerrar"
+            data-cursor={t({ en: "Close", es: "Cerrar" })}
             role="dialog"
             aria-label={zoom.alt}
           >
@@ -62,7 +64,7 @@ export default function CaseBlocks({ blocks }: { blocks: Block[] }) {
             <button
               type="button"
               className="absolute top-5 right-5 flex h-12 w-12 items-center justify-center rounded-full bg-paper text-[20px] text-ink"
-              aria-label="Cerrar"
+              aria-label={t({ en: "Close", es: "Cerrar" })}
             >
               ×
             </button>
@@ -209,15 +211,16 @@ function BlockView({ block: b, onZoom }: { block: Block; onZoom: (img: Img) => v
 
 /** An image at its real proportions that opens in the lightbox. */
 function ZoomImage({ img, onZoom, sizes }: { img: Img; onZoom: (img: Img) => void; sizes?: string }) {
+  const { t } = useLang();
   return (
     <motion.button
       type="button"
       layoutId={img.src}
       onClick={() => onZoom(img)}
-      data-cursor="Ampliar"
+      data-cursor={t({ en: "Zoom", es: "Ampliar" })}
       className="group block w-full overflow-hidden rounded-[18px] border border-line bg-white"
       style={{ maxWidth: maxCssWidth(img.src, { maxWidth: img.maxWidth, maxHeight: 860 }) }}
-      aria-label={`Ampliar: ${img.alt}`}
+      aria-label={`${t({ en: "Zoom", es: "Ampliar" })}: ${img.alt}`}
     >
       <SizedImage
         src={img.src}
@@ -242,6 +245,7 @@ function PhoneRail({
   block: Extract<Block, { type: "phones" }>;
   onZoom: (img: Img) => void;
 }) {
+  const { t } = useLang();
   const section = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const [distance, setDistance] = useState(0);
@@ -292,9 +296,9 @@ function PhoneRail({
       <button
         type="button"
         onClick={() => onZoom(img)}
-        data-cursor="Ampliar"
+        data-cursor={t({ en: "Zoom", es: "Ampliar" })}
         className="relative block aspect-[390/844] w-full overflow-hidden rounded-[30px] border-[6px] border-ink bg-ink shadow-[0_30px_60px_-30px_rgb(58_16_48/0.55)] transition-transform duration-700 ease-[var(--ease-fluid)] hover:-translate-y-2"
-        aria-label={`Ampliar: ${img.alt}`}
+        aria-label={`${t({ en: "Zoom", es: "Ampliar" })}: ${img.alt}`}
       >
         <Image
           src={img.src}

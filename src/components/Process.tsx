@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { PROCESS } from "@/data/site";
 import { FadeUp } from "./Reveal";
+import { useLang } from "@/i18n/lang";
 
 /**
  * Four steps joined by a line that draws itself as the section scrolls, each
@@ -37,6 +38,7 @@ function Step({
   index: number;
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
 }) {
+  const { t } = useLang();
   const at = index / PROCESS.length;
   const bg = useTransform(progress, [at, at + 0.08], ["#fbf4ef", "#6b1f52"]);
   const color = useTransform(progress, [at, at + 0.08], ["#6b1f52", "#ffffff"]);
@@ -51,9 +53,9 @@ function Step({
           {step.n}
         </motion.span>
         <h3 className="mt-6 font-serif text-[40px] leading-none italic transition-colors duration-300 group-hover:text-tangerine">
-          {step.title}
+          {t(step.title)}
         </h3>
-        <p className="mt-4 max-w-xs text-[15.5px] leading-relaxed text-muted">{step.body}</p>
+        <p className="mt-4 max-w-xs text-[15.5px] leading-relaxed text-muted">{t(step.body)}</p>
       </FadeUp>
     </li>
   );

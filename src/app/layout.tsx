@@ -4,6 +4,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
 import Nav from "@/components/Nav";
 import { SITE } from "@/data/site";
+import { HtmlLang } from "@/i18n/lang";
 import "./globals.css";
 
 const inter = Inter_Tight({
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
     template: `%s — ${SITE.shortName}`,
   },
   description:
-    "Portafolio de Consuelo Herrera De La Calle, diseñadora gráfica y UX/UI en Chile. Branding, investigación UX e interfaces claras y accesibles.",
+    "Portfolio of Consuelo Herrera De La Calle, graphic and UX/UI designer based in Chile. Branding, UX research and clear, accessible interfaces.",
 };
 
 export const viewport: Viewport = {
@@ -40,8 +41,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${inter.variable} ${instrument.variable} ${fraunces.variable} antialiased`}>
+    <html lang="en" className={`${inter.variable} ${instrument.variable} ${fraunces.variable} antialiased`}>
       <body className="grain min-h-dvh bg-paper text-ink">
+        <HtmlLang />
         <SmoothScroll />
         <Cursor />
         <Nav />
