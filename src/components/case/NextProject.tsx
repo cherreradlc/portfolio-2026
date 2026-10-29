@@ -20,10 +20,10 @@ export default function NextProject({ project: p }: { project: Project }) {
     <Link
       href={`/proyectos/${p.slug}`}
       data-cursor={t({ en: "Next", es: "Siguiente" })}
-      className="group relative block overflow-hidden rounded-[28px] bg-brand-deep px-6 py-16 text-paper sm:px-10 md:py-24"
+      className="group relative block overflow-hidden rounded-md bg-paper-2 px-6 py-16 sm:px-10 md:py-24"
     >
       <div
-        className="absolute inset-y-0 right-0 hidden w-1/2 opacity-0 transition-opacity duration-700 group-hover:opacity-60 md:block"
+        className="absolute inset-y-0 right-0 hidden w-1/2 opacity-0 transition-opacity duration-700 group-hover:opacity-90 md:block"
         aria-hidden="true"
       >
         {p.screens ? (
@@ -39,14 +39,14 @@ export default function NextProject({ project: p }: { project: Project }) {
             }`}
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-deep via-brand-deep/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-paper-2 via-paper-2/40 to-transparent" />
       </div>
-      <p className="relative text-[13px] tracking-[0.22em] text-paper/50">{t({ en: "NEXT PROJECT", es: "SIGUIENTE PROYECTO" })}</p>
-      <p className="relative mt-5 flex items-end justify-between gap-6 text-[clamp(2.4rem,6.5vw,6rem)] leading-[0.92] font-medium tracking-[-0.045em]">
+      <p className="relative font-mono text-[12.5px] tracking-wide text-muted uppercase">{t({ en: "NEXT PROJECT", es: "SIGUIENTE PROYECTO" })}</p>
+      <p className="relative mt-5 flex items-end justify-between gap-6 text-[clamp(2.4rem,6.5vw,6rem)] leading-[0.9] tracking-[-0.05em] uppercase">
         <span className="max-w-4xl transition-transform duration-700 ease-[var(--ease-fluid)] group-hover:translate-x-3">
           {p.title}
         </span>
-        <span className="hidden shrink-0 text-sky transition-transform duration-700 ease-[var(--ease-fluid)] group-hover:translate-x-3 sm:inline">
+        <span className="hidden shrink-0 text-brand transition-transform duration-700 ease-[var(--ease-fluid)] group-hover:translate-x-3 sm:inline">
           →
         </span>
       </p>

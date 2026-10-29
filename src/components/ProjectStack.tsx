@@ -3,159 +3,108 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import type { Accent, Project } from "@/data/projects";
-import { SplitWords } from "./Reveal";
 import { useLang } from "@/i18n/lang";
 import { useProjects } from "@/i18n/projects";
 import PhoneFan from "./PhoneFan";
 import { isSmall, naturalWidth } from "./SizedImage";
 
-/** Card colours: a soft tint of each project's accent, or ink for the dark one. */
-export const ACCENT_STYLES: Record<Accent, { card: string; chip: string; dark?: boolean }> = {
-  // champán, azul polvo, salvia gris y arcilla: tintes suaves y sobrios
-  tangerine: { card: "bg-[#f6dde4]", chip: "bg-tangerine text-paper" },
-  violet: { card: "bg-[#e9def2]", chip: "bg-brand text-paper" },
-  sage: { card: "bg-[#f3dce6]", chip: "bg-sage text-paper" },
-  wine: { card: "bg-[#f1d7dc]", chip: "bg-wine text-paper" },
-  ink: { card: "bg-brand-deep text-paper", chip: "bg-sky text-brand-deep", dark: true },
+/** Card tints: soft, light washes of each project's accent. */
+export const ACCENT_STYLES: Record<Accent, { card: string; tint: string; chip: string; dark?: boolean }> = {
+  tangerine: { card: "bg-[#f7e6ec]", tint: "#f7e6ec", chip: "bg-tangerine text-paper" },
+  violet: { card: "bg-[#eee8f5]", tint: "#eee8f5", chip: "bg-brand text-paper" },
+  sage: { card: "bg-[#f3e9f0]", tint: "#f3e9f0", chip: "bg-sage text-paper" },
+  wine: { card: "bg-[#f5e5e9]", tint: "#f5e5e9", chip: "bg-wine text-paper" },
+  ink: { card: "bg-[#ece6ee]", tint: "#ece6ee", chip: "bg-brand text-paper" },
 };
 
 /**
- * Selected work as a deck: every card pins near the top and the next one
- * slides over it while the ones underneath shrink back a little. Reads as a
- * single fluid motion instead of a grid of thumbnails.
+ * Selected work, one large panel per project. Each panel tips in from a
+ * 3D tilt as it enters, lies flat while it is centred and tips away again
+ * as it leaves, so scrolling feels like leafing through physical boards.
  */
 export default function ProjectStack() {
   const projects = useProjects();
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-
   return (
-    <div ref={ref} className="relative">
+    <div className="flex flex-col gap-[12vh] pb-[6vh]">
       {projects.map((p, i) => (
-        <Card
-          key={p.slug}
-          project={p}
-          index={i}
-          total={projects.length}
-          progress={scrollYProgress}
-        />
+        <Card key={p.slug} project={p} index={i} total={projects.length} />
       ))}
     </div>
   );
 }
 
-function Card({
-  project: p,
-  index,
-  total,
-  progress,
-}: {
-  project: Project;
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-}) {
+function Card({ project: p, index, total }: { project: Project; index: number; total: number }) {
   const { t } = useLang();
   const style = ACCENT_STYLES[p.accent];
-  const start = index / total;
-  const scale = useTransform(progress, [start, 1], [1, 1 - (total - index - 1) * 0.04]);
-  const dim = useTransform(progress, [start, Math.min(1, start + 1 / total)], [0, index === total - 1 ? 0 : 0.18]);
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const flip = index % 2 ? -1 : 1;
+  const rotateX = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [26, 0, 0, -14]);
+  const rotateZ = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [-3 * flip, 0, 0, 2 * flip]);
+  const scale = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.86, 1, 1, 0.92]);
+  const y = useTransform(scrollYProgress, [0, 0.4], [60, 0]);
+  const fills = !p.screens && naturalWidth(p.cover) >= 1600;
 
   return (
-    <div className="sticky top-0 flex min-h-[100svh] items-start justify-center pt-[12svh] sm:pt-[14vh]">
+    <div ref={ref} className="[perspective:1600px]">
       <motion.article
-        style={{ scale, top: `${index * 14}px` }}
-        className={`relative w-full origin-top overflow-hidden rounded-[28px] ${style.card} shadow-[0_-20px_60px_-30px_rgb(58_16_48/0.35)]`}
+        style={{ rotateX, rotateZ, scale, y }}
+        className={`relative mx-auto aspect-[4/5] w-full max-w-[1100px] overflow-hidden rounded-md sm:aspect-[16/10] ${style.card} shadow-[0_40px_80px_-50px_rgb(43_34_48/0.45)]`}
       >
-        <Link
-          href={`/proyectos/${p.slug}`}
-          data-cursor={t({ en: "View case", es: "Ver caso" })}
-          className="group grid min-h-[72svh] gap-6 p-5 sm:p-8 md:grid-cols-[1fr_1.15fr] md:gap-10 md:p-10"
-        >
-          <div className="flex flex-col justify-between gap-8">
-            <div className="flex items-center justify-between gap-4 text-[13px]">
-              <span className={`rounded-full px-3 py-1 ${style.chip}`}>{p.category}</span>
-              <span className={style.dark ? "text-paper/60" : "text-ink/55"}>
-                {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-              </span>
-            </div>
-
-            <div>
-              <SplitWords
-                key={p.title}
-                as="h3"
-                text={p.title}
-                className="text-[clamp(2rem,4.6vw,4rem)] leading-[0.95] font-medium tracking-[-0.035em]"
-                stagger={0.04}
-              />
-              <p className={`mt-5 max-w-md text-[16px] leading-relaxed ${style.dark ? "text-paper/70" : "text-ink/70"}`}>
-                {p.short}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <ul className="flex flex-wrap gap-2">
-                {p.tags.map((tag) => (
-                  <li
-                    key={tag}
-                    className={`rounded-full border px-3 py-1 text-[12.5px] ${
-                      style.dark ? "border-paper/25" : "border-ink/20"
-                    }`}
-                  >
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-              <span
-                className={`flex items-center gap-2 rounded-full px-5 py-3 text-[14px] transition-all duration-500 ease-[var(--ease-fluid)] group-hover:gap-4 ${
-                  style.dark ? "bg-paper text-brand-deep" : "bg-brand text-paper"
-                }`}
-              >
-                {t({ en: "View case", es: "Ver caso" })} <span aria-hidden="true">→</span>
-              </span>
-            </div>
-          </div>
-
-          <div
-            className={`relative min-h-[44svh] overflow-hidden rounded-[20px] md:min-h-0 ${
-              style.dark ? "bg-paper/10" : "bg-paper/45"
-            }`}
-          >
+        <Link href={`/proyectos/${p.slug}`} data-cursor={t({ en: "View project", es: "Ver proyecto" })} className="group absolute inset-0 block">
+          {/* Imagen: las grandes llenan el panel; el resto se ve entera, sin estirarse. */}
+          <div className="absolute inset-x-0 top-0 bottom-[150px] sm:bottom-[120px]">
             {p.screens ? (
-              <PhoneFan screens={p.screens} />
-            ) : naturalWidth(p.cover) >= 1600 ? (
-              // Solo las imágenes grandes llenan el recuadro; el resto se
-              // muestra entera para no estirarla.
+              <PhoneFan screens={p.screens} height="88%" />
+            ) : fills ? (
               <Image
                 src={p.cover}
                 alt={p.coverAlt}
                 fill
-                sizes="(max-width: 768px) 100vw, 55vw"
-                className="object-cover transition-transform duration-[1.4s] ease-[var(--ease-fluid)] group-hover:scale-[1.04]"
+                sizes="(max-width: 1100px) 100vw, 1100px"
+                className="object-cover transition-transform duration-[1.4s] ease-[var(--ease-fluid)] group-hover:scale-[1.03]"
               />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center p-6 sm:p-10">
+              <div className="absolute inset-0 p-6 sm:p-10">
                 <div className="relative h-full w-full transition-transform duration-[1.4s] ease-[var(--ease-fluid)] group-hover:scale-[1.03]">
                   <Image
                     src={p.cover}
                     alt={p.coverAlt}
                     fill
-                    sizes="(max-width: 768px) 90vw, 45vw"
+                    sizes="(max-width: 768px) 90vw, 600px"
                     unoptimized={isSmall(p.cover)}
-                    className="object-contain drop-shadow-[0_24px_40px_rgb(58_16_48/0.25)]"
+                    className="object-contain drop-shadow-[0_24px_40px_rgb(43_34_48/0.22)]"
                   />
                 </div>
               </div>
             )}
           </div>
+
+          <div
+            className="absolute inset-x-0 bottom-0 px-5 pt-16 pb-5 sm:px-7 sm:pb-6"
+            style={{ background: `linear-gradient(to top, ${style.tint} 62%, transparent)` }}
+          >
+            <div className="flex items-end justify-between gap-4">
+              <h3 className="text-[clamp(1.35rem,2.4vw,1.9rem)] leading-[1.05] tracking-[-0.03em] uppercase">{p.title}</h3>
+              <span className="hidden font-mono text-[12px] text-muted sm:block">
+                {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+              </span>
+            </div>
+            <div className="mt-3 flex flex-col gap-3 border-t border-ink/15 pt-3 sm:flex-row sm:items-center sm:justify-between">
+              <p className="font-mono text-[11.5px] tracking-wide text-ink-soft uppercase">
+                {p.category} <span className="mx-1 opacity-50">·</span> {p.year}
+              </p>
+              <span className="relative inline-flex w-fit items-center gap-2 overflow-hidden rounded-[4px] border border-ink/30 px-4 py-2 text-[12px] font-medium tracking-wide uppercase">
+                <span className="absolute inset-0 translate-y-full bg-brand transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:translate-y-0" />
+                <span className="relative transition-colors duration-500 group-hover:text-paper">
+                  {t({ en: "View project", es: "Ver proyecto" })} →
+                </span>
+              </span>
+            </div>
+          </div>
         </Link>
-        <motion.div
-          className="pointer-events-none absolute inset-0 bg-brand-deep"
-          style={{ opacity: dim }}
-          aria-hidden="true"
-        />
       </motion.article>
     </div>
   );

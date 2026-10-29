@@ -8,20 +8,15 @@ const OPTIONS: { value: Lang; label: string; name: string }[] = [
   { value: "es", label: "ES", name: "Español" },
 ];
 
-/**
- * Two-way language switch with a sliding marker. `dark` styles it for the
- * plum mobile menu.
- */
-export default function LangToggle({ dark = false }: { dark?: boolean }) {
+/** Two-way language switch with a sliding marker, in the monospaced UI voice. */
+export default function LangToggle() {
   const { lang, setLang } = useLang();
 
   return (
     <div
       role="group"
       aria-label="Language / Idioma"
-      className={`relative flex rounded-full border p-1 text-[12.5px] font-medium tracking-wide ${
-        dark ? "border-paper/25" : "border-line bg-paper/70 backdrop-blur"
-      }`}
+      className="relative flex rounded-[6px] border border-line bg-white/60 p-[3px] font-mono text-[12px] backdrop-blur"
     >
       {OPTIONS.map((o) => {
         const active = lang === o.value;
@@ -33,14 +28,14 @@ export default function LangToggle({ dark = false }: { dark?: boolean }) {
             onClick={() => setLang(o.value)}
             aria-pressed={active}
             aria-label={o.name}
-            className={`relative z-10 h-8 w-10 rounded-full transition-colors duration-300 ${
-              active ? (dark ? "text-brand-deep" : "text-paper") : dark ? "text-paper/70 hover:text-paper" : "text-ink-soft hover:text-ink"
+            className={`relative z-10 h-7 w-9 rounded-[4px] transition-colors duration-300 ${
+              active ? "text-paper" : "text-ink-soft hover:text-ink"
             }`}
           >
             {active && (
               <motion.span
-                layoutId={dark ? "lang-marker-dark" : "lang-marker"}
-                className={`absolute inset-0 -z-10 rounded-full ${dark ? "bg-sky" : "bg-brand"}`}
+                layoutId="lang-marker"
+                className="absolute inset-0 -z-10 rounded-[4px] bg-brand"
                 transition={{ type: "spring", stiffness: 420, damping: 34 }}
               />
             )}

@@ -1,88 +1,109 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useRef, useState } from "react";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { SERVICES } from "@/data/site";
 import { useLang } from "@/i18n/lang";
+import SizedImage from "./SizedImage";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+/** One board of real work per service, on a light wash of colour. */
+const BOARDS = [
+  { src: "/projects/invitacion-verano/admin-confirmados.jpg", alt: "Wedding invitation dashboard", tint: "#eee8f5", maxHeight: 560 },
+  { src: "/projects/invitacion-verano/portada.jpg", alt: "Summer wedding invitation cover", tint: "#f3e9f0", maxHeight: 560 },
+  { src: "/projects/hila/portada.jpg", alt: "Hila brand guidelines cover", tint: "#f7e6ec", maxHeight: 560 },
+  { src: "/projects/hila/tarjetas-diseno.jpg", alt: "Hila business cards", tint: "#f5e5e9", maxHeight: 520 },
+];
+
 /**
- * Rows that open on hover (desktop) or tap (phones) to show what each service
- * covers. A colour wipe runs under the row as it opens.
+ * Split screen. On desktop the left half is a column of full-height boards
+ * that scroll past while the right half stays pinned: whichever board is in
+ * view opens its service in the list. On phones it is a plain accordion.
  */
 export default function Services() {
   const { t } = useLang();
-  const [open, setOpen] = useState<number | null>(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    if (!window.matchMedia("(min-width: 768px)").matches) return;
+    setActive(Math.min(SERVICES.length - 1, Math.floor(v * SERVICES.length)));
+  });
 
   return (
-    <ul className="border-t border-line">
-      {SERVICES.map((s, i) => {
-        const active = open === i;
-        return (
-          <li
-            key={s.title.en}
-            className="relative overflow-hidden border-b border-line"
-            onPointerEnter={(e) => e.pointerType === "mouse" && setOpen(i)}
+    <div ref={ref} className="grid md:grid-cols-2">
+      <div className="hidden md:block">
+        {BOARDS.map((b) => (
+          <div
+            key={b.src}
+            className="flex h-[100svh] items-center justify-center overflow-hidden px-10"
+            style={{ background: b.tint }}
           >
-            <motion.div
-              className="absolute inset-0 origin-left bg-brand-deep"
-              initial={false}
-              animate={{ scaleX: active ? 1 : 0 }}
-              transition={{ duration: 0.7, ease: EASE }}
-              aria-hidden="true"
+            <SizedImage
+              src={b.src}
+              alt={b.alt}
+              maxHeight={b.maxHeight}
+              sizes="(max-width: 1440px) 40vw, 600px"
+              className="rounded-[4px] shadow-[0_40px_70px_-40px_rgb(43_34_48/0.45)]"
             />
-            <button
-              type="button"
-              onClick={() => setOpen(active ? null : i)}
-              aria-expanded={active}
-              className={`relative flex w-full items-center justify-between gap-6 px-2 py-7 text-left transition-colors duration-500 sm:px-6 ${
-                active ? "text-paper" : ""
-              }`}
-            >
-              <span className="flex items-baseline gap-5">
-                <span className={`text-[13px] ${active ? "text-paper/50" : "text-muted"}`}>0{i + 1}</span>
-                <span className="text-[clamp(1.8rem,4.5vw,3.6rem)] leading-none font-medium tracking-[-0.035em]">
-                  {t(s.title)}
-                </span>
-              </span>
-              <motion.span
-                className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-[22px] ${
-                  active ? "bg-sky text-brand-deep" : "border border-ink/25"
-                }`}
-                animate={{ rotate: active ? 45 : 0 }}
-                transition={{ duration: 0.5, ease: EASE }}
-                aria-hidden="true"
-              >
-                +
-              </motion.span>
-            </button>
-            <AnimatePresence initial={false}>
-              {active && (
-                <motion.div
-                  key="body"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.6, ease: EASE }}
-                  className="relative overflow-hidden"
-                >
-                  <div className="flex flex-col gap-5 px-2 pb-8 text-paper sm:flex-row sm:items-end sm:justify-between sm:px-6 sm:pl-[4.5rem]">
-                    <p className="max-w-lg text-[16.5px] leading-relaxed text-paper/75">{t(s.body)}</p>
-                    <ul className="flex flex-wrap gap-2">
-                      {s.tags.map((tag) => (
-                        <li key={tag.en} className="rounded-full border border-paper/25 px-3 py-1 text-[13px]">
-                          {t(tag)}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </li>
-        );
-      })}
-    </ul>
+          </div>
+        ))}
+      </div>
+
+      <div className="bg-paper-2">
+        <div className="flex flex-col justify-center px-4 py-20 sm:px-9 md:sticky md:top-0 md:h-[100svh] md:py-0 lg:px-16">
+          <p className="border-b border-ink/15 pb-5 font-mono text-[12.5px] tracking-wide uppercase">
+            {t({ en: "Services overview", es: "Servicios" })}
+          </p>
+          <ul>
+            {SERVICES.map((s, i) => {
+              const open = active === i;
+              return (
+                <li key={s.title.en} className="border-b border-ink/15">
+                  <button
+                    type="button"
+                    onClick={() => setActive(i)}
+                    aria-expanded={open}
+                    className="flex w-full items-baseline justify-between gap-4 py-5 text-left"
+                  >
+                    <span
+                      className={`text-[clamp(1.5rem,2.4vw,2rem)] leading-none tracking-[-0.03em] uppercase transition-colors duration-500 ${
+                        open ? "text-brand" : "text-ink"
+                      }`}
+                    >
+                      {t(s.title)}
+                    </span>
+                    <span className="font-mono text-[12px] text-muted">0{i + 1}</span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {open && (
+                      <motion.div
+                        key="body"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.6, ease: EASE }}
+                        className="overflow-hidden"
+                      >
+                        <p className="max-w-[52ch] pb-4 font-mono text-[13.5px] leading-[1.7] text-ink-soft">{t(s.body)}</p>
+                        <ul className="flex flex-wrap gap-2 pb-6">
+                          {s.tags.map((tag) => (
+                            <li key={tag.en} className="rounded-[4px] border border-ink/20 px-2.5 py-1 font-mono text-[11.5px] uppercase">
+                              {t(tag)}
+                            </li>
+                          ))}
+                        </ul>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 }

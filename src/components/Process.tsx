@@ -40,22 +40,22 @@ function Step({
 }) {
   const { t } = useLang();
   const at = index / PROCESS.length;
-  const bg = useTransform(progress, [at, at + 0.08], ["#fbf4ef", "#6b1f52"]);
-  const color = useTransform(progress, [at, at + 0.08], ["#6b1f52", "#ffffff"]);
+  const bg = useTransform(progress, [at, at + 0.08], ["#f8f5f2", "#8c3b72"]);
+  const color = useTransform(progress, [at, at + 0.08], ["#8c3b72", "#ffffff"]);
 
   return (
     <li className="group relative">
       <FadeUp delay={index * 0.08}>
         <motion.span
-          className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full border border-brand text-[13px] font-medium transition-transform duration-500 group-hover:scale-110"
+          className="relative z-10 flex h-11 w-11 items-center justify-center rounded-[4px] border border-brand font-mono text-[12px] transition-transform duration-500 group-hover:scale-110"
           style={{ backgroundColor: bg, color }}
         >
           {step.n}
         </motion.span>
-        <h3 className="mt-6 font-serif text-[40px] leading-none italic transition-colors duration-300 group-hover:text-tangerine">
+        <h3 className="mt-6 text-[clamp(1.6rem,2.4vw,2.1rem)] leading-none tracking-[-0.03em] uppercase transition-colors duration-300 group-hover:text-tangerine">
           {t(step.title)}
         </h3>
-        <p className="mt-4 max-w-xs text-[15.5px] leading-relaxed text-muted">{t(step.body)}</p>
+        <p className="mt-4 max-w-xs font-mono text-[13px] leading-[1.7] text-ink-soft">{t(step.body)}</p>
       </FadeUp>
     </li>
   );

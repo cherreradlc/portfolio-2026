@@ -117,7 +117,7 @@ export default function ManualViewer({
                 unoptimized
                 draggable={false}
                 priority={page === 1}
-                className="h-auto w-full rounded-[10px] shadow-[0_30px_60px_-30px_rgb(58_16_48/0.45)] select-none"
+                className="h-auto w-full rounded-[10px] shadow-[0_30px_60px_-30px_rgb(43_34_48/0.45)] select-none"
               />
             </motion.div>
           </AnimatePresence>

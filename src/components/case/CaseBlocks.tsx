@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import type { Block, Img } from "@/data/projects";
 import { IMAGE_SIZES } from "@/data/image-sizes";
 import { FadeUp, SplitWords } from "../Reveal";
@@ -28,7 +28,7 @@ export default function CaseBlocks({ blocks }: { blocks: Block[] }) {
     <>
       <div className="flex flex-col gap-28 md:gap-40">
         {blocks.map((b, i) => (
-          <BlockView key={i} block={b} onZoom={setZoom} />
+          <BlockView key={i} block={b} onZoom={setZoom} flip={blocks.slice(0, i).filter((x) => x.type === "video").length % 2 === 1} />
         ))}
       </div>
 
@@ -75,7 +75,7 @@ export default function CaseBlocks({ blocks }: { blocks: Block[] }) {
   );
 }
 
-function BlockView({ block: b, onZoom }: { block: Block; onZoom: (img: Img) => void }) {
+function BlockView({ block: b, onZoom, flip = false }: { block: Block; onZoom: (img: Img) => void; flip?: boolean }) {
   switch (b.type) {
     case "text":
       return (
@@ -206,7 +206,96 @@ function BlockView({ block: b, onZoom }: { block: Block; onZoom: (img: Img) => v
 
     case "manual":
       return <ManualViewer {...b} />;
+
+    case "video":
+      return (
+        // los videos se alternan de lado, para que dos seguidos no se vean iguales
+        <section className={`grid items-center gap-12 md:gap-20 ${flip ? "md:grid-cols-[auto_1fr]" : "md:grid-cols-[1fr_auto]"}`}>
+          <div className={flip ? "md:order-2" : ""}>
+            <FadeUp>
+              <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
+            </FadeUp>
+            <SplitWords
+              as="h2"
+              text={b.title}
+              stagger={0.035}
+              className="mt-6 text-[clamp(2rem,4.4vw,3.6rem)] leading-[1] font-medium tracking-[-0.035em]"
+            />
+            {b.body.map((p, i) => (
+              <FadeUp key={i} delay={0.1 + i * 0.08}>
+                <p className="mt-6 max-w-xl text-[17.5px] leading-[1.7] text-ink-soft">{p}</p>
+              </FadeUp>
+            ))}
+          </div>
+          <FadeUp delay={0.15}>
+            <VideoPhone src={b.src} poster={b.poster} alt={b.alt} />
+          </FadeUp>
+        </section>
+      );
   }
+}
+
+/**
+ * A screen recording inside a phone. It plays muted and on loop once it is on
+ * screen, pauses when scrolled away, and a tap pauses or resumes it. With
+ * reduced motion it waits for a tap.
+ */
+function VideoPhone({ src, poster, alt }: { src: string; poster: string; alt: string }) {
+  const { t } = useLang();
+  const video = useRef<HTMLVideoElement>(null);
+  const [paused, setPaused] = useState(true);
+
+  useEffect(() => {
+    const v = video.current;
+    if (!v) return;
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting && !still) v.play().catch(() => {});
+        else v.pause();
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        const v = video.current;
+        if (!v) return;
+        if (v.paused) v.play().catch(() => {});
+        else v.pause();
+      }}
+      data-cursor={paused ? t({ en: "Play", es: "Reproducir" }) : t({ en: "Pause", es: "Pausar" })}
+      aria-label={`${paused ? t({ en: "Play", es: "Reproducir" }) : t({ en: "Pause", es: "Pausar" })}: ${alt}`}
+      className="relative mx-auto block aspect-[720/1226] w-[min(78vw,340px)] overflow-hidden rounded-[clamp(22px,3vw,36px)] border-[clamp(5px,0.6vw,8px)] border-ink bg-ink shadow-[0_40px_80px_-30px_rgb(43_34_48/0.55)]"
+    >
+      <video
+        ref={video}
+        src={src}
+        poster={poster}
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        onPlay={() => setPaused(false)}
+        onPause={() => setPaused(true)}
+        className="h-full w-full object-cover"
+      />
+      {paused && (
+        <span className="absolute inset-0 flex items-center justify-center bg-ink/15">
+          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 shadow-lg">
+            <svg viewBox="0 0 24 24" width={26} height={26} aria-hidden="true">
+              <path d="M8 5.5v13l11-6.5z" fill="currentColor" />
+            </svg>
+          </span>
+        </span>
+      )}
+    </button>
+  );
 }
 
 /** An image at its real proportions that opens in the lightbox. */
@@ -235,8 +324,9 @@ function ZoomImage({ img, onZoom, sizes }: { img: Img; onZoom: (img: Img) => voi
 }
 
 /**
- * A row of phone screens. On wide screens the section pins and vertical
- * scrolling slides the row sideways; on phones it is a native swipe rail.
+ * A row of phone screens that slides sideways, on every screen size: swipe on
+ * a phone, drag with the mouse or a trackpad on a computer, or use the arrows.
+ * Vertical scrolling just moves past it, never through it.
  */
 function PhoneRail({
   block: b,
@@ -246,92 +336,129 @@ function PhoneRail({
   onZoom: (img: Img) => void;
 }) {
   const { t } = useLang();
-  const section = useRef<HTMLElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-  const [distance, setDistance] = useState(0);
-  const [wide, setWide] = useState(false);
+  const rail = useRef<HTMLDivElement>(null);
+  const [edge, setEdge] = useState({ start: true, end: false });
+  // un arrastre no debe abrir la pantalla en grande al soltar
+  const drag = useRef({ down: false, x: 0, left: 0, moved: false });
 
-  useLayoutEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
-    const sync = () => setWide(mq.matches);
+  useEffect(() => {
+    const r = rail.current;
+    if (!r) return;
+    const sync = () =>
+      setEdge({ start: r.scrollLeft < 8, end: r.scrollLeft + r.clientWidth >= r.scrollWidth - 8 });
     sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
+    r.addEventListener("scroll", sync, { passive: true });
+    const ro = new ResizeObserver(sync);
+    ro.observe(r);
+    return () => {
+      r.removeEventListener("scroll", sync);
+      ro.disconnect();
+    };
   }, []);
 
-  // La pista solo existe en la versión ancha: se mide después de montarla y
-  // cada vez que cambia su tamaño.
-  useLayoutEffect(() => {
-    const t = track.current;
-    if (!wide || !t?.parentElement) return;
-    const parent = t.parentElement;
-    // + el relleno derecho, que scrollWidth no siempre cuenta
-    const measure = () => setDistance(Math.max(0, t.scrollWidth - parent.clientWidth + 48));
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(t);
-    ro.observe(parent);
-    return () => ro.disconnect();
-  }, [wide]);
+  const step = (dir: 1 | -1) => {
+    const r = rail.current;
+    if (!r) return;
+    const phone = r.querySelector("figure");
+    const w = phone ? phone.getBoundingClientRect().width + 32 : r.clientWidth * 0.8;
+    r.scrollBy({ left: dir * w, behavior: "smooth" });
+  };
 
-  const { scrollYProgress } = useScroll({ target: section, offset: ["start start", "end end"] });
-  const x = useTransform(scrollYProgress, [0, 1], [0, -distance]);
-
-  const header = (
-    <div className="mb-10 px-4 sm:px-6">
-      <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
-      <SplitWords
-        as="h2"
-        text={b.title}
-        stagger={0.035}
-        className="mt-5 max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)] leading-[1] font-medium tracking-[-0.035em]"
-      />
-    </div>
+  const arrow = (dir: 1 | -1, off: boolean) => (
+    <button
+      type="button"
+      onClick={() => step(dir)}
+      disabled={off}
+      aria-label={dir < 0 ? t({ en: "Previous screens", es: "Pantallas anteriores" }) : t({ en: "Next screens", es: "Pantallas siguientes" })}
+      className="flex h-12 w-12 items-center justify-center rounded-full border border-line bg-white text-ink transition hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-30"
+    >
+      <svg viewBox="0 0 24 24" width={20} height={20} fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d={dir < 0 ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"} />
+      </svg>
+    </button>
   );
 
-  const phones = b.images.map((img) => (
-    // En pantallas anchas el ancho sale del alto disponible, para que el
-    // teléfono y su leyenda siempre quepan bajo el título.
-    <figure key={img.src} className="w-[66vw] shrink-0 snap-center md:w-[min(280px,calc((100svh-340px)*0.462))]">
-      <button
-        type="button"
-        onClick={() => onZoom(img)}
-        data-cursor={t({ en: "Zoom", es: "Ampliar" })}
-        className="relative block aspect-[390/844] w-full overflow-hidden rounded-[30px] border-[6px] border-ink bg-ink shadow-[0_30px_60px_-30px_rgb(58_16_48/0.55)] transition-transform duration-700 ease-[var(--ease-fluid)] hover:-translate-y-2"
-        aria-label={`${t({ en: "Zoom", es: "Ampliar" })}: ${img.alt}`}
-      >
-        <Image
-          src={img.src}
-          alt={img.alt}
-          fill
-          sizes="(max-width: 768px) 70vw, 360px"
-          unoptimized={isSmall(img.src)}
-          className="rounded-[24px] object-cover object-top"
-        />
-      </button>
-      <figcaption className="mt-4 text-[14.5px] leading-snug text-muted">{img.caption}</figcaption>
-    </figure>
-  ));
-
-  if (!wide) {
-    return (
-      // El ref va también aquí: useScroll lo sigue aunque en celular no se use.
-      <section ref={section} className="-mx-4 sm:-mx-6">
-        {header}
-        <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:px-6">
-          {phones}
-        </div>
-      </section>
-    );
-  }
-
   return (
-    <section ref={section} className="relative -mx-6" style={{ height: `calc(100vh + ${distance}px)` }}>
-      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
-        {header}
-        <motion.div ref={track} style={{ x }} className="flex gap-8 px-6">
-          {phones}
-        </motion.div>
+    <section className="-mx-4 sm:-mx-6">
+      <div className="mb-10 flex items-end justify-between gap-6 px-4 sm:px-6">
+        <div>
+          <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
+          <SplitWords
+            as="h2"
+            text={b.title}
+            stagger={0.035}
+            className="mt-5 max-w-3xl text-[clamp(2rem,4.4vw,3.6rem)] leading-[1] font-medium tracking-[-0.035em]"
+          />
+          {b.body && (
+            <FadeUp delay={0.1}>
+              <p className="mt-6 max-w-2xl text-[17.5px] leading-[1.7] text-ink-soft">{b.body}</p>
+            </FadeUp>
+          )}
+        </div>
+        <div className="hidden shrink-0 gap-3 md:flex">
+          {arrow(-1, edge.start)}
+          {arrow(1, edge.end)}
+        </div>
+      </div>
+
+      <div
+        ref={rail}
+        data-cursor={t({ en: "Drag", es: "Arrastrar" })}
+        className="flex cursor-grab select-none snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] active:cursor-grabbing sm:px-6 md:gap-8 [&::-webkit-scrollbar]:hidden"
+        onPointerDown={(e) => {
+          if (e.pointerType !== "mouse") return; // en pantallas táctiles desliza el propio navegador
+          e.preventDefault(); // que arrastrar no seleccione texto
+          const r = rail.current!;
+          drag.current = { down: true, x: e.clientX, left: r.scrollLeft, moved: false };
+          r.style.scrollSnapType = "none";
+        }}
+        onPointerMove={(e) => {
+          const d = drag.current;
+          if (!d.down) return;
+          const dx = e.clientX - d.x;
+          if (Math.abs(dx) > 5) d.moved = true;
+          rail.current!.scrollLeft = d.left - dx;
+        }}
+        onPointerUp={() => {
+          drag.current.down = false;
+          if (rail.current) rail.current.style.scrollSnapType = "";
+        }}
+        onPointerLeave={() => {
+          drag.current.down = false;
+          if (rail.current) rail.current.style.scrollSnapType = "";
+        }}
+        onClickCapture={(e) => {
+          if (drag.current.moved) {
+            e.preventDefault();
+            e.stopPropagation();
+            drag.current.moved = false;
+          }
+        }}
+      >
+        {b.images.map((img) => (
+          <figure key={img.src} className="w-[66vw] shrink-0 snap-start md:w-[min(280px,calc((100svh-340px)*0.462))]">
+            <button
+              type="button"
+              onClick={() => onZoom(img)}
+              data-cursor={t({ en: "Zoom", es: "Ampliar" })}
+              className="relative block aspect-[390/844] w-full overflow-hidden rounded-[30px] border-[6px] border-ink bg-ink shadow-[0_30px_60px_-30px_rgb(43_34_48/0.55)] transition-transform duration-700 ease-[var(--ease-fluid)] hover:-translate-y-2"
+              aria-label={`${t({ en: "Zoom", es: "Ampliar" })}: ${img.alt}`}
+            >
+              <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                draggable={false}
+                sizes="(max-width: 768px) 70vw, 360px"
+                unoptimized={isSmall(img.src)}
+                className="pointer-events-none rounded-[24px] object-cover object-top"
+              />
+            </button>
+            <figcaption className="mt-4 text-[14.5px] leading-snug text-muted">{img.caption}</figcaption>
+          </figure>
+        ))}
+        {/* margen al final para que la última pantalla no quede pegada al borde */}
+        <span aria-hidden="true" className="w-1 shrink-0 sm:w-2" />
       </div>
     </section>
   );

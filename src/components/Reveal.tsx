@@ -57,7 +57,7 @@ export function SplitWords({
   return (
     <Tag ref={ref as never} className={className} aria-label={text}>
       {words.map((w, i) => (
-        <span key={i} aria-hidden="true" className="inline-block overflow-hidden pb-[0.12em] align-bottom">
+        <span key={i} aria-hidden="true" className="-mt-[0.18em] inline-block overflow-hidden pt-[0.18em] pb-[0.12em] align-bottom">
           <motion.span
             className="inline-block"
             initial={{ y: "110%", rotate: 4 }}

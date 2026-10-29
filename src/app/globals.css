@@ -1,32 +1,30 @@
 @import "tailwindcss";
 
 /*
- * Plum & pink: rose-bone paper, plum-black text (never pure black), plum
- * `brand` for buttons and the logo, a deeper plum `brand-deep` for large
- * dark areas. The accent (`tangerine`) is a raspberry deep enough to read as
- * text on the light paper; vivid pink (`sky`) is reserved for dark grounds
- * and the cursor. Lavender, mauve and rose tint the project cards.
- * (Token names kept from the first palette: `tangerine` is the main accent,
- * `violet` the second one.)
+ * Light editorial: warm porcelain paper, plum-grey ink (never pure black),
+ * a muted plum `brand` for the few solid buttons and soft pink/lilac tints
+ * for project cards. `brand-deep` is kept for small dark accents only.
+ * (Token names kept from earlier palettes: `tangerine` is the main accent.)
  */
 @theme {
-  --color-paper: #fbf4ef;
-  --color-paper-2: #f3e3e6;
-  --color-ink: #3a1030;
-  --color-ink-soft: #5c3150;
-  --color-muted: #8b6b7f;
-  --color-line: rgb(58 16 48 / 0.13);
-  --color-brand: #6b1f52;
-  --color-brand-deep: #4a1238;
-  --color-sky: #ff7aa8;
+  --color-paper: #f8f5f2;
+  --color-paper-2: #f0e9e8;
+  --color-ink: #2b2230;
+  --color-ink-soft: #54485a;
+  --color-muted: #8a7e8b;
+  --color-line: rgb(43 34 48 / 0.12);
+  --color-brand: #8c3b72;
+  --color-brand-deep: #5e2150;
+  --color-sky: #f59ac0;
   --color-online: #3e9c72;
   --color-tangerine: #c2416f;
-  --color-violet: #b3527e;
-  --color-sage: #8c6d9e;
-  --color-wine: #9e3a64;
+  --color-violet: #b67aa0;
+  --color-sage: #a493b8;
+  --color-wine: #a8507a;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   --ease-fluid: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -34,6 +32,8 @@ html {
   background: var(--color-paper);
   color: var(--color-ink);
   -webkit-tap-highlight-color: transparent;
+  /* Las tarjetas inclinadas en 3D no deben ensanchar la página. */
+  overflow-x: clip;
 }
 
 /* Lenis owns the scroll; native smooth-scroll would fight it. */
@@ -73,7 +73,7 @@ body {
   inset: -50%;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   animation: grain 7s steps(8) infinite;
 }

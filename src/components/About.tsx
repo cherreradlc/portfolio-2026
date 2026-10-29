@@ -2,109 +2,102 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
-import { SKILLS, SOFTWARE } from "@/data/site";
-import { FadeUp, ScrollText } from "./Reveal";
+import { motion, useScroll, useTransform } from "motion/react";
+import { SITE, SKILLS, SOFTWARE } from "@/data/site";
+import { FadeUp, SplitWords } from "./Reveal";
 import { useLang } from "@/i18n/lang";
 
 /**
- * Portrait card that tilts toward the pointer and drifts on scroll, next to a
- * bio that fills in word by word.
+ * "Hi there, call me Consu": a huge staggered greeting, a slightly tilted
+ * portrait that straightens as it scrolls, and a monospaced bio with the
+ * two calls to action.
  */
 export default function About() {
   const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const drift = useTransform(scrollYProgress, [0, 1], [60, -60]);
-
-  const rx = useMotionValue(0);
-  const ry = useMotionValue(0);
-  const srx = useSpring(rx, { stiffness: 150, damping: 15 });
-  const sry = useSpring(ry, { stiffness: 150, damping: 15 });
+  const rotate = useTransform(scrollYProgress, [0, 0.5, 1], [-6, -1.5, 2]);
+  const drift = useTransform(scrollYProgress, [0, 1], [80, -60]);
 
   return (
-    <div ref={ref} className="grid items-start gap-14 md:grid-cols-[0.8fr_1.2fr] md:gap-20">
-      {/* Foto de 900 × 1147 px: nítida incluso al doble de densidad. */}
-      <motion.div style={{ y: drift }} className="mx-auto w-full max-w-[340px] [perspective:900px]">
+    <div ref={ref} className="grid gap-12 md:grid-cols-2 md:gap-10">
+      <div className="relative">
+        <p className="font-mono text-[13px] tracking-wide uppercase">{t({ en: "Hi there,", es: "Hola," })}</p>
+        <h2 className="mt-6 text-[clamp(3.6rem,10vw,8.5rem)] leading-[0.86] tracking-[-0.055em] uppercase">
+          <SplitWords key={t({ en: "a", es: "b" })} text={t({ en: "Call me", es: "Soy" })} className="block" />
+          <SplitWords text="Consu" delay={0.12} className="block pl-[1.2em] text-brand" />
+        </h2>
+
+        {/* Foto de 900 × 1147 px: nítida incluso al doble de densidad. */}
         <motion.figure
-          style={{ rotateX: srx, rotateY: sry }}
-          onPointerMove={(e) => {
-            const r = e.currentTarget.getBoundingClientRect();
-            ry.set(((e.clientX - r.left) / r.width - 0.5) * 16);
-            rx.set(-((e.clientY - r.top) / r.height - 0.5) * 16);
-          }}
-          onPointerLeave={() => {
-            rx.set(0);
-            ry.set(0);
-          }}
-          className="relative rotate-[-3deg] rounded-[22px] bg-paper p-3 pb-14 shadow-[0_30px_60px_-25px_rgb(58_16_48/0.45)]"
+          style={{ rotate, y: drift }}
+          className="relative mt-10 ml-auto w-[min(78%,340px)] overflow-hidden rounded-[4px] shadow-[0_40px_70px_-35px_rgb(43_34_48/0.45)] md:mt-[-1.5rem] md:mr-[8%]"
         >
-          <div className="relative aspect-[900/1147] overflow-hidden rounded-[14px]">
+          <div className="relative aspect-[900/1147]">
             <Image src="/consuelo.jpg" alt="Consuelo Herrera De La Calle" fill sizes="340px" className="object-cover" />
           </div>
-          <figcaption className="absolute bottom-4 left-5 font-serif text-[22px] italic">{t({ en: "Hi, I'm Consu ✶", es: "Hola, soy Consu ✶" })}</figcaption>
         </motion.figure>
-      </motion.div>
+      </div>
 
-      <div>
-        <ScrollText
-          key={t({ en: "en", es: "es" })}
-          className="text-[clamp(1.6rem,3.2vw,2.6rem)] leading-[1.18] font-medium tracking-[-0.025em]"
-          text={t({
-            en: "I turn complex problems into simple experiences. I come from graphic design, where I learned to build brands and consistent visual systems, and today I bring that eye to designing clear, accessible, human-centered digital products.",
-            es: "Convierto problemas complejos en experiencias simples. Vengo del diseño gráfico, donde aprendí a construir marcas y sistemas visuales consistentes, y hoy uso esa mirada para diseñar productos digitales claros, accesibles y centrados en las personas.",
-          })}
-        />
+      <div className="flex flex-col justify-end gap-8 font-mono text-[14px] leading-[1.7] text-ink-soft md:pt-40 md:pr-12">
+        <FadeUp>
+          <p>
+            {t({
+              en: "Hi, I'm Consuelo, a graphic and UX/UI designer from Chile. I come from graphic design, where I learned to build brands and consistent visual systems, and today I bring that eye to designing clear, accessible, human-centered digital products.",
+              es: "Hola, soy Consuelo, diseñadora gráfica y UX/UI de Chile. Vengo del diseño gráfico, donde aprendí a construir marcas y sistemas visuales consistentes, y hoy uso esa mirada para diseñar productos digitales claros, accesibles y centrados en las personas.",
+            })}
+          </p>
+        </FadeUp>
+        <FadeUp delay={0.08}>
+          <p>
+            {t({
+              en: "I've designed brand guidelines, corporate identities and campaign materials for startups and small businesses, and earned my UX/UI certification (SENCE Talento Digital, June 2026): research, information architecture, usability and interface design.",
+              es: "He diseñado manuales de marca, identidades corporativas y piezas de campaña para empresas nuevas, y me certifiqué en UX/UI (SENCE Talento Digital, junio 2026): investigación, arquitectura de información, usabilidad y diseño de interfaces.",
+            })}
+          </p>
+        </FadeUp>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-2">
-          <FadeUp>
-            <h3 className="text-[12px] tracking-[0.22em] text-muted">{t({ en: "EXPERIENCE", es: "EXPERIENCIA" })}</h3>
-            <p className="mt-3 text-[16px] leading-relaxed text-ink-soft">
-              {t({
-                en: "Graphic designer for startups and small businesses: brand guidelines, corporate identities and materials for political campaigns in Chile.",
-                es: "Diseñadora gráfica para empresas nuevas: manuales de marca, identidades corporativas y piezas para campañas políticas en Chile.",
-              })}
-            </p>
-          </FadeUp>
-          <FadeUp delay={0.1}>
-            <h3 className="text-[12px] tracking-[0.22em] text-muted">{t({ en: "EDUCATION", es: "FORMACIÓN" })}</h3>
-            <p className="mt-3 text-[16px] leading-relaxed text-ink-soft">
-              {t({
-                en: "Design studies and a UX/UI certification (SENCE Talento Digital, 2026): research, information architecture, usability and interface design.",
-                es: "Estudios en Diseño y certificación en UX/UI (SENCE Talento Digital, 2026): investigación, arquitectura de información, usabilidad y diseño de interfaces.",
-              })}
-            </p>
-          </FadeUp>
-        </div>
+        <FadeUp delay={0.12}>
+          <dl className="grid gap-6 border-t border-line pt-6 text-[12.5px] sm:grid-cols-2">
+            <div>
+              <dt className="tracking-[0.12em] text-muted">SOFTWARE</dt>
+              <dd className="mt-2 text-ink">{SOFTWARE.join(" · ")}</dd>
+            </div>
+            <div>
+              <dt className="tracking-[0.12em] text-muted">{t({ en: "SKILLS", es: "HABILIDADES" })}</dt>
+              <dd className="mt-2 text-ink">{SKILLS.map(t).join(" · ")}</dd>
+            </div>
+          </dl>
+        </FadeUp>
 
-        <div className="mt-10 grid gap-8 sm:grid-cols-2">
-          <FadeUp>
-            <h3 className="text-[12px] tracking-[0.22em] text-muted">SOFTWARE</h3>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {SOFTWARE.map((tool) => (
-                <li
-                  key={tool}
-                  className="rounded-full bg-brand px-4 py-2 text-[14px] text-paper transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-deep"
-                >
-                  {tool}
-                </li>
-              ))}
-            </ul>
-          </FadeUp>
-          <FadeUp delay={0.1}>
-            <h3 className="text-[12px] tracking-[0.22em] text-muted">{t({ en: "SKILLS", es: "HABILIDADES" })}</h3>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {SKILLS.map((skill) => (
-                <li
-                  key={skill.en}
-                  className="rounded-full border border-ink/20 px-4 py-2 text-[14px] transition-all duration-300 hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-paper"
-                >
-                  {t(skill)}
-                </li>
-              ))}
-            </ul>
-          </FadeUp>
-        </div>
+        <FadeUp delay={0.16}>
+          <div className="flex flex-wrap gap-3 border-t border-line pt-7 font-sans">
+            <a
+              href="#contacto"
+              className="group relative flex min-w-[220px] items-center justify-between gap-6 overflow-hidden rounded-[4px] bg-brand px-5 py-3.5 text-[13px] font-medium tracking-wide text-paper uppercase"
+            >
+              <span className="absolute inset-0 translate-y-full bg-brand-deep transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:translate-y-0" />
+              <span className="relative">{t({ en: "Start a project", es: "Empecemos" })}</span>
+              <span className="relative text-[18px] leading-none transition-transform duration-500 group-hover:rotate-90">+</span>
+            </a>
+            <a
+              href={SITE.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-[4px] border border-ink/30 px-5 py-3.5 text-[13px] font-medium tracking-wide uppercase transition-colors duration-300 hover:border-brand hover:text-brand"
+            >
+              LinkedIn
+            </a>
+            <a
+              href={SITE.cv}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-[4px] border border-ink/30 px-5 py-3.5 text-[13px] font-medium tracking-wide uppercase transition-colors duration-300 hover:border-brand hover:text-brand"
+            >
+              {t({ en: "Resume", es: "CV" })}
+            </a>
+          </div>
+        </FadeUp>
       </div>
     </div>
   );

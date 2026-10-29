@@ -18,7 +18,7 @@ export default function CaseHero({ project: p }: { project: Project }) {
   const cover = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: cover, offset: ["start end", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
-  const radius = useTransform(scrollYProgress, [0, 0.5], [40, 20]);
+  const radius = useTransform(scrollYProgress, [0, 0.5], [16, 6]);
   const imgY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
   const { t } = useLang();
   const style = ACCENT_STYLES[p.accent];
@@ -35,14 +35,14 @@ export default function CaseHero({ project: p }: { project: Project }) {
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: EASE }}>
           <Link
             href="/#proyectos"
-            className="group inline-flex items-center gap-2 text-[14px] text-muted transition-colors hover:text-ink"
+            className="group inline-flex items-center gap-2 font-mono text-[12.5px] tracking-wide text-muted uppercase transition-colors hover:text-ink"
           >
             <span className="transition-transform duration-500 group-hover:-translate-x-1">←</span> {t({ en: "All projects", es: "Todos los proyectos" })}
           </Link>
         </motion.div>
 
         <motion.span
-          className={`mt-10 inline-block rounded-full px-3 py-1 text-[13px] ${style.chip}`}
+          className="mt-10 inline-block rounded-[4px] border border-ink/25 px-3 py-1.5 font-mono text-[11.5px] tracking-wide uppercase"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
@@ -56,7 +56,7 @@ export default function CaseHero({ project: p }: { project: Project }) {
           immediate
           delay={0.15}
           stagger={0.05}
-          className="mt-6 max-w-6xl text-[clamp(2.8rem,8vw,7.5rem)] leading-[0.9] font-medium tracking-[-0.05em]"
+          className="mt-6 max-w-6xl text-[clamp(2.4rem,7vw,6.6rem)] leading-[0.9] font-normal tracking-[-0.05em] uppercase"
         />
 
         <div className="mt-12 grid gap-10 border-t border-line pt-8 md:grid-cols-[1.3fr_1fr]">
@@ -69,11 +69,11 @@ export default function CaseHero({ project: p }: { project: Project }) {
                   target="_blank"
                   rel="noreferrer"
                   data-cursor={t({ en: "Open", es: "Abrir" })}
-                  className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-brand py-3.5 pr-3.5 pl-6 text-[15px] text-paper"
+                  className="group relative flex items-center gap-3 overflow-hidden rounded-[4px] bg-brand py-3 pr-3 pl-5 text-[13px] font-medium tracking-wide text-paper uppercase"
                 >
                   <span className="absolute inset-0 origin-bottom scale-y-0 bg-brand-deep transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:scale-y-100" />
                   <span className="relative">{p.live.label}</span>
-                  <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-paper text-ink transition-transform duration-500 group-hover:rotate-45">
+                  <span className="relative flex h-8 w-8 items-center justify-center rounded-[3px] bg-paper text-ink transition-transform duration-500 group-hover:rotate-45">
                     ↗
                   </span>
                 </a>
@@ -83,7 +83,7 @@ export default function CaseHero({ project: p }: { project: Project }) {
           <dl className="grid gap-6 sm:grid-cols-2 md:grid-cols-1">
             {facts.map((f, i) => (
               <FadeUp key={f.k} delay={0.1 + i * 0.07}>
-                <dt className="text-[12px] tracking-[0.22em] text-muted">{f.k.toUpperCase()}</dt>
+                <dt className="font-mono text-[11.5px] tracking-[0.12em] text-muted">{f.k.toUpperCase()}</dt>
                 <dd className="mt-2 text-[16px] leading-snug">{f.v}</dd>
               </FadeUp>
             ))}
@@ -109,7 +109,7 @@ export default function CaseHero({ project: p }: { project: Project }) {
                 alt={p.coverAlt}
                 maxHeight={720}
                 priority
-                className="rounded-[12px] shadow-[0_30px_70px_-35px_rgb(58_16_48/0.5)]"
+                className="rounded-[12px] shadow-[0_30px_70px_-35px_rgb(43_34_48/0.5)]"
               />
             </motion.div>
           )}

@@ -28,7 +28,7 @@ export default function ProjectPage({ params }: PageProps<"/proyectos/[slug]">) 
       <Suspense fallback={<div className="min-h-[100svh]" aria-busy="true" />}>
         <Case params={params} />
       </Suspense>
-      <div className="mt-10 bg-brand-deep px-4 pt-2 pb-8 sm:px-6">
+      <div className="mt-10 px-4 pt-2 pb-8 sm:px-6">
         <div className="mx-auto max-w-7xl">
           <Footer />
         </div>

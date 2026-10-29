@@ -1,169 +1,189 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
-import Magnetic from "./Magnetic";
-import { SplitWords } from "./Reveal";
+import { useEffect } from "react";
+import Image from "next/image";
+import { motion, useMotionValue, useMotionTemplate, useSpring, useTransform } from "motion/react";
 import { SITE } from "@/data/site";
 import { useLang } from "@/i18n/lang";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const ROTATING = [
-  { en: "brands with character", es: "marcas con carácter" },
-  { en: "accessible interfaces", es: "interfaces accesibles" },
-  { en: "clear experiences", es: "experiencias claras" },
-  { en: "ideas people get", es: "ideas que se entienden" },
+
+// fragmentos que flotan del lado de la programadora
+const CODE = [
+  "<consuelo />",
+  "const diseño = true;",
+  "npm run dev",
+  "export default Invitacion",
+  "supabase.from('invitados')",
+  "display: grid;",
+  "git push origin main",
+  "</>",
 ];
 
 /**
- * Opening screen. Three blurred colour fields drift on their own and lean
- * toward the pointer, so the page feels liquid before anything is scrolled.
- * The headline sinks and fades as you leave, handing over to the work.
+ * Opening screen: her portrait split in two. On the left the photo — the
+ * designer; on the right the same photo as pixels and circuits — the
+ * programmer. Moving the pointer toward one side shows more of that half:
+ * the seam slides the opposite way, so the side you point at grows. On touch
+ * screens the seam drifts on its own and follows a finger dragged across.
  */
 export default function Hero() {
   const { t } = useLang();
-  const [word, setWord] = useState(0);
+  // 0 = todo diseñadora, 1 = todo programadora
+  const side = useMotionValue(0.5);
+  const smooth = useSpring(side, { stiffness: 70, damping: 20, mass: 0.6 });
+
   useEffect(() => {
-    const id = window.setInterval(() => setWord((w) => (w + 1) % ROTATING.length), 2600);
-    return () => window.clearInterval(id);
-  }, []);
+    const touch = window.matchMedia("(hover: none)").matches;
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (still) return;
 
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const sx = useSpring(mx, { stiffness: 40, damping: 18 });
-  const sy = useSpring(my, { stiffness: 40, damping: 18 });
-  const bx = useTransform(sx, (v) => v * -0.6);
-  const by = useTransform(sy, (v) => v * -0.6);
+    if (!touch) {
+      const move = (e: PointerEvent) => side.set(Math.min(1, Math.max(0, e.clientX / window.innerWidth)));
+      window.addEventListener("pointermove", move);
+      return () => window.removeEventListener("pointermove", move);
+    }
 
-  const { scrollY } = useScroll();
-  const lift = useTransform(scrollY, [0, 700], [0, -140]);
-  const fade = useTransform(scrollY, [0, 520], [1, 0]);
+    // sin mouse: va y viene sola, y un dedo que arrastra la toma
+    let dragging = false;
+    let raf = 0;
+    const t0 = performance.now();
+    const tick = (now: number) => {
+      if (!dragging) side.set(0.5 + Math.sin((now - t0) / 1600) * 0.32);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    const down = () => (dragging = true);
+    const moveTouch = (e: TouchEvent) => {
+      // la línea sigue al dedo: arrastrar a la derecha muestra más foto
+      if (dragging) side.set(Math.min(1, Math.max(0, 1 - e.touches[0].clientX / window.innerWidth)));
+    };
+    const up = () => (dragging = false);
+    const el = document.getElementById("retrato");
+    el?.addEventListener("touchstart", down, { passive: true });
+    window.addEventListener("touchmove", moveTouch, { passive: true });
+    window.addEventListener("touchend", up);
+    return () => {
+      cancelAnimationFrame(raf);
+      el?.removeEventListener("touchstart", down);
+      window.removeEventListener("touchmove", moveTouch);
+      window.removeEventListener("touchend", up);
+    };
+  }, [side]);
+
+  // la línea divisoria se corre al lado contrario del puntero
+  const seam = useTransform(smooth, [0, 1], [100, 0]);
+  const clip = useMotionTemplate`inset(0 0 0 ${seam}%)`;
+  const seamLeft = useMotionTemplate`${seam}%`;
+  const designer = useTransform(smooth, [0.15, 0.7], [1, 0.22]);
+  const coder = useTransform(smooth, [0.3, 0.85], [0.22, 1]);
+  const designerX = useTransform(smooth, [0, 1], [0, -24]);
+  const coderX = useTransform(smooth, [0, 1], [24, 0]);
 
   return (
-    <section
-      className="relative isolate flex min-h-[100svh] flex-col justify-center overflow-hidden md:justify-end px-4 pt-32 pb-10 sm:px-6 sm:pb-14"
-      onPointerMove={(e) => {
-        const r = e.currentTarget.getBoundingClientRect();
-        mx.set(((e.clientX - r.left) / r.width - 0.5) * 160);
-        my.set(((e.clientY - r.top) / r.height - 0.5) * 160);
-      }}
-    >
-      {/* campos de color fluidos */}
-      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-        <motion.div
-          className="absolute top-[8%] left-[52%] h-[46vmax] w-[46vmax] rounded-full bg-tangerine/45 blur-[90px]"
-          style={{ x: sx, y: sy }}
-          animate={{ scale: [1, 1.15, 0.95, 1], rotate: [0, 30, -10, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute top-[30%] left-[10%] h-[38vmax] w-[38vmax] rounded-full bg-violet/35 blur-[100px]"
-          style={{ x: bx, y: by }}
-          animate={{ scale: [1, 0.9, 1.12, 1], x: [0, 60, -30, 0] }}
-          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute -bottom-[20%] left-[35%] h-[34vmax] w-[34vmax] rounded-full bg-sage/35 blur-[90px]"
-          animate={{ scale: [1, 1.2, 1], y: [0, -40, 0] }}
-          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
+    <section className="relative isolate overflow-hidden border-b border-line pt-24">
+      <h1 className="sr-only">
+        {t({ en: "Consuelo Herrera, designer and programmer", es: "Consuelo Herrera, diseñadora y programadora" })}
+      </h1>
 
-      <motion.div style={{ y: lift, opacity: fade }} className="mx-auto w-full max-w-7xl">
+      <div className="relative mx-auto grid min-h-[calc(100svh-6rem)] max-w-[1280px] grid-rows-[auto_auto] px-4 sm:px-9 md:grid-cols-[1fr_auto_1fr] md:grid-rows-1 md:items-center max-md:content-end max-md:grid-cols-2">
+        {/* Diseñadora */}
         <motion.div
-          className="mb-8 flex flex-wrap items-center gap-3"
-          initial={{ opacity: 0, y: 16 }}
+          style={{ opacity: designer, x: designerX }}
+          className="z-10 max-md:col-start-1 max-md:row-start-1 max-md:w-1/2 max-md:pr-3 md:pr-8 md:text-right"
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
+          transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}
         >
-          <span className="flex items-center gap-2.5 rounded-full border border-line bg-paper/60 px-4 py-2 text-[13px] backdrop-blur">
-            <span className="h-2 w-2 rounded-full bg-online [animation:pulse-dot_1.6s_ease-out_infinite]" />
-            {t(SITE.availability)}
-          </span>
-          <span className="text-[13px] text-muted">{t({ en: "Portfolio 2026", es: "Portafolio 2026" })}</span>
+          <p className="text-[clamp(2rem,6.2vw,5.4rem)] leading-[0.95] font-medium tracking-[-0.045em]">
+            {t({ en: "designer", es: "diseñadora" })}
+          </p>
+          <p className="mt-4 hidden text-[clamp(13px,1.35vw,16px)] leading-[1.55] text-ink-soft md:block md:ml-auto md:max-w-[30ch]">
+            {t({
+              en: "Graphic and UX/UI designer: brands, interfaces and clear experiences.",
+              es: "Diseñadora gráfica y UX/UI: marcas, interfaces y experiencias claras.",
+            })}
+          </p>
         </motion.div>
 
-        {/* Fraunces: "Consuelo" en redonda y "Herrera" en cursiva, mismo cuerpo.
-            Cada palabra mide ~4,5 veces su tamaño de letra: 15vw cabe en un
-            celular de 360 px y el tope de 11rem en la columna de escritorio. */}
-        <h1 className="font-[family-name:var(--font-fraunces)] text-[clamp(3.4rem,15vw,11rem)] leading-[0.9] tracking-[-0.03em]">
-          <SplitWords text="Consuelo" immediate delay={0.3} className="block font-semibold" />
-          <SplitWords text="Herrera" immediate delay={0.45} className="block pl-[0.6em] font-light italic text-brand" />
-        </h1>
-
-        <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <motion.p
-            className="max-w-xl text-[clamp(1.25rem,2.4vw,1.75rem)] leading-snug tracking-tight text-ink-soft"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: EASE, delay: 1 }}
-          >
-            {t({ en: "Graphic & UX/UI designer. I design", es: "Diseñadora gráfica & UX/UI. Diseño" })}{" "}
-            <span className="relative inline-flex h-[1.25em] overflow-hidden align-bottom">
-              <AnimatePresence mode="popLayout" initial={false}>
-                <motion.span
-                  key={t(ROTATING[word])}
-                  className="inline-block font-serif text-[1.15em] italic text-tangerine"
-                  initial={{ y: "100%", opacity: 0 }}
-                  animate={{ y: "0%", opacity: 1 }}
-                  exit={{ y: "-100%", opacity: 0 }}
-                  transition={{ duration: 0.7, ease: EASE }}
-                >
-                  {t(ROTATING[word])}
-                </motion.span>
-              </AnimatePresence>
-            </span>
-            .
-          </motion.p>
-
+        {/* el retrato partido */}
+        <div
+          id="retrato"
+          className="relative mx-auto aspect-[900/1147] h-[min(68svh,700px)] self-end max-md:col-span-2 max-md:row-start-2 max-md:mt-3 max-md:h-[min(56svh,520px)] md:row-start-1 md:col-start-2"
+        >
           <motion.div
-            className="flex flex-wrap items-center gap-3"
-            initial={{ opacity: 0, y: 20 }}
+            // bordes difuminados: el fondo gris de la foto se funde con la página
+            className="absolute inset-0 [mask-composite:intersect] [mask-image:linear-gradient(to_right,transparent,#000_14%,#000_86%,transparent),linear-gradient(to_bottom,transparent,#000_12%)]"
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: EASE, delay: 1.15 }}
+            transition={{ duration: 1.1, ease: EASE, delay: 0.1 }}
           >
-            <Magnetic>
-              <a
-                href="#proyectos"
-                data-cursor={t({ en: "View", es: "Ver" })}
-                className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-brand py-4 pr-4 pl-7 text-[15px] text-paper"
-              >
-                <span className="absolute inset-0 origin-bottom scale-y-0 rounded-full bg-brand-deep transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:scale-y-100" />
-                <span className="relative">{t({ en: "See my work", es: "Ver proyectos" })}</span>
-                <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-paper text-ink transition-transform duration-500 group-hover:rotate-90">
-                  ↓
-                </span>
-              </a>
-            </Magnetic>
-            <Magnetic>
-              <a
-                href={SITE.cv}
-                target="_blank"
-                rel="noreferrer"
-                className="group flex items-center gap-2 rounded-full border border-ink/25 px-6 py-4 text-[15px] transition-colors duration-300 hover:border-brand hover:bg-brand hover:text-paper"
-              >
-                {t({ en: "View CV", es: "Ver CV" })}
-                <span className="transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
-              </a>
-            </Magnetic>
+            <Image
+              src="/consuelo.jpg"
+              alt={t({ en: "Consuelo Herrera", es: "Consuelo Herrera" })}
+              fill
+              priority
+              sizes="(max-width: 768px) 80vw, 560px"
+              className="object-cover object-bottom"
+            />
+            <motion.div className="absolute inset-0" style={{ clipPath: clip }} aria-hidden="true">
+              <Image
+                src="/consuelo-programadora.webp"
+                alt=""
+                fill
+                priority
+                sizes="(max-width: 768px) 80vw, 560px"
+                className="object-cover object-bottom"
+              />
+            </motion.div>
+            {/* la costura: una línea fina con un brillo */}
+            <motion.span
+              aria-hidden="true"
+              className="absolute top-[6%] bottom-0 w-px bg-gradient-to-b from-transparent via-brand/60 to-transparent"
+              style={{ left: seamLeft }}
+            />
           </motion.div>
+          {/* el retrato se funde con la sección de abajo */}
+          <span className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-paper to-transparent" aria-hidden="true" />
         </div>
-      </motion.div>
 
-      <motion.div
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-[11px] tracking-[0.3em] text-muted md:flex"
-        style={{ opacity: fade }}
-        aria-hidden="true"
-      >
-        SCROLL
-        <span className="relative h-10 w-px overflow-hidden bg-line">
-          <motion.span
-            className="absolute inset-x-0 h-4 bg-ink"
-            animate={{ y: [-16, 40] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </span>
-      </motion.div>
+        {/* Programadora */}
+        <motion.div
+          style={{ opacity: coder, x: coderX }}
+          className="relative z-10 max-md:col-start-2 max-md:row-start-1 max-md:pl-3 max-md:text-right md:pl-8"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: EASE, delay: 0.35 }}
+        >
+          <p className="font-mono text-[clamp(1.5rem,4.6vw,4rem)] leading-[1] tracking-[-0.04em] text-brand">
+            &lt;{t({ en: "programmer", es: "programadora" })}&gt;
+          </p>
+          <p className="mt-4 hidden text-[clamp(13px,1.35vw,16px)] leading-[1.55] text-ink-soft md:block max-md:ml-auto md:max-w-[30ch]">
+            {t({
+              en: "I build what I design: clean code with Next.js, React and Supabase.",
+              es: "Construyo lo que diseño: código limpio con Next.js, React y Supabase.",
+            })}
+          </p>
+          <div className="pointer-events-none absolute top-full left-8 mt-6 hidden flex-col gap-1.5 font-mono text-[12.5px] text-sage md:flex" aria-hidden="true">
+            {CODE.map((line, i) => (
+              <motion.span
+                key={line}
+                style={{ marginLeft: `${(i * 37) % 90}px` }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0.25, 0.75, 0.25] }}
+                transition={{ duration: 4 + (i % 3), repeat: Infinity, delay: i * 0.35, ease: "easeInOut" }}
+              >
+                {line}
+              </motion.span>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+
+      <p className="absolute top-24 left-1/2 hidden -translate-x-1/2 items-center gap-2.5 font-mono text-[12px] text-muted md:flex">
+        <span className="h-2 w-2 rounded-full bg-online [animation:pulse-dot_1.6s_ease-out_infinite]" />
+        {t(SITE.availability)}
+      </p>
     </section>
   );
 }
