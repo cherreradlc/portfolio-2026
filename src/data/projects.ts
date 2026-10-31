@@ -1,3 +1,5 @@
+import { FRESCO_CODE, FRESCO_LINEAS } from "./code/fresco";
+
 /**
  * Every project in the portfolio, in display order. Case-study pages are built
  * from `blocks`, so adding a project is a data change, not a layout change.
@@ -28,11 +30,21 @@ export type Block =
   | { type: "gallery"; eyebrow?: string; title?: string; feature?: Img; images: Img[]; columns?: 2 | 3 | 4 }
   | { type: "phones"; eyebrow: string; title: string; body?: string; images: (Img & { caption: string })[] }
   | { type: "quote"; text: string }
+  | {
+      type: "code";
+      eyebrow: string;
+      title: string;
+      body: string[];
+      stack: string[];
+      files: { label: string; name: string; code: string; caption: string }[];
+    }
   | { type: "video"; eyebrow: string; title: string; body: string[]; src: string; poster: string; alt: string }
   | { type: "manual"; eyebrow: string; title: string; folder: string; pages: number; lowRes?: number[] };
 
 export type Project = {
   slug: string;
+  /** Para el filtro del inicio: diseño (marca, gráfica) o front-end (diseñado y programado). */
+  kind: "diseno" | "frontend";
   title: string;
   short: string;
   category: string;
@@ -56,6 +68,7 @@ export type Project = {
 export const PROJECTS: Project[] = [
   {
     slug: "invitacion-verano",
+    kind: "frontend",
     title: "Invitación de matrimonio de verano",
     short: "Una invitación en acuarela que florece al tocarla, con música, confirmación guiada y un panel para los novios.",
     category: "UX/UI · Producto digital",
@@ -158,11 +171,13 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "fresco",
+    kind: "frontend",
     title: "Fresco — app de ventas para un pequeño negocio",
     short: "Una app para el celular que reemplaza el cuaderno de un cliente que vende paltas y huevos: pedidos, cobros, stock y finanzas.",
     category: "UX/UI · Producto digital",
     tags: ["UX/UI", "Producto", "Web app"],
     year: "2026",
+    live: { href: "https://fresco-demo-five.vercel.app", label: "Probar la app" },
     role: "Investigación, arquitectura de información, diseño de interfaz y desarrollo",
     tools: ["Diseño UI", "Arquitectura de información", "Next.js", "Web app instalable"],
     accent: "violet",
@@ -229,6 +244,22 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
+        type: "code",
+        eyebrow: "Hecho con código",
+        title: "Diseñada y programada por mí",
+        body: [
+          "Fresco no es un prototipo en Figma: es una app que funciona. La programé con Next.js, React y TypeScript, y se instala en el celular como cualquier app.",
+          "Las reglas del negocio viven en el código: el precio por mayor, quién debe y desde cuándo, la proyección de ventas y los libros para el contador. Estos son fragmentos reales.",
+        ],
+        stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4", "App instalable (PWA)", `${FRESCO_LINEAS.toLocaleString("es-CL")} líneas de código`],
+        files: [
+          { label: "precioPara()", name: "src/lib/tipos.ts", code: FRESCO_CODE.precios, caption: "El precio por mayor se aplica solo si el cliente es mayorista y llega a la cantidad mínima. También escribe bien las unidades: “1 bandeja”, “3 bandejas”." },
+          { label: "deudores()", name: "src/lib/calculos.ts", code: FRESCO_CODE.deudas, caption: "Suma lo que debe cada cliente en sus pedidos entregados y los ordena por antigüedad, para cobrar primero la deuda más vieja." },
+          { label: "proyeccion()", name: "src/lib/finanzas.ts", code: FRESCO_CODE.proyeccion, caption: "Estima cómo cierra el mes según el ritmo de ventas y proyecta los próximos 3 meses con una línea de tendencia." },
+          { label: "libroDiario()", name: "src/lib/finanzas.ts", code: FRESCO_CODE.libro, caption: "Arma el libro diario para el contador: cada factura se convierte en un asiento con debe y haber, con el IVA separado." },
+        ],
+      },
+      {
         type: "list",
         eyebrow: "Decisiones de diseño",
         title: "Pensada para una mano y poco tiempo",
@@ -247,6 +278,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "invitacion-digital",
+    kind: "frontend",
     title: "Invitación digital de matrimonio",
     short: "Una invitación que se abre como un sobre real, con confirmación de asistencia y un panel para los novios.",
     category: "UX/UI · Producto digital",
@@ -348,6 +380,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "hila",
+    kind: "diseno",
     title: "Hila — Sistema de marca",
     short: "Identidad visual y manual de marca para una marca de fruta deshidratada: logo, tipografías, color y aplicaciones.",
     category: "Branding · Identidad visual",

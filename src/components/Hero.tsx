@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useMotionTemplate, useSpring, useTransform } from "motion/react";
 import { SITE } from "@/data/site";
 import { useLang } from "@/i18n/lang";
+import { TIPO_EVENT } from "./ProjectGrid";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+
+// cada palabra lleva a los proyectos de su tipo
+const verTipo = (tipo: "diseno" | "frontend") => window.dispatchEvent(new CustomEvent(TIPO_EVENT, { detail: tipo }));
 
 // fragmentos que flotan del lado de la programadora
 const CODE = [
@@ -32,6 +36,9 @@ export default function Hero() {
   // 0 = todo diseñadora, 1 = todo programadora
   const side = useMotionValue(0.5);
   const smooth = useSpring(side, { stiffness: 70, damping: 20, mass: 0.6 });
+  // en pantallas angostas los títulos casi no se corren, para que no se salgan
+  const [shift, setShift] = useState(24);
+  useEffect(() => setShift(window.innerWidth < 768 ? 6 : 24), []);
 
   useEffect(() => {
     const touch = window.matchMedia("(hover: none)").matches;
@@ -77,16 +84,16 @@ export default function Hero() {
   const seamLeft = useMotionTemplate`${seam}%`;
   const designer = useTransform(smooth, [0.15, 0.7], [1, 0.22]);
   const coder = useTransform(smooth, [0.3, 0.85], [0.22, 1]);
-  const designerX = useTransform(smooth, [0, 1], [0, -24]);
-  const coderX = useTransform(smooth, [0, 1], [24, 0]);
+  const designerX = useTransform(smooth, (v) => v * -shift);
+  const coderX = useTransform(smooth, (v) => (1 - v) * shift);
 
   return (
     <section className="relative isolate overflow-hidden border-b border-line pt-24">
       <h1 className="sr-only">
-        {t({ en: "Consuelo Herrera, designer and programmer", es: "Consuelo Herrera, diseñadora y programadora" })}
+        {t({ en: "Consuelo Herrera, designer and front-end developer", es: "Consuelo Herrera, diseñadora y desarrolladora front-end" })}
       </h1>
 
-      <div className="relative mx-auto grid min-h-[calc(100svh-6rem)] max-w-[1280px] grid-rows-[auto_auto] px-4 sm:px-9 md:grid-cols-[1fr_auto_1fr] md:grid-rows-1 md:items-center max-md:content-end max-md:grid-cols-2">
+      <div className="relative mx-auto grid max-w-[1280px] max-md:pt-6 md:min-h-[calc(100svh-6rem)] grid-rows-[auto_auto] px-4 sm:px-9 md:grid-cols-[1fr_auto_1fr] md:grid-rows-1 md:items-center max-md:content-end max-md:grid-cols-2">
         {/* Diseñadora */}
         <motion.div
           style={{ opacity: designer, x: designerX }}
@@ -95,9 +102,14 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}
         >
-          <p className="text-[clamp(2rem,6.2vw,5.4rem)] leading-[0.95] font-medium tracking-[-0.045em]">
-            {t({ en: "designer", es: "diseñadora" })}
-          </p>
+          <a href="#proyectos" onClick={() => verTipo("diseno")} data-cursor={t({ en: "Design", es: "Diseño" })} className="group block">
+            <span className="block text-[clamp(2rem,6.2vw,5.4rem)] leading-[0.95] font-medium tracking-[-0.045em] transition-colors duration-300 group-hover:text-ink">
+              {t({ en: "designer", es: "diseñadora" })}
+            </span>
+            <span className="mt-2 block whitespace-nowrap font-mono text-[10.5px] tracking-wide text-muted uppercase transition-colors duration-300 group-hover:text-brand md:text-[12.5px]">
+              {t({ en: "See projects ↓", es: "Ver proyectos ↓" })}
+            </span>
+          </a>
           <p className="mt-4 hidden text-[clamp(13px,1.35vw,16px)] leading-[1.55] text-ink-soft md:block md:ml-auto md:max-w-[30ch]">
             {t({
               en: "Graphic and UX/UI designer: brands, interfaces and clear experiences.",
@@ -109,7 +121,7 @@ export default function Hero() {
         {/* el retrato partido */}
         <div
           id="retrato"
-          className="relative mx-auto aspect-[900/1147] h-[min(68svh,700px)] self-end max-md:col-span-2 max-md:row-start-2 max-md:mt-3 max-md:h-[min(56svh,520px)] md:row-start-1 md:col-start-2"
+          className="relative mx-auto -translate-x-[10%] aspect-[900/1147] h-[min(68svh,700px)] self-end max-md:col-span-2 max-md:row-start-2 max-md:mt-3 max-md:h-[min(60svh,540px)] md:row-start-1 md:col-start-2"
         >
           <motion.div
             // bordes difuminados: el fondo gris de la foto se funde con la página
@@ -155,9 +167,14 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.35 }}
         >
-          <p className="font-mono text-[clamp(1.5rem,4.6vw,4rem)] leading-[1] tracking-[-0.04em] text-brand">
-            &lt;{t({ en: "programmer", es: "programadora" })}&gt;
-          </p>
+          <a href="#proyectos" onClick={() => verTipo("frontend")} data-cursor="Front-end" className="group block">
+            <span className="block whitespace-nowrap text-[clamp(2rem,6.2vw,5.4rem)] leading-[0.95] font-medium tracking-[-0.045em] text-brand transition-colors duration-300 group-hover:text-brand-deep">
+              front-end
+            </span>
+            <span className="mt-2 block whitespace-nowrap font-mono text-[10.5px] tracking-wide text-muted uppercase transition-colors duration-300 group-hover:text-brand md:text-[12.5px]">
+              {t({ en: "See projects ↓", es: "Ver proyectos ↓" })}
+            </span>
+          </a>
           <p className="mt-4 hidden text-[clamp(13px,1.35vw,16px)] leading-[1.55] text-ink-soft md:block max-md:ml-auto md:max-w-[30ch]">
             {t({
               en: "I build what I design: clean code with Next.js, React and Supabase.",

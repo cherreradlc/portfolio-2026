@@ -1,3 +1,4 @@
+import { FRESCO_CODE, FRESCO_LINEAS } from "./code/fresco";
 import type { Project } from "./projects";
 
 /**
@@ -7,6 +8,7 @@ import type { Project } from "./projects";
 export const PROJECTS_EN: Project[] = [
   {
     slug: "invitacion-verano",
+    kind: "frontend",
     title: "Summer wedding invitation",
     short: "A watercolour invitation that blooms when tapped, with music, guided RSVPs and a dashboard for the couple.",
     category: "UX/UI · Digital product",
@@ -109,11 +111,13 @@ export const PROJECTS_EN: Project[] = [
   },
   {
     slug: "fresco",
+    kind: "frontend",
     title: "Fresco — sales app for a small business",
     short: "A phone app that replaces an avocado and egg seller's notebook: orders, payments, stock and finances.",
     category: "UX/UI · Digital product",
     tags: ["UX/UI", "Product", "Web app"],
     year: "2026",
+    live: { href: "https://fresco-demo-five.vercel.app", label: "Try the app" },
     role: "Research, information architecture, interface design and development",
     tools: ["UI design", "Information architecture", "Next.js", "Installable web app"],
     accent: "violet",
@@ -180,6 +184,22 @@ export const PROJECTS_EN: Project[] = [
         ],
       },
       {
+        type: "code",
+        eyebrow: "Built with code",
+        title: "Designed and built by me",
+        body: [
+          "Fresco isn’t a Figma prototype: it’s a working app. I built it with Next.js, React and TypeScript, and it installs on the phone like any other app.",
+          "The business rules live in the code: wholesale pricing, who owes and since when, the sales projection and the accountant’s books. These are real excerpts.",
+        ],
+        stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4", "Installable app (PWA)", `${FRESCO_LINEAS.toLocaleString("en-US")} lines of code`],
+        files: [
+          { label: "precioPara()", name: "src/lib/tipos.ts", code: FRESCO_CODE.precios, caption: "Wholesale pricing applies only when the client is a wholesaler and reaches the minimum quantity. It also writes units properly: “1 tray”, “3 trays”." },
+          { label: "deudores()", name: "src/lib/calculos.ts", code: FRESCO_CODE.deudas, caption: "Adds up what each client owes across delivered orders and sorts them by age, so the oldest debt gets collected first." },
+          { label: "proyeccion()", name: "src/lib/finanzas.ts", code: FRESCO_CODE.proyeccion, caption: "Estimates how the month will close at the current pace and projects the next 3 months with a trend line." },
+          { label: "libroDiario()", name: "src/lib/finanzas.ts", code: FRESCO_CODE.libro, caption: "Builds the journal for the accountant: every invoice becomes an entry with debit and credit, VAT kept apart." },
+        ],
+      },
+      {
         type: "list",
         eyebrow: "Design decisions",
         title: "Made for one hand and little time",
@@ -198,6 +218,7 @@ export const PROJECTS_EN: Project[] = [
   },
   {
     slug: "invitacion-digital",
+    kind: "frontend",
     title: "Digital wedding invitation",
     short: "An invitation that opens like a real envelope, with RSVPs and a dashboard for the couple.",
     category: "UX/UI · Digital product",
@@ -299,6 +320,7 @@ export const PROJECTS_EN: Project[] = [
   },
   {
     slug: "hila",
+    kind: "diseno",
     title: "Hila — Brand system",
     short: "Visual identity and brand guidelines for a dried-fruit brand: logo, typefaces, color and applications.",
     category: "Branding · Visual identity",

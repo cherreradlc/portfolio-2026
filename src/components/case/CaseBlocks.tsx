@@ -8,6 +8,7 @@ import { IMAGE_SIZES } from "@/data/image-sizes";
 import { FadeUp, SplitWords } from "../Reveal";
 import SizedImage, { isSmall, maxCssWidth } from "../SizedImage";
 import ManualViewer from "./ManualViewer";
+import CodeWindow from "./CodeWindow";
 import { useLang } from "@/i18n/lang";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -203,6 +204,9 @@ function BlockView({ block: b, onZoom, flip = false }: { block: Block; onZoom: (
 
     case "phones":
       return <PhoneRail block={b} onZoom={onZoom} />;
+
+    case "code":
+      return <CodeWindow block={b} />;
 
     case "manual":
       return <ManualViewer {...b} />;

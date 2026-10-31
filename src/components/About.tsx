@@ -1,50 +1,32 @@
 "use client";
 
-import { useRef } from "react";
-import Image from "next/image";
-import { motion, useScroll, useTransform } from "motion/react";
 import { SITE, SKILLS, SOFTWARE } from "@/data/site";
 import { FadeUp, SplitWords } from "./Reveal";
 import { useLang } from "@/i18n/lang";
 
 /**
- * "Hi there, call me Consu": a huge staggered greeting, a slightly tilted
- * portrait that straightens as it scrolls, and a monospaced bio with the
- * two calls to action.
+ * "Hi there, call me Consu": a huge staggered greeting and a monospaced bio
+ * with the calls to action. No portrait here — the hero already shows it.
  */
 export default function About() {
   const { t } = useLang();
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const rotate = useTransform(scrollYProgress, [0, 0.5, 1], [-6, -1.5, 2]);
-  const drift = useTransform(scrollYProgress, [0, 1], [80, -60]);
 
   return (
-    <div ref={ref} className="grid gap-12 md:grid-cols-2 md:gap-10">
+    <div className="grid gap-12 md:grid-cols-2 md:gap-10">
       <div className="relative">
         <p className="font-mono text-[13px] tracking-wide uppercase">{t({ en: "Hi there,", es: "Hola," })}</p>
         <h2 className="mt-6 text-[clamp(3.6rem,10vw,8.5rem)] leading-[0.86] tracking-[-0.055em] uppercase">
           <SplitWords key={t({ en: "a", es: "b" })} text={t({ en: "Call me", es: "Soy" })} className="block" />
           <SplitWords text="Consu" delay={0.12} className="block pl-[1.2em] text-brand" />
         </h2>
-
-        {/* Foto de 900 × 1147 px: nítida incluso al doble de densidad. */}
-        <motion.figure
-          style={{ rotate, y: drift }}
-          className="relative mt-10 ml-auto w-[min(78%,340px)] overflow-hidden rounded-[4px] shadow-[0_40px_70px_-35px_rgb(43_34_48/0.45)] md:mt-[-1.5rem] md:mr-[8%]"
-        >
-          <div className="relative aspect-[900/1147]">
-            <Image src="/consuelo.jpg" alt="Consuelo Herrera De La Calle" fill sizes="340px" className="object-cover" />
-          </div>
-        </motion.figure>
       </div>
 
       <div className="flex flex-col justify-end gap-8 font-mono text-[14px] leading-[1.7] text-ink-soft md:pt-40 md:pr-12">
         <FadeUp>
           <p>
             {t({
-              en: "Hi, I'm Consuelo, a graphic and UX/UI designer from Chile. I come from graphic design, where I learned to build brands and consistent visual systems, and today I bring that eye to designing clear, accessible, human-centered digital products.",
-              es: "Hola, soy Consuelo, diseñadora gráfica y UX/UI de Chile. Vengo del diseño gráfico, donde aprendí a construir marcas y sistemas visuales consistentes, y hoy uso esa mirada para diseñar productos digitales claros, accesibles y centrados en las personas.",
+              en: "Hi, I'm Consuelo, a graphic and UX/UI designer from Chile. I come from graphic design, where I learned to build brands and consistent visual systems, and today I bring that eye to designing clear, accessible, human-centered digital products. And I build what I design, with Next.js, React and Supabase.",
+              es: "Hola, soy Consuelo, diseñadora gráfica y UX/UI de Chile. Vengo del diseño gráfico, donde aprendí a construir marcas y sistemas visuales consistentes, y hoy uso esa mirada para diseñar productos digitales claros, accesibles y centrados en las personas. Y construyo lo que diseño, con Next.js, React y Supabase.",
             })}
           </p>
         </FadeUp>
