@@ -118,7 +118,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}
         >
-          <a href="#proyectos" onClick={() => verTipo("diseno")} data-cursor={t({ en: "Design", es: "Diseño" })} className="group block">
+          <a href="#proyectos" onClick={() => verTipo("diseno")} className="group block">
             <span className="block text-[clamp(2rem,6.2vw,5.4rem)] leading-[0.95] font-medium tracking-[-0.045em] transition-colors duration-300 group-hover:text-ink">
               {t({ en: "designer", es: "diseñadora" })}
             </span>
@@ -183,7 +183,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: EASE, delay: 0.35 }}
         >
-          <a href="#proyectos" onClick={() => verTipo("frontend")} data-cursor="Front-end" className="group block">
+          <a href="#proyectos" onClick={() => verTipo("frontend")} className="group block">
             <span className="block whitespace-nowrap text-[clamp(2rem,6.2vw,5.4rem)] leading-[0.95] font-medium tracking-[-0.045em] text-brand transition-colors duration-300 group-hover:text-brand-deep">
               front-end
             </span>

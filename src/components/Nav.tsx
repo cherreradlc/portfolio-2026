@@ -86,7 +86,6 @@ export default function Nav() {
               onClick={() => setOpen((o) => !o)}
               aria-expanded={open}
               aria-label={open ? t({ en: "Close menu", es: "Cerrar menú" }) : t({ en: "Open menu", es: "Abrir menú" })}
-              data-cursor={open ? t({ en: "Close", es: "Cerrar" }) : "Menu"}
               className="relative flex h-11 w-11 items-center justify-center"
             >
               <motion.span

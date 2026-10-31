@@ -53,7 +53,7 @@ function Card({ project: p, index, total }: { project: Project; index: number; t
         style={{ rotateX, rotateZ, scale, y }}
         className={`relative mx-auto aspect-[4/5] w-full max-w-[1100px] overflow-hidden rounded-md sm:aspect-[16/10] ${style.card} shadow-[0_40px_80px_-50px_rgb(43_34_48/0.45)]`}
       >
-        <Link href={`/proyectos/${p.slug}`} data-cursor={t({ en: "View project", es: "Ver proyecto" })} className="group absolute inset-0 block">
+        <Link href={`/proyectos/${p.slug}`} className="group absolute inset-0 block">
           {/* Imagen: las grandes llenan el panel; el resto se ve entera, sin estirarse. */}
           <div className="absolute inset-x-0 top-0 bottom-[150px] sm:bottom-[120px]">
             {p.screens ? (

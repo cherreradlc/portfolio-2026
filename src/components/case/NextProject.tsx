@@ -19,7 +19,6 @@ export default function NextProject({ project: p }: { project: Project }) {
   return (
     <Link
       href={`/proyectos/${p.slug}`}
-      data-cursor={t({ en: "Next", es: "Siguiente" })}
       className="group relative block overflow-hidden rounded-md bg-paper-2 px-6 py-16 sm:px-10 md:py-24"
     >
       <div

@@ -68,7 +68,6 @@ export default function CaseHero({ project: p }: { project: Project }) {
                   href={p.live.href}
                   target="_blank"
                   rel="noreferrer"
-                  data-cursor={t({ en: "Open", es: "Abrir" })}
                   className="group relative flex items-center gap-3 overflow-hidden rounded-[4px] bg-brand py-3 pr-3 pl-5 text-[13px] font-medium tracking-wide text-paper uppercase"
                 >
                   <span className="absolute inset-0 origin-bottom scale-y-0 bg-brand-deep transition-transform duration-500 ease-[var(--ease-fluid)] group-hover:scale-y-100" />

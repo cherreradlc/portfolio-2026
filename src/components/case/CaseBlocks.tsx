@@ -36,12 +36,11 @@ export default function CaseBlocks({ blocks }: { blocks: Block[] }) {
       <AnimatePresence>
         {zoom && (
           <motion.div
-            className="fixed inset-0 z-[65] flex items-center justify-center bg-ink/85 p-4 backdrop-blur-md sm:p-10"
+            className="fixed inset-0 z-[65] flex cursor-zoom-out items-center justify-center bg-ink/85 p-4 backdrop-blur-md sm:p-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setZoom(null)}
-            data-cursor={t({ en: "Close", es: "Cerrar" })}
             role="dialog"
             aria-label={zoom.alt}
           >
@@ -278,7 +277,6 @@ function VideoPhone({ src, poster, alt }: { src: string; poster: string; alt: st
         if (v.paused) v.play().catch(() => {});
         else v.pause();
       }}
-      data-cursor={paused ? t({ en: "Play", es: "Reproducir" }) : t({ en: "Pause", es: "Pausar" })}
       aria-label={`${paused ? t({ en: "Play", es: "Reproducir" }) : t({ en: "Pause", es: "Pausar" })}: ${alt}`}
       className="relative mx-auto block aspect-[720/1226] w-[min(78vw,340px)] overflow-hidden rounded-[clamp(22px,3vw,36px)] border-[clamp(5px,0.6vw,8px)] border-ink bg-ink shadow-[0_40px_80px_-30px_rgb(43_34_48/0.55)]"
     >
@@ -315,8 +313,7 @@ function ZoomImage({ img, onZoom, sizes }: { img: Img; onZoom: (img: Img) => voi
       type="button"
       layoutId={img.src}
       onClick={() => onZoom(img)}
-      data-cursor={t({ en: "Zoom", es: "Ampliar" })}
-      className="group block w-full overflow-hidden rounded-[18px] border border-line bg-white"
+      className="group block w-full cursor-zoom-in overflow-hidden rounded-[18px] border border-line bg-white"
       style={{ maxWidth: maxCssWidth(img.src, { maxWidth: img.maxWidth, maxHeight: 860 }) }}
       aria-label={`${t({ en: "Zoom", es: "Ampliar" })}: ${img.alt}`}
     >
@@ -412,7 +409,6 @@ function PhoneRail({
 
       <div
         ref={rail}
-        data-cursor={t({ en: "Drag", es: "Arrastrar" })}
         className="flex cursor-grab select-none snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 [scrollbar-width:none] active:cursor-grabbing sm:px-6 md:gap-8 [&::-webkit-scrollbar]:hidden"
         onPointerDown={(e) => {
           if (e.pointerType !== "mouse") return; // en pantallas táctiles desliza el propio navegador
@@ -449,8 +445,7 @@ function PhoneRail({
             <button
               type="button"
               onClick={() => onZoom(img)}
-              data-cursor={t({ en: "Zoom", es: "Ampliar" })}
-              className="relative block aspect-[390/844] w-full overflow-hidden rounded-[30px] border-[6px] border-ink bg-ink shadow-[0_30px_60px_-30px_rgb(43_34_48/0.55)] transition-transform duration-700 ease-[var(--ease-fluid)] hover:-translate-y-2"
+              className="relative block aspect-[390/844] w-full cursor-zoom-in overflow-hidden rounded-[30px] border-[6px] border-ink bg-ink shadow-[0_30px_60px_-30px_rgb(43_34_48/0.55)] transition-transform duration-700 ease-[var(--ease-fluid)] hover:-translate-y-2"
               aria-label={`${t({ en: "Zoom", es: "Ampliar" })}: ${img.alt}`}
             >
               <Image

@@ -49,7 +49,6 @@ export default function Contact() {
           <button
             type="button"
             onClick={copy}
-            data-cursor={copied ? t({ en: "Done!", es: "¡Listo!" }) : t({ en: "Copy", es: "Copiar" })}
             className="group flex items-center gap-4 text-left text-[clamp(1.2rem,3.4vw,2.4rem)] tracking-[-0.03em] break-all"
           >
             <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1.5px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size,color] duration-700 ease-[var(--ease-fluid)] group-hover:bg-[length:100%_1.5px] group-hover:text-brand">

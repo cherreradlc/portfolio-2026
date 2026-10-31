@@ -12,7 +12,6 @@ export default function SideTab() {
       href={t(SITE.cv)}
       target="_blank"
       rel="noreferrer"
-      data-cursor="PDF"
       className="group fixed top-1/2 right-0 z-40 hidden -translate-y-1/2 flex-col items-center gap-10 rounded-l-md border border-r-0 border-line bg-white px-3 pt-4 pb-5 shadow-[0_10px_30px_-15px_rgb(43_34_48/0.3)] transition-[padding] duration-500 ease-[var(--ease-fluid)] hover:pr-5 md:flex"
     >
       <Logo className="h-6 w-auto text-brand" />

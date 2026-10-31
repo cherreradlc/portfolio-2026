@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, IBM_Plex_Mono, Inter_Tight, Instrument_Serif } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
-import Cursor from "@/components/Cursor";
 import Nav from "@/components/Nav";
 import SideTab from "@/components/SideTab";
 import { SITE } from "@/data/site";
@@ -55,7 +54,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="grain min-h-dvh overflow-x-clip bg-paper text-ink">
         <HtmlLang />
         <SmoothScroll />
-        <Cursor />
         <Nav />
         <SideTab />
         {children}

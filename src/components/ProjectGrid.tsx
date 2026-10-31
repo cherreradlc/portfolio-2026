@@ -63,7 +63,6 @@ export default function ProjectGrid() {
             <FadeUp delay={i * 0.08} y={30}>
               <Link
                 href={`/proyectos/${p.slug}`}
-                data-cursor={t({ en: "View", es: "Ver" })}
                 className="group block overflow-hidden rounded-[14px] border border-line bg-white transition duration-500 ease-[var(--ease-fluid)] hover:-translate-y-1.5 hover:shadow-[0_30px_60px_-36px_rgb(43_34_48/0.45)]"
               >
                 <span
