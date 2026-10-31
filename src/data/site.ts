@@ -15,7 +15,7 @@ export const SITE = {
   // PDF dentro del propio sitio (public/), uno por idioma. El antiguo
   // /cv-consuelo-herrera.pdf queda como copia del inglés, por enlaces viejos.
   cv: { en: "/cv-consuelo-herrera-en.pdf", es: "/cv-consuelo-herrera-es.pdf" } satisfies T,
-  linkedin: "https://www.linkedin.com/in/consuelo-herrera-de-la-calle-43452b19b/",
+  linkedin: "https://www.linkedin.com/in/consueloherreradesign/",
 };
 
 export const SERVICES: { title: T; body: T; tags: T[] }[] = [
