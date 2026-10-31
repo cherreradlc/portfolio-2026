@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Consuelo Herrera — portfolio
 
-## Getting Started
+Source code of my portfolio: **[consueloherreradesign.vercel.app](https://consueloherreradesign.vercel.app)**.
 
-First, run the development server:
+I'm a UX/UI designer and front-end developer. I designed this site and built it myself.
+
+## Highlights
+
+- **Split portrait hero.** My photo and a pixel version of it share the screen. The seam follows the mouse, or the finger on touch screens, and each side links to the projects of its kind.
+- **Case studies built from data.** Each project is a list of typed blocks (text, stats, phone carousels, videos, galleries, a page-by-page brand manual viewer, code windows), so adding a case study is a data change, not a layout change.
+- **Real code on display.** Coded projects include an editor-style window with real excerpts, highlighted by a small TypeScript/SQL tokenizer written for the site.
+- **Bilingual.** English by default with a Spanish toggle, plus a CV in each language.
+- **Accessible motion.** Animations respect `prefers-reduced-motion`, text meets WCAG AA contrast, and images keep their real proportions.
+
+## Stack
+
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · Motion · Lenis · deployed on Vercel.
+
+## Code tour
+
+| Where | What |
+| --- | --- |
+| `src/data/projects.ts`, `projects.en.ts` | Every case study as typed data, in Spanish and English |
+| `src/data/code/` | Real excerpts from the coded projects |
+| `src/components/Hero.tsx` | Split portrait with pointer and touch control |
+| `src/components/case/CaseBlocks.tsx` | Renders each block type of a case study |
+| `src/components/case/CodeWindow.tsx` | Tabbed code window with syntax highlighting |
+| `src/components/ProjectGrid.tsx` | Project grid with type filters |
+| `src/i18n/` | Language toggle and translated content |
+
+## Related
+
+- [Fresco](https://github.com/cherreradlc/fresco): a sales and finance app for a small food business ([live demo](https://fresco-demo-five.vercel.app)).
+
+## Run it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
