@@ -232,6 +232,11 @@ export const PROJECTS_EN: Project[] = [
         type: "quote",
         text: "The goal: an invitation that feels like summer and is answered in a minute.",
       },
+      {
+        type: "quote",
+        text: "You understood exactly what I wanted. The platform is super easy to use. 100% recommended.",
+        author: "The bride",
+      },
     ],
   },
   {
@@ -443,6 +448,11 @@ export const PROJECTS_EN: Project[] = [
       {
         type: "quote",
         text: "The goal: the couple never had to chase RSVPs on WhatsApp.",
+      },
+      {
+        type: "quote",
+        text: "It turned out great, the design is really lovely. It's exactly what I needed.",
+        author: "The bride",
       },
     ],
   },

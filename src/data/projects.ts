@@ -31,7 +31,7 @@ export type Block =
   | { type: "image"; src: string; alt: string; caption?: string }
   | { type: "gallery"; eyebrow?: string; title?: string; feature?: Img; images: Img[]; columns?: 2 | 3 | 4 }
   | { type: "phones"; eyebrow: string; title: string; body?: string; images: (Img & { caption: string })[] }
-  | { type: "quote"; text: string }
+  | { type: "quote"; text: string; author?: string }
   | {
       type: "code";
       eyebrow: string;
@@ -292,6 +292,11 @@ export const PROJECTS: Project[] = [
         type: "quote",
         text: "La meta: una invitación que se sienta como el verano y que se responda en un minuto.",
       },
+      {
+        type: "quote",
+        text: "Entendiste perfectamente lo que quería. La plataforma es súper fácil de usar. 100% recomendada.",
+        author: "Novia",
+      },
     ],
   },
   {
@@ -503,6 +508,11 @@ export const PROJECTS: Project[] = [
       {
         type: "quote",
         text: "La meta: que los novios no tuvieran que perseguir confirmaciones por WhatsApp.",
+      },
+      {
+        type: "quote",
+        text: "Quedó genial, está muy lindo el diseño. Es justo lo que necesitaba.",
+        author: "Novia",
       },
     ],
   },

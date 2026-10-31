@@ -152,6 +152,11 @@ function BlockView({ block: b, onZoom, flip = false }: { block: Block; onZoom: (
             stagger={0.03}
             className="-mt-6 font-serif text-[clamp(1.9rem,4vw,3.2rem)] leading-[1.15] italic"
           />
+          {b.author && (
+            <FadeUp>
+              <p className="mt-6 text-[13px] tracking-[0.22em] text-muted">— {b.author.toUpperCase()}</p>
+            </FadeUp>
+          )}
         </section>
       );
 
