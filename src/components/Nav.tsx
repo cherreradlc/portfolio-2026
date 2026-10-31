@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import LangToggle from "./LangToggle";
 import { SITE } from "@/data/site";
+import Logo from "./Logo";
 import { useLang } from "@/i18n/lang";
 
 const LINKS = [
@@ -66,9 +67,7 @@ export default function Nav() {
       >
         <nav className="flex h-[72px] items-center justify-between sm:h-[88px]">
           <Link href="/" className="group flex items-center gap-3" aria-label={t({ en: "Home", es: "Inicio" })}>
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand font-serif text-[18px] italic text-paper transition-transform duration-500 group-hover:rotate-[360deg]">
-              ch
-            </span>
+            <Logo className="h-10 w-auto text-brand transition-colors duration-300 group-hover:text-brand-deep" />
             <span className="text-[13px] leading-tight font-semibold tracking-[0.08em] uppercase">
               Consuelo
               <br />

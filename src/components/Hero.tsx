@@ -29,7 +29,8 @@ const CODE = [
  * designer; on the right the same photo as pixels and circuits — the
  * programmer. Moving the pointer toward one side shows more of that half:
  * the seam slides the opposite way, so the side you point at grows. On touch
- * screens the seam drifts on its own and follows a finger dragged across.
+ * screens the seam drifts on its own until touched; from then on it stays
+ * exactly where the finger leaves it.
  */
 export default function Hero() {
   const { t } = useLang();
@@ -51,22 +52,37 @@ export default function Hero() {
       return () => window.removeEventListener("pointermove", move);
     }
 
-    // sin mouse: va y viene sola, y un dedo que arrastra la toma
+    // sin mouse: va y viene sola hasta que la tocan; desde ahí la línea
+    // queda donde la deja el dedo y no vuelve a moverse sola
+    const el = document.getElementById("retrato");
+    let tocada = false;
     let dragging = false;
     let raf = 0;
     const t0 = performance.now();
     const tick = (now: number) => {
-      if (!dragging) side.set(0.5 + Math.sin((now - t0) / 1600) * 0.32);
+      if (tocada) return;
+      side.set(0.5 + Math.sin((now - t0) / 1600) * 0.32);
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    const down = () => (dragging = true);
+    // la línea queda justo bajo el dedo, medido sobre el retrato
+    const seguir = (x: number) => {
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const v = 1 - Math.min(1, Math.max(0, (x - r.left) / r.width));
+      side.set(v);
+      smooth.jump(v);
+    };
+    const down = (e: TouchEvent) => {
+      tocada = true;
+      dragging = true;
+      cancelAnimationFrame(raf);
+      seguir(e.touches[0].clientX);
+    };
     const moveTouch = (e: TouchEvent) => {
-      // la línea sigue al dedo: arrastrar a la derecha muestra más foto
-      if (dragging) side.set(Math.min(1, Math.max(0, 1 - e.touches[0].clientX / window.innerWidth)));
+      if (dragging) seguir(e.touches[0].clientX);
     };
     const up = () => (dragging = false);
-    const el = document.getElementById("retrato");
     el?.addEventListener("touchstart", down, { passive: true });
     window.addEventListener("touchmove", moveTouch, { passive: true });
     window.addEventListener("touchend", up);
@@ -76,7 +92,7 @@ export default function Hero() {
       window.removeEventListener("touchmove", moveTouch);
       window.removeEventListener("touchend", up);
     };
-  }, [side]);
+  }, [side, smooth]);
 
   // la línea divisoria se corre al lado contrario del puntero
   const seam = useTransform(smooth, [0, 1], [100, 0]);
@@ -121,7 +137,7 @@ export default function Hero() {
         {/* el retrato partido */}
         <div
           id="retrato"
-          className="relative mx-auto -translate-x-[10%] aspect-[900/1147] h-[min(68svh,700px)] self-end max-md:col-span-2 max-md:row-start-2 max-md:mt-3 max-md:h-[min(60svh,540px)] md:row-start-1 md:col-start-2"
+          className="relative mx-auto touch-pan-y -translate-x-[10%] aspect-[900/1147] h-[min(68svh,700px)] self-end max-md:col-span-2 max-md:row-start-2 max-md:mt-3 max-md:h-[min(60svh,540px)] md:row-start-1 md:col-start-2"
         >
           <motion.div
             // bordes difuminados: el fondo gris de la foto se funde con la página

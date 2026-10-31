@@ -9,7 +9,7 @@ import { useLang } from "@/i18n/lang";
 type CodeBlock = Extract<Block, { type: "code" }>;
 
 // colores del editor, sobre fondo oscuro
-const TOKENS: [RegExp, string][] = [
+const TS: [RegExp, string][] = [
   [/\/\*[\s\S]*?\*\/|\/\/[^\n]*/y, "text-[#9a8f9c] italic"],
   [/"(?:[^"\\]|\\.)*"|`(?:[^`\\]|\\.)*`/y, "text-[#a8dbb0]"],
   [/\b(?:export|const|let|function|return|if|else|for|of|continue|new|import|from|type)\b/y, "text-[#f59ac0]"],
@@ -18,8 +18,18 @@ const TOKENS: [RegExp, string][] = [
   [/\b[A-Z][\w$]*\b/y, "text-[#d7b4f0]"],
 ];
 
-/** Colorea TypeScript lo justo para leerlo: comentarios, textos, palabras clave, números y funciones. */
-function highlight(code: string): ReactNode[] {
+const SQL: [RegExp, string][] = [
+  [/--[^\n]*/y, "text-[#9a8f9c] italic"],
+  [/'(?:[^']|'')*'/y, "text-[#a8dbb0]"],
+  [/\$\$/y, "text-[#f5c27a]"],
+  [/\b(?:create|or|replace|function|returns|table|language|sql|stable|security|definer|set|as|with|select|from|where|order|by|limit|grant|execute|on|to|and)\b/iy, "text-[#f59ac0]"],
+  [/\b\d+\b/y, "text-[#f5c27a]"],
+  [/[A-Za-z_]\w*(?=\()/y, "text-[#a9c7ff]"],
+];
+
+/** Colorea TypeScript (o SQL) lo justo para leerlo: comentarios, textos, palabras clave, números y funciones. */
+function highlight(code: string, lang: "ts" | "sql" = "ts"): ReactNode[] {
+  const TOKENS = lang === "sql" ? SQL : TS;
   const out: ReactNode[] = [];
   let plain = "";
   let i = 0;
@@ -137,7 +147,7 @@ export default function CodeWindow({ block: b }: { block: CodeBlock }) {
                   {Array.from({ length: lines }, (_, i) => i + 1).join("\n")}
                 </pre>
                 <pre className="min-w-0">
-                  <code>{highlight(file.code)}</code>
+                  <code>{highlight(file.code, file.lang)}</code>
                 </pre>
               </div>
               <figcaption className="border-t border-white/10 bg-white/[0.03] px-4 py-4 text-[15px] leading-relaxed text-white/80 sm:px-5">

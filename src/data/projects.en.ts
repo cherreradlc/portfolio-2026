@@ -1,4 +1,6 @@
 import { FRESCO_CODE, FRESCO_LINEAS } from "./code/fresco";
+import { INVITACION_CODE, INVITACION_LINEAS } from "./code/invitacion";
+import { DIGITAL_CODE, DIGITAL_LINEAS } from "./code/invitacion-digital";
 import type { Project } from "./projects";
 
 /**
@@ -90,6 +92,22 @@ export const PROJECTS_EN: Project[] = [
           { src: "/projects/invitacion-verano/admin-resumen.jpg", alt: "Dashboard answer summary", caption: "The summary: each box is a filter." },
           { src: "/projects/invitacion-verano/admin-confirmados.jpg", alt: "Confirmed guests with allergies and song", caption: "Confirmed guests, with allergies and song." },
           { src: "/projects/invitacion-verano/admin-pendientes.jpg", alt: "Pending guests", caption: "Those still to answer." },
+        ],
+      },
+      {
+        type: "code",
+        eyebrow: "Built with code",
+        title: "Designed and built by me",
+        body: [
+          "The invitation is a real website: guests RSVP from their phone and the couple sees the answers in their dashboard. I built it with Next.js and Supabase, a cloud database.",
+          "Behind the watercolours there’s code that looks after the guests: their list can’t be downloaded, the music plays well on iPhone and songs come from a real catalogue. These are real excerpts.",
+        ],
+        stack: ["Next.js 16", "React 19", "TypeScript", "Supabase (PostgreSQL)", "Tailwind CSS 4", "SVG illustrations", `${INVITACION_LINEAS.toLocaleString("en-US")} lines of code`],
+        files: [
+          { label: "find_guest_by_name()", name: "supabase/migrations/0006_name_and_first_surname.sql", lang: "sql", code: INVITACION_CODE.buscar, caption: "Finds a guest by first name and first surname, ignoring accents and capitals. It requires the exact start of the name, so nobody can pull the list by typing one letter." },
+          { label: "GET /api/canciones", name: "src/app/api/canciones/route.ts", code: INVITACION_CODE.canciones, caption: "As the guest types, it suggests songs from the Apple Music catalogue, without duplicate versions or “(feat. …)”, so the DJ’s list stays clean." },
+          { label: "play()", name: "src/components/Musica.tsx", code: INVITACION_CODE.musica, caption: "The music fades in over a second and its volume goes through a compressor, so it also works on iPhone, where the regular volume can’t be changed." },
+          { label: "RamaItinerario", name: "src/components/Acuarelas.tsx", code: INVITACION_CODE.rama, caption: "Draws the itinerary branch with curves: it crosses the centre at every heart and grows alternating leaves, larger in the middle of each bend." },
         ],
       },
       {
@@ -299,6 +317,22 @@ export const PROJECTS_EN: Project[] = [
           { src: "/projects/invitacion/admin-resumen.jpg", alt: "Answer summary and add-guest field", caption: "A summary of answers and a field to add guests." },
           { src: "/projects/invitacion/admin-respuestas.jpg", alt: "Guest cards with allergies and song", caption: "Each guest with their allergies and song." },
           { src: "/projects/invitacion/admin-editar.jpg", alt: "Editing a guest's name", caption: "Names are fixed right there." },
+        ],
+      },
+      {
+        type: "code",
+        eyebrow: "Built with code",
+        title: "Designed and built by me",
+        body: [
+          "Behind the opening envelope there’s a complete application: guests RSVP and the couple manages the list from a password-protected dashboard.",
+          "I built it to work with two different databases, Supabase in the cloud or MySQL on its own server, without changing the rest of the code. These are real excerpts.",
+        ],
+        stack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "MySQL", "Tailwind CSS 4", `${DIGITAL_LINEAS.toLocaleString("en-US")} lines of code`],
+        files: [
+          { label: "Opening envelope", name: "src/components/EnvelopeCover.tsx", code: DIGITAL_CODE.sobre, caption: "The timing of the envelope animation: the seal, the flap, the card rising and the fade. The flap and pocket shapes are cut with polygons." },
+          { label: "GuestsRepository", name: "src/lib/db/types.ts", code: DIGITAL_CODE.repo, caption: "A single list of database actions: find, respond, add, edit and remove guests. That way the invitation works the same on Supabase or MySQL." },
+          { label: "proxy()", name: "src/proxy.ts", code: DIGITAL_CODE.proxy, caption: "Guards the couple’s dashboard: anyone who arrives without signing in is sent to the login screen." },
+          { label: "localSignIn()", name: "src/lib/auth/local-auth.ts", code: DIGITAL_CODE.login, caption: "The couple’s sign-in: the password is compared hashed (never stored as is) and the session lives in a secure cookie for 7 days." },
         ],
       },
       {

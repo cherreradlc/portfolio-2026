@@ -1,4 +1,6 @@
 import { FRESCO_CODE, FRESCO_LINEAS } from "./code/fresco";
+import { INVITACION_CODE, INVITACION_LINEAS } from "./code/invitacion";
+import { DIGITAL_CODE, DIGITAL_LINEAS } from "./code/invitacion-digital";
 
 /**
  * Every project in the portfolio, in display order. Case-study pages are built
@@ -36,7 +38,7 @@ export type Block =
       title: string;
       body: string[];
       stack: string[];
-      files: { label: string; name: string; code: string; caption: string }[];
+      files: { label: string; name: string; code: string; caption: string; lang?: "sql" }[];
     }
   | { type: "video"; eyebrow: string; title: string; body: string[]; src: string; poster: string; alt: string }
   | { type: "manual"; eyebrow: string; title: string; folder: string; pages: number; lowRes?: number[] };
@@ -150,6 +152,22 @@ export const PROJECTS: Project[] = [
           { src: "/projects/invitacion-verano/admin-resumen.jpg", alt: "Resumen de respuestas del panel", caption: "El resumen: cada cuadro es un filtro." },
           { src: "/projects/invitacion-verano/admin-confirmados.jpg", alt: "Lista de confirmados con alergias y canción", caption: "Los confirmados, con sus alergias y su canción." },
           { src: "/projects/invitacion-verano/admin-pendientes.jpg", alt: "Lista de pendientes", caption: "Los que faltan por responder." },
+        ],
+      },
+      {
+        type: "code",
+        eyebrow: "Hecho con código",
+        title: "Diseñada y programada por mí",
+        body: [
+          "La invitación es un sitio real: los invitados confirman desde el celular y los novios ven las respuestas en su panel. La programé con Next.js y Supabase, una base de datos en la nube.",
+          "Detrás de las acuarelas hay código que cuida a los invitados: su lista no se puede descargar, la música suena bien en iPhone y las canciones se eligen de un catálogo real. Estos son fragmentos reales.",
+        ],
+        stack: ["Next.js 16", "React 19", "TypeScript", "Supabase (PostgreSQL)", "Tailwind CSS 4", "Ilustraciones en SVG", `${INVITACION_LINEAS.toLocaleString("es-CL")} líneas de código`],
+        files: [
+          { label: "find_guest_by_name()", name: "supabase/migrations/0006_name_and_first_surname.sql", lang: "sql", code: INVITACION_CODE.buscar, caption: "Busca al invitado por su nombre y primer apellido, sin importar tildes ni mayúsculas. Pide el comienzo exacto del nombre, así nadie puede sacar la lista escribiendo una letra." },
+          { label: "GET /api/canciones", name: "src/app/api/canciones/route.ts", code: INVITACION_CODE.canciones, caption: "Mientras el invitado escribe, sugiere canciones del catálogo de Apple Music, sin versiones repetidas ni “(feat. …)”, para que la lista del DJ quede limpia." },
+          { label: "play()", name: "src/components/Musica.tsx", code: INVITACION_CODE.musica, caption: "La música entra suave, en un segundo, y su volumen se baja con un compresor: así funciona también en iPhone, donde el volumen normal no se puede cambiar." },
+          { label: "RamaItinerario", name: "src/components/Acuarelas.tsx", code: INVITACION_CODE.rama, caption: "Dibuja la rama del itinerario con curvas: cruza el centro en cada corazón y le salen hojas alternadas, más grandes en la mitad de cada curva." },
         ],
       },
       {
@@ -359,6 +377,22 @@ export const PROJECTS: Project[] = [
           { src: "/projects/invitacion/admin-resumen.jpg", alt: "Resumen de respuestas y formulario para agregar invitados", caption: "El resumen de respuestas y un campo para agregar invitados." },
           { src: "/projects/invitacion/admin-respuestas.jpg", alt: "Tarjetas de invitados con alergias y canción", caption: "Cada invitado con sus alergias y su canción." },
           { src: "/projects/invitacion/admin-editar.jpg", alt: "Edición del nombre de un invitado", caption: "Los nombres se corrigen ahí mismo." },
+        ],
+      },
+      {
+        type: "code",
+        eyebrow: "Hecho con código",
+        title: "Diseñada y programada por mí",
+        body: [
+          "Detrás del sobre que se abre hay una aplicación completa: los invitados confirman su asistencia y los novios administran la lista desde un panel con contraseña.",
+          "La programé para que funcione con dos bases de datos distintas, Supabase en la nube o MySQL en un servidor propio, sin cambiar el resto del código. Estos son fragmentos reales.",
+        ],
+        stack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "MySQL", "Tailwind CSS 4", `${DIGITAL_LINEAS.toLocaleString("es-CL")} líneas de código`],
+        files: [
+          { label: "Sobre que se abre", name: "src/components/EnvelopeCover.tsx", code: DIGITAL_CODE.sobre, caption: "Los tiempos de la animación del sobre: el sello, la solapa, la tarjeta que sube y el fundido. Las formas de la solapa y el bolsillo se recortan con polígonos." },
+          { label: "GuestsRepository", name: "src/lib/db/types.ts", code: DIGITAL_CODE.repo, caption: "Una sola lista de acciones para la base de datos: buscar, responder, agregar, editar y borrar invitados. Así la invitación funciona igual con Supabase o con MySQL." },
+          { label: "proxy()", name: "src/proxy.ts", code: DIGITAL_CODE.proxy, caption: "Protege el panel de los novios: si alguien entra sin haber iniciado sesión, lo manda a la pantalla de ingreso." },
+          { label: "localSignIn()", name: "src/lib/auth/local-auth.ts", code: DIGITAL_CODE.login, caption: "El ingreso de los novios: la contraseña se compara cifrada (nunca se guarda tal cual) y la sesión queda en una cookie segura por 7 días." },
         ],
       },
       {
