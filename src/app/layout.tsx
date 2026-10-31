@@ -35,12 +35,14 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  // las imágenes para compartir (opengraph-image.png) necesitan la dirección completa
+  metadataBase: new URL("https://consueloherreradesign.vercel.app"),
   title: {
     default: `${SITE.name} — ${SITE.role}`,
     template: `%s — ${SITE.shortName}`,
   },
   description:
-    "Portfolio of Consuelo Herrera De La Calle, graphic and UX/UI designer based in Chile. Branding, UX research and clear, accessible interfaces.",
+    "Portfolio of Consuelo Herrera De La Calle, UX/UI designer and front-end developer based in Chile. User research, clear interfaces and working web apps built with React and Next.js.",
 };
 
 export const viewport: Viewport = {

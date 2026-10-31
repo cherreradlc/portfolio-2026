@@ -15,10 +15,10 @@ const verTipo = (tipo: "diseno" | "frontend") => window.dispatchEvent(new Custom
 // fragmentos que flotan del lado de la programadora
 const CODE = [
   "<consuelo />",
-  "const diseño = true;",
+  "const design = true;",
   "npm run dev",
-  "export default Invitacion",
-  "supabase.from('invitados')",
+  "export default Invitation",
+  "supabase.from('guests')",
   "display: grid;",
   "git push origin main",
   "</>",
@@ -128,8 +128,8 @@ export default function Hero() {
           </a>
           <p className="mt-4 hidden text-[clamp(13px,1.35vw,16px)] leading-[1.55] text-ink-soft md:block md:ml-auto md:max-w-[30ch]">
             {t({
-              en: "Graphic and UX/UI designer: brands, interfaces and clear experiences.",
-              es: "Diseñadora gráfica y UX/UI: marcas, interfaces y experiencias claras.",
+              en: "UX/UI and graphic designer: research, clear interfaces and brands.",
+              es: "Diseñadora UX/UI y gráfica: investigación, interfaces claras y marcas.",
             })}
           </p>
         </motion.div>

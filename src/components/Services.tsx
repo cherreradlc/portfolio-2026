@@ -10,10 +10,10 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 /** One board of real work per service, on a light wash of colour. */
 const BOARDS = [
-  { src: "/projects/invitacion-verano/admin-confirmados.jpg", alt: "Wedding invitation dashboard", tint: "#eee8f5", maxHeight: 560 },
+  { src: "/projects/ux4all/wireframe-dashboard.jpg", alt: "UX4ALL dashboard sketch", tint: "#eee8f5", maxHeight: 560 },
   { src: "/projects/invitacion-verano/portada.jpg", alt: "Summer wedding invitation cover", tint: "#f3e9f0", maxHeight: 560 },
+  { src: "/projects/fresco/inicio.jpg", alt: "Fresco sales app home screen", tint: "#eef1e6", maxHeight: 560 },
   { src: "/projects/hila/portada.jpg", alt: "Hila brand guidelines cover", tint: "#f7e6ec", maxHeight: 560 },
-  { src: "/projects/hila/tarjetas-diseno.jpg", alt: "Hila business cards", tint: "#f5e5e9", maxHeight: 520 },
 ];
 
 /**

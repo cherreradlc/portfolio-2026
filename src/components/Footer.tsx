@@ -6,7 +6,7 @@ import { scrollToTarget } from "./SmoothScroll";
 import { SITE } from "@/data/site";
 import { useLang } from "@/i18n/lang";
 
-/** Footer with a live Santiago clock, so remote teams see her working hours. */
+/** Footer with a live Chile clock, so remote teams see her working hours. */
 export default function Footer() {
   const { t, lang } = useLang();
   const [time, setTime] = useState("");
@@ -28,7 +28,7 @@ export default function Footer() {
       <p>© 2026 {SITE.name}</p>
       <p className="flex items-center gap-2">
         <span className="h-1.5 w-1.5 rounded-full bg-online [animation:pulse-dot_1.6s_ease-out_infinite]" />
-        Santiago, Chile {time && `· ${time}`}
+        Coquimbo, Chile {time && `· ${time}`}
       </p>
       <Magnetic>
         <button

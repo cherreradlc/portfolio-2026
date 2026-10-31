@@ -19,7 +19,7 @@ const LINKS = [
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-/** Santiago time, ticking, so remote teams see her working hours at a glance. */
+/** Chile time, ticking, so remote teams see her working hours at a glance. */
 function useClock() {
   const [time, setTime] = useState("");
   useEffect(() => {
@@ -77,7 +77,7 @@ export default function Nav() {
 
           <div className="flex items-center gap-4 sm:gap-6">
             <p className="hidden font-mono text-[12.5px] tracking-wide text-muted md:block">
-              SCL <span className="mx-1 opacity-50">·</span>
+              CHILE <span className="mx-1 opacity-50">·</span>
               <span className="text-ink">{time}</span>
             </p>
             <LangToggle />
@@ -144,7 +144,7 @@ export default function Nav() {
               <a href={`mailto:${SITE.email}`} className="hover:text-brand">{SITE.email}</a>
               <span className="flex gap-6">
                 <a href={SITE.linkedin} target="_blank" rel="noreferrer" className="hover:text-brand">LINKEDIN ↗</a>
-                <a href={SITE.cv} target="_blank" rel="noreferrer" className="hover:text-brand">{t({ en: "RESUME ↗", es: "CV ↗" })}</a>
+                <a href={t(SITE.cv)} target="_blank" rel="noreferrer" className="hover:text-brand">{t({ en: "RESUME ↗", es: "CV ↗" })}</a>
               </span>
             </motion.div>
           </motion.div>

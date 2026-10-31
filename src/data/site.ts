@@ -4,17 +4,17 @@ import type { T } from "@/i18n/lang";
 export const SITE = {
   name: "Consuelo Herrera De La Calle",
   shortName: "Consuelo Herrera",
-  role: "Graphic & UX/UI Designer",
-  location: "Chile",
+  role: "UX/UI Designer & Front-end Developer",
+  location: "Coquimbo, Chile",
   timezone: "America/Santiago",
   email: "contact.consudesign@gmail.com",
   availability: {
-    en: "Available · on-site or remote · full-time or freelance",
-    es: "Disponible · presencial o remoto · full-time o freelance",
+    en: "Open to remote roles with European teams · freelance or contractor",
+    es: "Disponible en remoto para equipos en Europa · freelance o contractor",
   } satisfies T,
-  // PDF dentro del propio sitio (public/), así no depende de un enlace externo.
-  // El CV es bilingüe: inglés en la página 1 y español en la página 2.
-  cv: "/cv-consuelo-herrera.pdf",
+  // PDF dentro del propio sitio (public/), uno por idioma. El antiguo
+  // /cv-consuelo-herrera.pdf queda como copia del inglés, por enlaces viejos.
+  cv: { en: "/cv-consuelo-herrera-en.pdf", es: "/cv-consuelo-herrera-es.pdf" } satisfies T,
   linkedin: "https://www.linkedin.com/in/consuelo-herrera-de-la-calle-43452b19b/",
 };
 
@@ -46,6 +46,19 @@ export const SERVICES: { title: T; body: T; tags: T[] }[] = [
     ],
   },
   {
+    title: { en: "Front-end", es: "Front-end" },
+    body: {
+      en: "Responsive web apps built with React, Next.js and TypeScript, connected to real data and ready to use.",
+      es: "Aplicaciones web responsivas con React, Next.js y TypeScript, conectadas a datos reales y listas para usar.",
+    },
+    tags: [
+      { en: "React", es: "React" },
+      { en: "Next.js", es: "Next.js" },
+      { en: "TypeScript", es: "TypeScript" },
+      { en: "Supabase", es: "Supabase" },
+    ],
+  },
+  {
     title: { en: "Branding", es: "Branding" },
     body: {
       en: "Visual identities with a concept: logo, color, typography and brand guidelines ready to use.",
@@ -54,20 +67,7 @@ export const SERVICES: { title: T; body: T; tags: T[] }[] = [
     tags: [
       { en: "Logo", es: "Logo" },
       { en: "Brand guidelines", es: "Manual de marca" },
-      { en: "Stationery", es: "Papelería" },
-    ],
-  },
-  {
-    title: { en: "Graphic Design", es: "Diseño gráfico" },
-    body: {
-      en: "Pieces for campaigns, packaging and editorial that communicate fast and look right in any format.",
-      es: "Piezas para campañas, packaging y editorial que comunican rápido y se ven bien en cualquier formato.",
-    },
-    tags: [
-      { en: "Campaigns", es: "Campañas" },
       { en: "Packaging", es: "Packaging" },
-      { en: "Editorial", es: "Editorial" },
-      { en: "Social media", es: "Redes" },
     ],
   },
 ];
@@ -107,13 +107,15 @@ export const PROCESS: { n: string; title: T; body: T }[] = [
   },
 ];
 
-export const SOFTWARE = ["Figma", "Illustrator", "Photoshop", "InDesign"];
+export const DESIGN_TOOLS = ["Figma", "Illustrator", "Photoshop", "InDesign"];
+
+export const CODE_TOOLS = ["React", "Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Git", "Vercel"];
 
 export const SKILLS: T[] = [
   { en: "UX Research", es: "UX Research" },
   { en: "Prototyping", es: "Prototipado" },
+  { en: "Usability testing", es: "Pruebas de usabilidad" },
   { en: "Design Thinking", es: "Design Thinking" },
   { en: "Accessibility", es: "Accesibilidad" },
   { en: "Branding", es: "Branding" },
-  { en: "HTML & CSS", es: "HTML & CSS" },
 ];

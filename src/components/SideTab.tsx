@@ -9,7 +9,7 @@ export default function SideTab() {
   const { t } = useLang();
   return (
     <a
-      href={SITE.cv}
+      href={t(SITE.cv)}
       target="_blank"
       rel="noreferrer"
       data-cursor="PDF"

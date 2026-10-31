@@ -30,7 +30,7 @@ export default function Contact() {
 
   const links = [
     { label: "LinkedIn", href: SITE.linkedin },
-    { label: t({ en: "Resume", es: "Currículum" }), href: SITE.cv },
+    { label: t({ en: "Resume", es: "Currículum" }), href: t(SITE.cv) },
   ];
 
   return (
