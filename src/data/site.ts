@@ -9,8 +9,8 @@ export const SITE = {
   timezone: "America/Santiago",
   email: "contact.consudesign@gmail.com",
   availability: {
-    en: "Open to remote roles with European teams · freelance or contractor",
-    es: "Disponible en remoto para equipos en Europa · freelance o contractor",
+    en: "Open to remote roles · freelance or contractor",
+    es: "Disponible en remoto · freelance o contractor",
   } satisfies T,
   // PDF dentro del propio sitio (public/), uno por idioma. El antiguo
   // /cv-consuelo-herrera.pdf queda como copia del inglés, por enlaces viejos.

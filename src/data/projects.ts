@@ -107,7 +107,7 @@ export const PROJECTS: Project[] = [
         eyebrow: "Recorrido",
         title: "Un día de trabajo en la app",
         body: [
-          "Anota un pedido mayorista con pago parcial, registra un cobro y revisa cómo va el mes en finanzas.",
+          "Entra a la app, anota un pedido mayorista con pago parcial, registra un cobro y revisa cómo va el mes en finanzas.",
           "Los clientes y las cifras son de ejemplo.",
         ],
         src: "/projects/fresco/recorrido.mp4",

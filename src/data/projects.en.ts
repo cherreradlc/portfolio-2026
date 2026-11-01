@@ -47,7 +47,7 @@ export const PROJECTS_EN: Project[] = [
         eyebrow: "Walkthrough",
         title: "A working day in the app",
         body: [
-          "He logs a wholesale order with partial payment, records a payment and checks how the month is going in finances.",
+          "He signs in, logs a wholesale order with partial payment, records a payment and checks how the month is going in finances.",
           "Clients and figures are examples.",
         ],
         src: "/projects/fresco/recorrido.mp4",
