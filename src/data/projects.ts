@@ -82,7 +82,7 @@ export const PROJECTS: Project[] = [
     accent: "violet",
     cover: "/projects/fresco/inicio.jpg",
     coverAlt: "Pantalla de inicio de la app con lo que le deben y lo vendido hoy",
-    screens: ["/projects/fresco/inicio.jpg", "/projects/fresco/finanzas.jpg", "/projects/fresco/nuevo-pedido.jpg"],
+    screens: ["/projects/fresco/inicio.jpg", "/projects/fresco/ingresar.jpg", "/projects/fresco/nuevo-pedido.jpg"],
     intro:
       "Propuesta para un negocio real: un vendedor de paltas, huevos y queso de cabra, por mayor y al detalle, que anota todo en un cuaderno. Diseñé y programé un prototipo funcional para que venda, cobre y sepa cuánto gana desde el celular.",
     blocks: [
@@ -120,6 +120,7 @@ export const PROJECTS: Project[] = [
         title: "Lo del día, a un toque",
         body: "Pedidos, cobros y stock: lo que antes estaba repartido en el cuaderno, ahora en una sola app.",
         images: [
+          { src: "/projects/fresco/ingresar.jpg", alt: "Pantalla de bienvenida con el logo de Fresco y el inicio de sesión", caption: "La bienvenida: el logo, un huevo partido mitad palta, y el ingreso." },
           { src: "/projects/fresco/inicio.jpg", alt: "Inicio con deudas, ventas y entregas del día", caption: "Al abrirla: cuánto le deben, lo vendido hoy y qué entregar." },
           { src: "/projects/fresco/nuevo-pedido.jpg", alt: "Nuevo pedido con aviso de precio mayorista", caption: "El precio por mayor se aplica solo, y avisa cuánto falta." },
           { src: "/projects/fresco/pedidos.jpg", alt: "Lista de pedidos con estado de entrega y pago", caption: "Cada pedido dice cómo va la entrega y el pago." },

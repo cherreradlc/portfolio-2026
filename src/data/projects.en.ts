@@ -22,7 +22,7 @@ export const PROJECTS_EN: Project[] = [
     accent: "violet",
     cover: "/projects/fresco/inicio.jpg",
     coverAlt: "App home screen with money owed and today's sales",
-    screens: ["/projects/fresco/inicio.jpg", "/projects/fresco/finanzas.jpg", "/projects/fresco/nuevo-pedido.jpg"],
+    screens: ["/projects/fresco/inicio.jpg", "/projects/fresco/ingresar.jpg", "/projects/fresco/nuevo-pedido.jpg"],
     intro:
       "A proposal for a real business: a seller of avocados, eggs and goat cheese, wholesale and retail, who keeps everything in a notebook. I designed and built a working prototype so he can sell, collect and know what he earns from his phone.",
     blocks: [
@@ -60,6 +60,7 @@ export const PROJECTS_EN: Project[] = [
         title: "The day's work, one tap away",
         body: "Orders, payments and stock: what was scattered in the notebook, now in one app.",
         images: [
+          { src: "/projects/fresco/ingresar.jpg", alt: "Welcome screen with the Fresco logo and sign-in", caption: "The welcome: the logo, an egg cracked half into avocado, and sign-in." },
           { src: "/projects/fresco/inicio.jpg", alt: "Home with debts, sales and today's deliveries", caption: "On opening: what he's owed, today's sales and what to deliver." },
           { src: "/projects/fresco/nuevo-pedido.jpg", alt: "New order with wholesale price hint", caption: "Wholesale pricing applies itself, and shows what's missing." },
           { src: "/projects/fresco/pedidos.jpg", alt: "Orders with delivery and payment status", caption: "Each order shows delivery and payment." },
