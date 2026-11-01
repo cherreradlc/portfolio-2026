@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FadeUp } from "./Reveal";
 import PhoneFan from "./PhoneFan";
+import ProjectBackdrop from "./ProjectBackdrop";
 import { ACCENT_STYLES } from "./ProjectStack";
 import { useLang } from "@/i18n/lang";
 import { useProjects } from "@/i18n/projects";
@@ -69,7 +70,10 @@ export default function ProjectGrid() {
                   className={`relative block aspect-[4/3] overflow-hidden ${ACCENT_STYLES[p.accent].card}`}
                 >
                   {p.screens ? (
-                    <PhoneFan screens={p.screens} height="84%" />
+                    <>
+                      <ProjectBackdrop slug={p.slug} />
+                      <PhoneFan screens={p.screens} height="84%" />
+                    </>
                   ) : (
                     <Image
                       src={p.cover}
