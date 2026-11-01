@@ -26,6 +26,8 @@ export default function PlaygroundTeaser() {
   const { t, lang } = useLang();
   const plays = usePlays();
   const title = t({ en: "Playground", es: "Patio de juegos" });
+  const lineas = lang === "es" ? ["Patio de", "juegos"] : ["Playground"];
+  const inicio = lineas.map((_, l) => lineas.slice(0, l).join("").length);
 
   return (
     <FadeUp>
@@ -34,23 +36,29 @@ export default function PlaygroundTeaser() {
         <div className="relative grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
           <div>
             <p className="font-mono text-[13px] tracking-wide uppercase">{t({ en: "New · Designed in Figma, built in code", es: "Nuevo · Diseñado en Figma, construido en código" })}</p>
-            <p key={lang} aria-hidden="true" className="mt-5 flex flex-wrap text-[clamp(2.8rem,7vw,5.6rem)] leading-[0.9] font-semibold tracking-[-0.05em] uppercase">
-              {title.split("").map((ch, i) =>
-                ch === " " ? (
-                  <span key={i} className="w-[0.3em]" />
-                ) : (
-                  <motion.span
-                    key={i}
-                    className={`inline-block ${LETTER_COLORS[i % LETTER_COLORS.length]} [-webkit-text-stroke:2.5px_rgb(43_34_48)] [paint-order:stroke_fill]`}
-                    initial={{ y: 0 }}
-                    whileInView={{ y: [0, -18, 0] }}
-                    viewport={{ once: true, amount: 0.6 }}
-                    transition={{ duration: 0.6, delay: 0.3 + i * 0.05, ease: "easeOut" }}
-                  >
-                    {ch}
-                  </motion.span>
-                ),
-              )}
+            {/* en español va en dos líneas ("Patio de" / "juegos") para que no se corte una palabra */}
+            <p key={lang} aria-hidden="true" className="mt-5 text-[clamp(2.6rem,7vw,5.6rem)] leading-[0.9] font-semibold tracking-[-0.05em] uppercase">
+              {lineas.map((linea, l) => (
+                <span key={l} className="flex whitespace-nowrap">
+                  {linea.split("").map((ch, k) => {
+                    const i = inicio[l] + k;
+                    return ch === " " ? (
+                      <span key={k} className="w-[0.3em]" />
+                    ) : (
+                      <motion.span
+                        key={k}
+                        className={`inline-block ${LETTER_COLORS[i % LETTER_COLORS.length]} [-webkit-text-stroke:2.5px_rgb(43_34_48)] [paint-order:stroke_fill]`}
+                        initial={{ y: 0 }}
+                        whileInView={{ y: [0, -18, 0] }}
+                        viewport={{ once: true, amount: 0.6 }}
+                        transition={{ duration: 0.6, delay: 0.3 + i * 0.05, ease: "easeOut" }}
+                      >
+                        {ch}
+                      </motion.span>
+                    );
+                  })}
+                </span>
+              ))}
             </p>
             <h2 className="sr-only">{title}</h2>
             <p className="mt-6 max-w-md font-mono text-[14px] leading-[1.7] text-ink-soft">
