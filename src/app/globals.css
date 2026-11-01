@@ -22,6 +22,14 @@
   --color-sage: #a493b8;
   --color-wine: #a8507a;
 
+  /* Playground only: a louder, toy-box palette. */
+  --color-sun: #ffc83d;
+  --color-coral: #ff6b57;
+  --color-pool: #3fa9f5;
+  --color-mint: #34c79a;
+  --color-grape: #7b4dff;
+  --color-bubble: #ff8fc8;
+
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
   --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -34,6 +42,36 @@ html {
   -webkit-tap-highlight-color: transparent;
   /* Las tarjetas inclinadas en 3D no deben ensanchar la página. */
   overflow-x: clip;
+  transition:
+    background-color 0.7s var(--ease-fluid),
+    color 0.7s var(--ease-fluid);
+
+  /* Fondo del parque del playground. */
+  --park: #fff8ea;
+  --park-dot: rgb(43 34 48 / 0.13);
+}
+
+/* Brillo que cruza los esqueletos de carga del playground. */
+@keyframes brillo {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/*
+ * Night: the playground's day/night switch flips the whole page. Only the
+ * surfaces and text change; the toy pieces keep their dark ink (see
+ * PlayPiece) so their colours stay readable.
+ */
+html[data-noche] {
+  --color-paper: #121834;
+  --color-paper-2: #1b2347;
+  --color-ink: #f4eefc;
+  --color-ink-soft: #cfc8e6;
+  --color-muted: #a39cc0;
+  --color-line: rgb(244 238 252 / 0.16);
+  --park: #1a2250;
+  --park-dot: rgb(244 238 252 / 0.16);
 }
 
 /* Lenis owns the scroll; native smooth-scroll would fight it. */

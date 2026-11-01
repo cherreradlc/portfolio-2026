@@ -14,6 +14,7 @@ const LINKS = [
   { href: "/#proyectos", label: { en: "Projects", es: "Proyectos" } },
   { href: "/#sobre-mi", label: { en: "About", es: "Sobre mí" } },
   { href: "/#servicios", label: { en: "Services", es: "Servicios" } },
+  { href: "/playground", label: { en: "Playground", es: "Patio de juegos" } },
   { href: "/#contacto", label: { en: "Contact", es: "Contacto" } },
 ];
 
