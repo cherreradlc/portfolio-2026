@@ -26,10 +26,17 @@ export default function PhoneFan({
   screens,
   height = "82%",
   animateIn = false,
+  thumb,
 }: {
   screens: string[];
   height?: string;
   animateIn?: boolean;
+  /**
+   * Sizes for small phones (the home cards). There a 900 px screenshot is
+   * drawn about 120 px wide and the browser shrinks it with jagged text, so
+   * the image optimizer sends one close to that size, resized smoothly.
+   */
+  thumb?: string;
 }) {
   const [front, ...rest] = screens;
   const order = rest.length ? [rest[0], front, rest[1] ?? rest[0]] : [front];
@@ -62,8 +69,9 @@ export default function PhoneFan({
               src={src}
               alt=""
               fill
-              sizes="(max-width: 768px) 60vw, 400px"
-              unoptimized={isSmall(src)}
+              sizes={thumb ?? "(max-width: 768px) 60vw, 400px"}
+              unoptimized={!thumb && isSmall(src)}
+              quality={thumb ? 90 : undefined}
               className="object-cover object-top"
             />
           </motion.div>

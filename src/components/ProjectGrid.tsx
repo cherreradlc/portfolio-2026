@@ -72,7 +72,7 @@ export default function ProjectGrid() {
                   {p.screens ? (
                     <>
                       <ProjectBackdrop slug={p.slug} />
-                      <PhoneFan screens={p.screens} height="84%" />
+                      <PhoneFan screens={p.screens} height="84%" thumb="(max-width: 640px) 32vw, 170px" />
                     </>
                   ) : (
                     <Image
