@@ -7,6 +7,7 @@ import Services from "@/components/Services";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import SectionHeader from "@/components/SectionHeader";
+import PlaygroundTeaser from "@/components/playground/PlaygroundTeaser";
 
 export default function Home() {
   return (
@@ -20,6 +21,10 @@ export default function Home() {
           meta="2024 — 2026"
         />
         <ProjectGrid />
+      </section>
+
+      <section id="jugar" className="scroll-mt-20 px-4 pb-24 sm:px-9 md:pb-32">
+        <PlaygroundTeaser />
       </section>
 
 
