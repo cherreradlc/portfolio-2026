@@ -2,7 +2,7 @@
 
 Source code of my portfolio: **[consueloherreradesign.vercel.app](https://consueloherreradesign.vercel.app)**.
 
-I'm a UX/UI designer and front-end developer. I designed this site and built it myself.
+I'm a UX/UI designer who builds with AI. I designed this site and built it with Claude Code, reviewing and testing every detail.
 
 ## Highlights
 

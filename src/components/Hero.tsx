@@ -9,6 +9,11 @@ import { TIPO_EVENT } from "./ProjectGrid";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+// Bordes difuminados: el fondo gris de la foto se funde con la página. Va en
+// cada imagen y no en el contenedor, porque Safari no aplica la máscara del
+// contenedor a la capa recortada que se anima.
+const FADE = "[mask-composite:intersect] [mask-image:linear-gradient(to_right,transparent,#000_14%,#000_86%,transparent),linear-gradient(to_bottom,transparent,#000_12%)]";
+
 // cada palabra lleva a los proyectos de su tipo
 const verTipo = (tipo: "diseno" | "frontend") => window.dispatchEvent(new CustomEvent(TIPO_EVENT, { detail: tipo }));
 
@@ -42,18 +47,18 @@ export default function Hero() {
   useEffect(() => setShift(window.innerWidth < 768 ? 6 : 24), []);
 
   useEffect(() => {
-    const touch = window.matchMedia("(hover: none)").matches;
+    // Mouse y dedo se escuchan siempre: algunos Android dicen tener mouse, y
+    // con "reducir movimiento" el retrato igual debe responder al dedo.
+    const touch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (still) return;
 
-    if (!touch) {
-      const move = (e: PointerEvent) => side.set(Math.min(1, Math.max(0, e.clientX / window.innerWidth)));
-      window.addEventListener("pointermove", move);
-      return () => window.removeEventListener("pointermove", move);
-    }
+    const move = (e: PointerEvent) => {
+      if (e.pointerType === "mouse") side.set(Math.min(1, Math.max(0, e.clientX / window.innerWidth)));
+    };
+    window.addEventListener("pointermove", move);
 
-    // sin mouse: va y viene sola hasta que la tocan; desde ahí la línea
-    // queda donde la deja el dedo y no vuelve a moverse sola
+    // en pantallas táctiles va y viene sola hasta que la tocan (salvo con
+    // "reducir movimiento"); desde ahí la línea queda donde la deja el dedo
     const el = document.getElementById("retrato");
     let tocada = false;
     let dragging = false;
@@ -64,7 +69,7 @@ export default function Hero() {
       side.set(0.5 + Math.sin((now - t0) / 1600) * 0.32);
       raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
+    if (touch && !still) raf = requestAnimationFrame(tick);
     // la línea queda justo bajo el dedo, medido sobre el retrato
     const seguir = (x: number) => {
       if (!el) return;
@@ -86,11 +91,14 @@ export default function Hero() {
     el?.addEventListener("touchstart", down, { passive: true });
     window.addEventListener("touchmove", moveTouch, { passive: true });
     window.addEventListener("touchend", up);
+    window.addEventListener("touchcancel", up);
     return () => {
       cancelAnimationFrame(raf);
+      window.removeEventListener("pointermove", move);
       el?.removeEventListener("touchstart", down);
       window.removeEventListener("touchmove", moveTouch);
       window.removeEventListener("touchend", up);
+      window.removeEventListener("touchcancel", up);
     };
   }, [side, smooth]);
 
@@ -140,8 +148,7 @@ export default function Hero() {
           className="relative mx-auto touch-pan-y -translate-x-[10%] aspect-[900/1147] h-[min(68svh,700px)] self-end max-md:col-span-2 max-md:row-start-2 max-md:mt-3 max-md:h-[min(60svh,540px)] md:row-start-1 md:col-start-2"
         >
           <motion.div
-            // bordes difuminados: el fondo gris de la foto se funde con la página
-            className="absolute inset-0 [mask-composite:intersect] [mask-image:linear-gradient(to_right,transparent,#000_14%,#000_86%,transparent),linear-gradient(to_bottom,transparent,#000_12%)]"
+            className="absolute inset-0"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, ease: EASE, delay: 0.1 }}
@@ -152,9 +159,9 @@ export default function Hero() {
               fill
               priority
               sizes="(max-width: 768px) 80vw, 560px"
-              className="object-cover object-bottom"
+              className={`object-cover object-bottom ${FADE}`}
             />
-            <motion.div className="absolute inset-0" style={{ clipPath: clip }} aria-hidden="true">
+            <motion.div className={`absolute inset-0 ${FADE}`} style={{ clipPath: clip }} aria-hidden="true">
               <Image
                 src="/consuelo-programadora.webp"
                 alt=""

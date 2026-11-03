@@ -41,8 +41,8 @@ export default function About() {
         <FadeUp delay={0.1}>
           <p>
             {t({
-              en: `I work remotely from ${SITE.location} as a freelancer or contractor, and adapt my schedule to overlap with European teams. English B2, Spanish native.`,
-              es: `Trabajo en remoto desde ${SITE.location} como freelance o contractor, y adapto mi horario para coincidir con equipos en Europa. Inglés B2, español nativo.`,
+              en: `I work remotely from ${SITE.location} as a freelancer or contractor, with teams anywhere in the world. English B2, Spanish native.`,
+              es: `Trabajo en remoto desde ${SITE.location} como freelance o contractor, con equipos de cualquier parte del mundo. Inglés B2, español nativo.`,
             })}
           </p>
         </FadeUp>
