@@ -10,7 +10,6 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 /** One board of real work per service, on a light wash of colour. */
 const BOARDS = [
-  { src: "/projects/fresco/nuevo-pedido.jpg", alt: "Fresco new order screen, designed for one hand", tint: "#eee8f5", maxHeight: 560 },
   { src: "/projects/invitacion-verano/portada.jpg", alt: "Summer wedding invitation cover", tint: "#f3e9f0", maxHeight: 560 },
   { src: "/projects/fresco/inicio.jpg", alt: "Fresco sales app home screen", tint: "#eef1e6", maxHeight: 560 },
 ];

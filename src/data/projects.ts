@@ -76,7 +76,7 @@ export const PROJECTS: Project[] = [
     tags: ["UX/UI", "Producto", "Web app"],
     year: "2026",
     live: { href: "https://fresco-demo-five.vercel.app", label: "Probar la app" },
-    role: "Investigación, arquitectura de información, diseño de interfaz y desarrollo",
+    role: "Arquitectura de información, diseño de interfaz y desarrollo con IA",
     tools: ["Diseño UI", "Arquitectura de información", "Next.js", "Web app instalable"],
     accent: "violet",
     cover: "/projects/fresco/inicio.jpg",
@@ -284,7 +284,7 @@ export const PROJECTS: Project[] = [
         title: "Cada detalle tiene un porqué",
         items: [
           { title: "Flores reales", body: "Se usaron las acuarelas elegidas por la novia, en alta calidad para que se vean nítidas." },
-          { title: "Respuestas ordenadas", body: "Alergias para marcar y canciones de una lista: nada mal escrito." },
+          { title: "Respuestas ordenadas", body: "Alergias para marcar y canciones de una lista: casi nada se puede escribir mal." },
           { title: "Fácil de encontrarse", body: "Basta el nombre y un apellido para confirmar." },
           { title: "Música al abrir", body: "Suena al tocar la flor y se puede pausar en cualquier momento." },
         ],

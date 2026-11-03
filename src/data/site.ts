@@ -20,19 +20,6 @@ export const SITE = {
 
 export const SERVICES: { title: T; body: T; tags: T[] }[] = [
   {
-    title: { en: "UX Research", es: "UX Research" },
-    body: {
-      en: "Interviews, personas, journey maps, benchmarking and heuristic evaluation to understand before designing.",
-      es: "Entrevistas, personas, journey maps, benchmarking y evaluación heurística para entender antes de diseñar.",
-    },
-    tags: [
-      { en: "Interviews", es: "Entrevistas" },
-      { en: "Personas", es: "Personas" },
-      { en: "Journey maps", es: "Journey map" },
-      { en: "Heuristics", es: "Heurísticas" },
-    ],
-  },
-  {
     title: { en: "UI Design", es: "Diseño UI" },
     body: {
       en: "Clear, accessible interfaces, from wireframes to high fidelity, built on consistent component systems.",
@@ -65,7 +52,6 @@ export const DESIGN_TOOLS = ["Figma", "Illustrator", "Photoshop", "InDesign"];
 export const CODE_TOOLS = ["Claude Code", "React", "Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Git", "Vercel"];
 
 export const SKILLS: T[] = [
-  { en: "UX Research", es: "UX Research" },
   { en: "Prototyping", es: "Prototipado" },
   { en: "Usability testing", es: "Pruebas de usabilidad" },
   { en: "Design Thinking", es: "Design Thinking" },

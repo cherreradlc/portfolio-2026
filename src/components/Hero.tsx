@@ -136,8 +136,8 @@ export default function Hero() {
           </a>
           <p className="mt-4 hidden text-[clamp(13px,1.35vw,16px)] leading-[1.55] text-ink-soft md:block md:ml-auto md:max-w-[30ch]">
             {t({
-              en: "UX/UI and graphic designer: research, clear interfaces and brands.",
-              es: "Diseñadora UX/UI y gráfica: investigación, interfaces claras y marcas.",
+              en: "UX/UI and graphic designer: clear interfaces and brands.",
+              es: "Diseñadora UX/UI y gráfica: interfaces claras y marcas.",
             })}
           </p>
         </motion.div>
