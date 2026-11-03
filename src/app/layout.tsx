@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     template: `%s — ${SITE.shortName}`,
   },
   description:
-    "Portfolio of Consuelo Herrera De La Calle, UX/UI designer and front-end developer based in Chile. User research, clear interfaces and working web apps built with React and Next.js.",
+    "Portfolio of Consuelo Herrera De La Calle, UX/UI designer based in Chile. User research, clear interfaces, and working web apps built with AI on React and Next.js.",
 };
 
 export const viewport: Viewport = {

@@ -1,6 +1,5 @@
 import { FRESCO_CODE, FRESCO_LINEAS } from "./code/fresco";
 import { INVITACION_CODE, INVITACION_LINEAS } from "./code/invitacion";
-import { DIGITAL_CODE, DIGITAL_LINEAS } from "./code/invitacion-digital";
 
 /**
  * Every project in the portfolio, in display order. Case-study pages are built
@@ -72,7 +71,7 @@ export const PROJECTS: Project[] = [
     slug: "fresco",
     kind: "frontend",
     title: "Fresco — app de ventas para un pequeño negocio",
-    short: "Propuesta para un negocio real: una app para el celular que reemplaza el cuaderno de un vendedor de paltas y huevos.",
+    short: "Para un negocio real, que ya aceptó el proyecto: una app para el celular que reemplaza el cuaderno de un vendedor de paltas y huevos.",
     category: "UX/UI · Producto digital",
     tags: ["UX/UI", "Producto", "Web app"],
     year: "2026",
@@ -84,7 +83,7 @@ export const PROJECTS: Project[] = [
     coverAlt: "Pantalla de inicio de la app con lo que le deben y lo vendido hoy",
     screens: ["/projects/fresco/inicio.jpg", "/projects/fresco/ingresar.jpg", "/projects/fresco/nuevo-pedido.jpg"],
     intro:
-      "Propuesta para un negocio real: un vendedor de paltas, huevos y queso de cabra, por mayor y al detalle, que anota todo en un cuaderno. Diseñé y programé un prototipo funcional para que venda, cobre y sepa cuánto gana desde el celular.",
+      "Para un negocio real: un vendedor de paltas, huevos y queso de cabra, por mayor y al detalle, que anota todo en un cuaderno. Diseñé un prototipo funcional, construido con IA, para que venda, cobre y sepa cuánto gana desde el celular. El cliente lo aceptó y ahora lo estamos llevando a su negocio.",
     blocks: [
       {
         type: "stats",
@@ -145,10 +144,10 @@ export const PROJECTS: Project[] = [
       },
       {
         type: "code",
-        eyebrow: "Hecho con código",
-        title: "Diseñada y programada por mí",
+        eyebrow: "Diseño + IA",
+        title: "Diseñada por mí, construida con IA",
         body: [
-          "Fresco no es un prototipo en Figma: es una app que funciona. La programé con Next.js, React y TypeScript, y se instala en el celular como cualquier app.",
+          "Fresco no es un prototipo en Figma: es una app que funciona y se instala en el celular. Yo la diseñé y definí cómo debía comportarse; el código lo construí con IA (Claude Code), revisando y probando cada pantalla hasta que funcionara como la diseñé.",
           "Las reglas del negocio viven en el código: el precio por mayor, quién debe y desde cuándo, la proyección de ventas y los libros para el contador. Estos son fragmentos reales.",
         ],
         stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4", "App instalable (PWA)", `${FRESCO_LINEAS.toLocaleString("es-CL")} líneas de código`],
@@ -196,9 +195,9 @@ export const PROJECTS: Project[] = [
       {
         type: "stats",
         items: [
-          { value: "1 toque", label: "para abrir la flor y entrar" },
-          { value: "6", label: "alergias comunes para marcar" },
-          { value: "100%", label: "pensada para celular" },
+          { value: "123", label: "invitados con su propia confirmación" },
+          { value: "2 días", label: "del primer diseño a publicada" },
+          { value: "≈12", label: "respuestas mal escritas en mi invitación anterior: aquí se eligen de una lista" },
         ],
       },
       {
@@ -206,8 +205,9 @@ export const PROJECTS: Project[] = [
         eyebrow: "El desafío",
         title: "Una invitación alegre que se responde bien",
         body: [
-          "Los novios querían algo colorido y veraniego, con las flores de su tarjeta de referencia. También querían respuestas ordenadas: en otra invitación la gente escribió mal las canciones o las alergias.",
+          "Los novios querían algo colorido y veraniego, con las flores de su tarjeta de referencia. También querían respuestas ordenadas: en una invitación anterior que diseñé, cerca de 12 respuestas llegaron con canciones o alergias mal escritas.",
           "Por eso las alergias se marcan con un toque y las canciones se eligen de una lista, con su nombre y su artista.",
+          "A noviembre de 2026, 36 de los 123 invitados ya confirmaron, y los novios ven cada respuesta ordenada en su panel.",
         ],
       },
       {
@@ -264,10 +264,10 @@ export const PROJECTS: Project[] = [
       },
       {
         type: "code",
-        eyebrow: "Hecho con código",
-        title: "Diseñada y programada por mí",
+        eyebrow: "Diseño + IA",
+        title: "Diseñada por mí, construida con IA",
         body: [
-          "La invitación es un sitio real: los invitados confirman desde el celular y los novios ven las respuestas en su panel. La programé con Next.js y Supabase, una base de datos en la nube.",
+          "La invitación es un sitio real: los invitados confirman desde el celular y los novios ven las respuestas en su panel. Yo diseñé la experiencia y las ilustraciones; el código lo construí con IA (Claude Code) sobre Next.js y Supabase, revisando cada detalle antes de publicarlo.",
           "Detrás de las acuarelas hay código que cuida a los invitados: su lista no se puede descargar, la música suena bien en iPhone y las canciones se eligen de un catálogo real. Estos son fragmentos reales.",
         ],
         stack: ["Next.js 16", "React 19", "TypeScript", "Supabase (PostgreSQL)", "Tailwind CSS 4", "Ilustraciones en SVG", `${INVITACION_LINEAS.toLocaleString("es-CL")} líneas de código`],
@@ -296,223 +296,6 @@ export const PROJECTS: Project[] = [
       {
         type: "quote",
         text: "Entendiste perfectamente lo que quería. La plataforma es súper fácil de usar. 100% recomendada.",
-        author: "Novia",
-      },
-    ],
-  },
-  {
-    slug: "ux4all",
-    kind: "diseno",
-    title: "UX4ALL — Plataforma educativa accesible",
-    short: "Una plataforma de aprendizaje online diseñada desde la accesibilidad, para estudiantes con dislexia, baja visión o que retoman sus estudios.",
-    category: "UX Research · Diseño de producto",
-    tags: ["UX Research", "Accesibilidad", "Prototipado"],
-    year: "2026",
-    role: "Investigación UX, arquitectura de información, prototipado y evaluación",
-    tools: ["Entrevistas", "Personas", "Journey map", "Benchmarking", "Heurísticas de Nielsen"],
-    accent: "violet",
-    cover: "/projects/ux4all/pantalla-inicio.jpg",
-    coverAlt: "Pantalla de inicio de la app con cursos destacados",
-    screens: ["/projects/ux4all/pantalla-inicio.jpg", "/projects/ux4all/pantalla-curso.jpg", "/projects/ux4all/pantalla-inscripcion.jpg"],
-    intro:
-      "Las plataformas educativas más usadas resuelven la gestión de cursos, pero dejan la accesibilidad escondida. UX4ALL parte al revés: primero quién estudia y con qué capacidades, después la interfaz.",
-    blocks: [
-      {
-        type: "stats",
-        items: [
-          { value: "3", label: "entrevistas con usuarios reales" },
-          { value: "2", label: "personas construidas desde la investigación" },
-          { value: "< 25 s", label: "para encontrar una tarea en el test del prototipo" },
-        ],
-      },
-      {
-        type: "text",
-        eyebrow: "El problema",
-        title: "Navegar una plataforma educativa no debería ser la parte difícil de estudiar",
-        body: [
-          "Entrevisté a una estudiante universitaria con dislexia, a un estudiante con baja visión y a una adulta que retoma sus estudios online. Los tres describieron lo mismo: navegación confusa, exceso de información en pantalla y opciones de accesibilidad difíciles de encontrar.",
-          "Un benchmarking de Moodle, Google Classroom y Canvas confirmó la brecha: plataformas robustas, pero sobrecargadas y con una curva de aprendizaje alta para quien llega por primera vez.",
-        ],
-      },
-      {
-        type: "list",
-        eyebrow: "Investigación",
-        title: "Lo que aprendí de las personas usuarias",
-        items: [
-          { title: "Camila, 21 · dislexia", body: "Necesita contenido escaneable, tipografía legible e instrucciones sin ambigüedad. Le frustran los textos largos sin jerarquía." },
-          { title: "Luis, 38 · baja visión", body: "Necesita alto contraste, botones grandes y control del tamaño de texto. Le frustran los flujos con demasiados pasos." },
-          { title: "Journey: acceder a una tarea", body: "De la expectativa al ingreso, a la confusión al buscar el curso y la sobrecarga al leer instrucciones. El alivio solo llega al enviar." },
-          { title: "Oportunidad", body: "Un dashboard claro, breadcrumbs, un modo accesible siempre visible e indicadores de progreso en cada paso." },
-        ],
-      },
-      {
-        type: "gallery",
-        eyebrow: "Bocetos",
-        title: "Primero en papel: estructura antes que estilo",
-        columns: 4,
-        images: [
-          { src: "/projects/ux4all/wireframe-login.jpg", alt: "Boceto de inicio de sesión con botón de modo accesible" },
-          { src: "/projects/ux4all/wireframe-dashboard.jpg", alt: "Boceto del dashboard con cursos y tareas pendientes" },
-          { src: "/projects/ux4all/wireframe-curso.jpg", alt: "Boceto de la vista de curso" },
-          { src: "/projects/ux4all/wireframe-tarea.jpg", alt: "Boceto de la vista de tarea" },
-        ],
-      },
-      {
-        type: "text",
-        eyebrow: "Prototipo y validación",
-        title: "Probar temprano para equivocarse barato",
-        body: [
-          "Diseñé wireframes de baja fidelidad para las cuatro vistas clave: inicio de sesión con modo accesible visible, dashboard, curso y tarea. Etiquetas siempre visibles, campos grandes y un menú lateral fijo.",
-          "En pruebas con tres usuarios, todos encontraron su tarea en menos de 25 segundos y valoraron el menú fijo. También detectaron que la ayuda era poco visible y que buscaban el buscador arriba: ambos ajustes se incorporaron.",
-        ],
-      },
-      {
-        type: "phones",
-        eyebrow: "La interfaz final",
-        title: "Del boceto al prototipo de alta fidelidad",
-        images: [
-          { src: "/projects/ux4all/pantalla-inicio.jpg", alt: "Pantalla de inicio", caption: "Inicio: búsqueda siempre visible, categorías y cursos con duración y nivel." },
-          { src: "/projects/ux4all/pantalla-curso.jpg", alt: "Detalle de curso", caption: "Detalle del curso en bloques cortos y escaneables, con un solo botón principal." },
-          { src: "/projects/ux4all/pantalla-inscripcion.jpg", alt: "Confirmación de inscripción", caption: "Inscripción con un mensaje claro y una acción grande, fácil de tocar." },
-        ],
-      },
-      {
-        type: "image",
-        src: "/projects/ux4all/prototipo-flujo.jpg",
-        alt: "Flujo completo del prototipo con sus conexiones en Figma",
-        caption: "Prototipo navegable en Figma: inicio, detalle, inscripción y comienzo del curso.",
-      },
-      {
-        type: "list",
-        eyebrow: "Evaluación heurística",
-        title: "Las 10 heurísticas de Nielsen como checklist",
-        items: [
-          { title: "Visibilidad del estado · media", body: "Confirmación de envío más destacada: ícono de éxito, mensaje persistente y cambio de estado del botón." },
-          { title: "Flexibilidad y eficiencia · media", body: "Atajos de teclado, navegación por tab optimizada y compatibilidad con lector de pantalla." },
-          { title: "Ayuda y documentación · baja", body: "Botón de ayuda fijo, tooltips contextuales y un centro de ayuda accesible." },
-        ],
-      },
-    ],
-  },
-  {
-    slug: "invitacion-digital",
-    kind: "frontend",
-    title: "Invitación digital de matrimonio",
-    short: "Una invitación que se abre como un sobre real, con confirmación de asistencia y un panel para los novios.",
-    category: "UX/UI · Producto digital",
-    tags: ["UX/UI", "Dirección de arte", "Web"],
-    year: "2026",
-    role: "Diseño de experiencia, interfaz, ilustración y dirección de arte",
-    tools: ["Diseño UI", "Ilustración vectorial", "Next.js", "Supabase", "Vercel"],
-    accent: "sage",
-    cover: "/projects/invitacion/tarjeta.jpg",
-    coverAlt: "Sobre verde salvia abierto con la tarjeta de la invitación",
-    screens: ["/projects/invitacion/tarjeta.jpg", "/projects/invitacion/sobre.jpg", "/projects/invitacion/portada.jpg"],
-    intro:
-      "Una invitación tan especial como una impresa, que además ordena lo difícil: quién viene, qué no puede comer cada uno y qué canción pide.",
-    blocks: [
-      {
-        type: "stats",
-        items: [
-          { value: "60", label: "invitados en una sola lista" },
-          { value: "3", label: "respuestas posibles: confirma, pendiente, no asiste" },
-          { value: "100%", label: "pensada para celular" },
-        ],
-      },
-      {
-        type: "text",
-        eyebrow: "El desafío",
-        title: "Emocionar al abrirla y ordenar las respuestas",
-        body: [
-          "Las invitaciones digitales suelen ser un PDF que se pierde en el chat, y las respuestas quedan repartidas en mensajes. Esta emociona al abrirla y junta todas las confirmaciones en un solo lugar.",
-          "La lista de invitados es privada: nadie la puede ver con el link.",
-        ],
-      },
-      {
-        type: "video",
-        eyebrow: "Recorrido",
-        title: "Así la usa un invitado",
-        body: [
-          "Abre el sobre, recorre la invitación, ve el mapa y la lista de regalos, y confirma con sus alergias y una canción.",
-          "Los nombres son de ejemplo y la foto y los lugares están difuminados.",
-        ],
-        src: "/projects/invitacion/recorrido.mp4",
-        poster: "/projects/invitacion/recorrido-poster.jpg",
-        alt: "Video del recorrido por la invitación en un celular",
-      },
-      {
-        type: "phones",
-        eyebrow: "La invitación",
-        title: "Del sobre cerrado a la confirmación",
-        images: [
-          { src: "/projects/invitacion/sobre.jpg", alt: "Sobre cerrado con lacre", caption: "Se toca el sello para abrir." },
-          { src: "/projects/invitacion/tarjeta.jpg", alt: "Tarjeta saliendo del sobre", caption: "La tarjeta sale del sobre." },
-          { src: "/projects/invitacion/portada.jpg", alt: "Portada de la invitación", caption: "Ilustraciones en acuarela hechas a medida." },
-          { src: "/projects/invitacion/fecha.jpg", alt: "Fecha y cuenta regresiva", caption: "La fecha y una cuenta regresiva." },
-          { src: "/projects/invitacion/itinerario.jpg", alt: "Itinerario del día", caption: "El itinerario de un vistazo." },
-          { src: "/projects/invitacion/dresscode.jpg", alt: "Dresscode con colores a evitar", caption: "Dresscode y colores a evitar." },
-          { src: "/projects/invitacion/confirmar.jpg", alt: "Formulario de confirmación", caption: "Para confirmar basta escribir el nombre." },
-          { src: "/projects/invitacion/confirmar-busqueda.jpg", alt: "Mensaje de nombre no encontrado", caption: "Avisos claros si el nombre no está." },
-        ],
-      },
-      {
-        type: "video",
-        eyebrow: "Panel de los novios",
-        title: "Todas las respuestas en un solo lugar",
-        body: [
-          "Los novios entran con su correo y ven cuántos confirmaron, quiénes faltan y quiénes no van.",
-          "Desde ahí agregan o corrigen invitados, y ven lo que respondió cada uno.",
-        ],
-        src: "/projects/invitacion/panel.mp4",
-        poster: "/projects/invitacion/panel-poster.jpg",
-        alt: "Video del panel de los novios",
-      },
-      {
-        type: "phones",
-        eyebrow: "El panel",
-        title: "La lista de invitados, siempre al día",
-        body: "Aquí los novios ven quién viene y qué pidió cada uno, y mantienen la lista ordenada sin planillas.",
-        images: [
-          { src: "/projects/invitacion/admin-ingreso.jpg", alt: "Ingreso al panel de los novios", caption: "Se entra con correo y contraseña." },
-          { src: "/projects/invitacion/admin-resumen.jpg", alt: "Resumen de respuestas y formulario para agregar invitados", caption: "El resumen de respuestas y un campo para agregar invitados." },
-          { src: "/projects/invitacion/admin-respuestas.jpg", alt: "Tarjetas de invitados con alergias y canción", caption: "Cada invitado con sus alergias y su canción." },
-          { src: "/projects/invitacion/admin-editar.jpg", alt: "Edición del nombre de un invitado", caption: "Los nombres se corrigen ahí mismo." },
-        ],
-      },
-      {
-        type: "code",
-        eyebrow: "Hecho con código",
-        title: "Diseñada y programada por mí",
-        body: [
-          "Detrás del sobre que se abre hay una aplicación completa: los invitados confirman su asistencia y los novios administran la lista desde un panel con contraseña.",
-          "La programé para que funcione con dos bases de datos distintas, Supabase en la nube o MySQL en un servidor propio, sin cambiar el resto del código. Estos son fragmentos reales.",
-        ],
-        stack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "MySQL", "Tailwind CSS 4", `${DIGITAL_LINEAS.toLocaleString("es-CL")} líneas de código`],
-        files: [
-          { label: "Sobre que se abre", name: "src/components/EnvelopeCover.tsx", code: DIGITAL_CODE.sobre, caption: "Los tiempos de la animación del sobre: el sello, la solapa, la tarjeta que sube y el fundido. Las formas de la solapa y el bolsillo se recortan con polígonos." },
-          { label: "GuestsRepository", name: "src/lib/db/types.ts", code: DIGITAL_CODE.repo, caption: "Una sola lista de acciones para la base de datos: buscar, responder, agregar, editar y borrar invitados. Así la invitación funciona igual con Supabase o con MySQL." },
-          { label: "proxy()", name: "src/proxy.ts", code: DIGITAL_CODE.proxy, caption: "Protege el panel de los novios: si alguien entra sin haber iniciado sesión, lo manda a la pantalla de ingreso." },
-          { label: "localSignIn()", name: "src/lib/auth/local-auth.ts", code: DIGITAL_CODE.login, caption: "El ingreso de los novios: la contraseña se compara cifrada (nunca se guarda tal cual) y la sesión queda en una cookie segura por 7 días." },
-        ],
-      },
-      {
-        type: "list",
-        eyebrow: "Decisiones de diseño",
-        title: "Cada detalle tiene un porqué",
-        items: [
-          { title: "Búsqueda por nombre", body: "Cada invitado solo se encuentra a sí mismo. Nadie puede ver la lista completa." },
-          { title: "Mensajes claros", body: "Si falta un apellido o el nombre no está, la invitación lo dice con amabilidad." },
-          { title: "Panel en el celular", body: "Cada invitado es una tarjeta fácil de leer, sin tablas que se salgan de la pantalla." },
-          { title: "Ilustración propia", body: "Ramas de eucalipto en acuarela, todas distintas." },
-        ],
-      },
-      {
-        type: "quote",
-        text: "La meta: que los novios no tuvieran que perseguir confirmaciones por WhatsApp.",
-      },
-      {
-        type: "quote",
-        text: "Quedó genial, está muy lindo el diseño. Es justo lo que necesitaba.",
         author: "Novia",
       },
     ],

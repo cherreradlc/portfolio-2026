@@ -106,7 +106,7 @@ export default function Hero() {
   return (
     <section className="relative isolate overflow-hidden border-b border-line pt-24">
       <h1 className="sr-only">
-        {t({ en: "Consuelo Herrera, designer and front-end developer", es: "Consuelo Herrera, diseñadora y desarrolladora front-end" })}
+        {t({ en: "Consuelo Herrera, UX/UI designer who builds with AI", es: "Consuelo Herrera, diseñadora UX/UI que construye con IA" })}
       </h1>
 
       <div className="relative mx-auto grid max-w-[1280px] max-md:pt-6 md:min-h-[calc(100svh-6rem)] grid-rows-[auto_auto] px-4 sm:px-9 md:grid-cols-[1fr_auto_1fr] md:grid-rows-1 md:items-center max-md:content-end max-md:grid-cols-2">
@@ -193,8 +193,8 @@ export default function Hero() {
           </a>
           <p className="mt-4 hidden text-[clamp(13px,1.35vw,16px)] leading-[1.55] text-ink-soft md:block max-md:ml-auto md:max-w-[30ch]">
             {t({
-              en: "I build what I design: clean code with Next.js, React and Supabase.",
-              es: "Construyo lo que diseño: código limpio con Next.js, React y Supabase.",
+              en: "I build what I design with AI: working apps on Next.js, React and Supabase.",
+              es: "Construyo lo que diseño con IA: apps que funcionan, con Next.js, React y Supabase.",
             })}
           </p>
           <div className="pointer-events-none absolute top-full left-8 mt-6 hidden flex-col gap-1.5 font-mono text-[12.5px] text-sage md:flex" aria-hidden="true">

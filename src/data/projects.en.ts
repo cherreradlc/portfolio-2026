@@ -1,6 +1,5 @@
 import { FRESCO_CODE, FRESCO_LINEAS } from "./code/fresco";
 import { INVITACION_CODE, INVITACION_LINEAS } from "./code/invitacion";
-import { DIGITAL_CODE, DIGITAL_LINEAS } from "./code/invitacion-digital";
 import type { Project } from "./projects";
 
 /**
@@ -12,7 +11,7 @@ export const PROJECTS_EN: Project[] = [
     slug: "fresco",
     kind: "frontend",
     title: "Fresco — sales app for a small business",
-    short: "A proposal for a real business: a phone app that replaces an avocado and egg seller's notebook.",
+    short: "For a real business that has accepted the project: a phone app that replaces an avocado and egg seller's notebook.",
     category: "UX/UI · Digital product",
     tags: ["UX/UI", "Product", "Web app"],
     year: "2026",
@@ -24,7 +23,7 @@ export const PROJECTS_EN: Project[] = [
     coverAlt: "App home screen with money owed and today's sales",
     screens: ["/projects/fresco/inicio.jpg", "/projects/fresco/ingresar.jpg", "/projects/fresco/nuevo-pedido.jpg"],
     intro:
-      "A proposal for a real business: a seller of avocados, eggs and goat cheese, wholesale and retail, who keeps everything in a notebook. I designed and built a working prototype so he can sell, collect and know what he earns from his phone.",
+      "For a real business: a seller of avocados, eggs and goat cheese, wholesale and retail, who keeps everything in a notebook. I designed a working prototype, built with AI, so he can sell, collect and know what he earns from his phone. The client accepted it, and we are now bringing it into his business.",
     blocks: [
       {
         type: "stats",
@@ -85,10 +84,10 @@ export const PROJECTS_EN: Project[] = [
       },
       {
         type: "code",
-        eyebrow: "Built with code",
-        title: "Designed and built by me",
+        eyebrow: "Design + AI",
+        title: "Designed by me, built with AI",
         body: [
-          "Fresco isn’t a Figma prototype: it’s a working app. I built it with Next.js, React and TypeScript, and it installs on the phone like any other app.",
+          "Fresco isn’t a Figma prototype: it’s a working app that installs on the phone. I designed it and defined how it should behave; I built the code with AI (Claude Code), reviewing and testing every screen until it worked the way I designed it.",
           "The business rules live in the code: wholesale pricing, who owes and since when, the sales projection and the accountant’s books. These are real excerpts.",
         ],
         stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4", "Installable app (PWA)", `${FRESCO_LINEAS.toLocaleString("en-US")} lines of code`],
@@ -136,9 +135,9 @@ export const PROJECTS_EN: Project[] = [
       {
         type: "stats",
         items: [
-          { value: "1 tap", label: "to open the flower and step in" },
-          { value: "6", label: "common allergies to tick" },
-          { value: "100%", label: "designed for phones" },
+          { value: "123", label: "guests, each with their own RSVP" },
+          { value: "2 days", label: "from first design to live" },
+          { value: "≈12", label: "misspelled answers on my previous invitation: here they’re picked from a list" },
         ],
       },
       {
@@ -146,8 +145,9 @@ export const PROJECTS_EN: Project[] = [
         eyebrow: "The challenge",
         title: "A cheerful invitation that gets good answers",
         body: [
-          "The couple wanted something colourful and summery, with the flowers from their reference card. They also wanted tidy answers: on another invitation people misspelled songs and allergies.",
+          "The couple wanted something colourful and summery, with the flowers from their reference card. They also wanted tidy answers: on a previous invitation I designed, about 12 answers came in with misspelled songs or allergies.",
           "So allergies are ticked with a tap, and songs are picked from a list, with title and artist.",
+          "As of November 2026, 36 of the 123 guests have already confirmed, and the couple sees every answer neatly in their dashboard.",
         ],
       },
       {
@@ -204,10 +204,10 @@ export const PROJECTS_EN: Project[] = [
       },
       {
         type: "code",
-        eyebrow: "Built with code",
-        title: "Designed and built by me",
+        eyebrow: "Design + AI",
+        title: "Designed by me, built with AI",
         body: [
-          "The invitation is a real website: guests RSVP from their phone and the couple sees the answers in their dashboard. I built it with Next.js and Supabase, a cloud database.",
+          "The invitation is a real website: guests RSVP from their phone and the couple sees the answers in their dashboard. I designed the experience and the illustrations; I built the code with AI (Claude Code) on Next.js and Supabase, reviewing every detail before publishing it.",
           "Behind the watercolours there’s code that looks after the guests: their list can’t be downloaded, the music plays well on iPhone and songs come from a real catalogue. These are real excerpts.",
         ],
         stack: ["Next.js 16", "React 19", "TypeScript", "Supabase (PostgreSQL)", "Tailwind CSS 4", "SVG illustrations", `${INVITACION_LINEAS.toLocaleString("en-US")} lines of code`],
@@ -236,223 +236,6 @@ export const PROJECTS_EN: Project[] = [
       {
         type: "quote",
         text: "You understood exactly what I wanted. The platform is super easy to use. 100% recommended.",
-        author: "The bride",
-      },
-    ],
-  },
-  {
-    slug: "ux4all",
-    kind: "diseno",
-    title: "UX4ALL — Accessible learning platform",
-    short: "An online learning platform designed around accessibility, for students with dyslexia, low vision or returning to their studies.",
-    category: "UX Research · Product design",
-    tags: ["UX Research", "Accessibility", "Prototyping"],
-    year: "2026",
-    role: "UX research, information architecture, prototyping and evaluation",
-    tools: ["Interviews", "Personas", "Journey map", "Benchmarking", "Nielsen heuristics"],
-    accent: "violet",
-    cover: "/projects/ux4all/pantalla-inicio.jpg",
-    coverAlt: "App home screen with featured courses",
-    screens: ["/projects/ux4all/pantalla-inicio.jpg", "/projects/ux4all/pantalla-curso.jpg", "/projects/ux4all/pantalla-inscripcion.jpg"],
-    intro:
-      "The most widely used learning platforms handle course management well but leave accessibility hidden. UX4ALL starts the other way round: first who is studying and with what abilities, then the interface.",
-    blocks: [
-      {
-        type: "stats",
-        items: [
-          { value: "3", label: "interviews with real users" },
-          { value: "2", label: "personas built from the research" },
-          { value: "< 25 s", label: "to find a task in the prototype test" },
-        ],
-      },
-      {
-        type: "text",
-        eyebrow: "The problem",
-        title: "Navigating a learning platform shouldn't be the hard part of studying",
-        body: [
-          "I interviewed a university student with dyslexia, a student with low vision and an adult returning to study online. All three described the same thing: confusing navigation, too much information on screen and accessibility options that were hard to find.",
-          "A benchmark of Moodle, Google Classroom and Canvas confirmed the gap: robust platforms, but overloaded and with a steep learning curve for first-time users.",
-        ],
-      },
-      {
-        type: "list",
-        eyebrow: "Research",
-        title: "What I learned from the users",
-        items: [
-          { title: "Camila, 21 · dyslexia", body: "Needs scannable content, legible type and unambiguous instructions. Long, unstructured text frustrates her." },
-          { title: "Luis, 38 · low vision", body: "Needs high contrast, large buttons and control over text size. Flows with too many steps frustrate him." },
-          { title: "Journey: reaching a task", body: "From anticipation at login, to confusion finding the course and overload reading the instructions. Relief only comes on submitting." },
-          { title: "Opportunity", body: "A clear dashboard, breadcrumbs, an always-visible accessible mode and progress indicators at every step." },
-        ],
-      },
-      {
-        type: "gallery",
-        eyebrow: "Sketches",
-        title: "Paper first: structure before style",
-        columns: 4,
-        images: [
-          { src: "/projects/ux4all/wireframe-login.jpg", alt: "Sketch of the login screen with an accessible-mode button" },
-          { src: "/projects/ux4all/wireframe-dashboard.jpg", alt: "Sketch of the dashboard with courses and pending tasks" },
-          { src: "/projects/ux4all/wireframe-curso.jpg", alt: "Sketch of the course view" },
-          { src: "/projects/ux4all/wireframe-tarea.jpg", alt: "Sketch of the task view" },
-        ],
-      },
-      {
-        type: "text",
-        eyebrow: "Prototype and validation",
-        title: "Test early so mistakes stay cheap",
-        body: [
-          "I designed low-fidelity wireframes for the four key views: login with a visible accessible mode, dashboard, course and task. Always-visible labels, large fields and a fixed side menu.",
-          "In tests with three users, all of them found their task in under 25 seconds and valued the fixed menu. They also showed that help was hard to spot and that they looked for search at the top: both changes were made.",
-        ],
-      },
-      {
-        type: "phones",
-        eyebrow: "The final interface",
-        title: "From sketch to high-fidelity prototype",
-        images: [
-          { src: "/projects/ux4all/pantalla-inicio.jpg", alt: "Home screen", caption: "Home: search always visible, categories and courses with duration and level." },
-          { src: "/projects/ux4all/pantalla-curso.jpg", alt: "Course detail", caption: "Course detail in short, scannable blocks with a single primary button." },
-          { src: "/projects/ux4all/pantalla-inscripcion.jpg", alt: "Enrollment confirmation", caption: "Enrollment with a clear message and a large, easy-to-tap action." },
-        ],
-      },
-      {
-        type: "image",
-        src: "/projects/ux4all/prototipo-flujo.jpg",
-        alt: "Full prototype flow with its connections in Figma",
-        caption: "Clickable prototype in Figma: home, detail, enrollment and course start.",
-      },
-      {
-        type: "list",
-        eyebrow: "Heuristic evaluation",
-        title: "Nielsen's 10 heuristics as a checklist",
-        items: [
-          { title: "Visibility of system status · medium", body: "A more prominent submission confirmation: success icon, persistent message and a change in button state." },
-          { title: "Flexibility and efficiency · medium", body: "Keyboard shortcuts, optimized tab navigation and screen-reader support." },
-          { title: "Help and documentation · low", body: "A fixed help button, contextual tooltips and an accessible help center." },
-        ],
-      },
-    ],
-  },
-  {
-    slug: "invitacion-digital",
-    kind: "frontend",
-    title: "Digital wedding invitation",
-    short: "An invitation that opens like a real envelope, with RSVPs and a dashboard for the couple.",
-    category: "UX/UI · Digital product",
-    tags: ["UX/UI", "Art direction", "Web"],
-    year: "2026",
-    role: "Experience design, interface, illustration and art direction",
-    tools: ["UI design", "Vector illustration", "Next.js", "Supabase", "Vercel"],
-    accent: "sage",
-    cover: "/projects/invitacion/tarjeta.jpg",
-    coverAlt: "Sage green envelope open with the invitation card",
-    screens: ["/projects/invitacion/tarjeta.jpg", "/projects/invitacion/sobre.jpg", "/projects/invitacion/portada.jpg"],
-    intro:
-      "An invitation as special as a printed one, that also sorts out the hard part: who's coming, what each guest can't eat and which song they want.",
-    blocks: [
-      {
-        type: "stats",
-        items: [
-          { value: "60", label: "guests in a single list" },
-          { value: "3", label: "possible answers: yes, pending, can't come" },
-          { value: "100%", label: "designed for phones" },
-        ],
-      },
-      {
-        type: "text",
-        eyebrow: "The challenge",
-        title: "Delight on opening, order in the answers",
-        body: [
-          "Digital invitations are often a PDF lost in a chat, with answers scattered across messages. This one delights when opened and keeps every RSVP in one place.",
-          "The guest list is private: nobody can see it from the link.",
-        ],
-      },
-      {
-        type: "video",
-        eyebrow: "Walkthrough",
-        title: "How a guest uses it",
-        body: [
-          "They open the envelope, browse the invitation, check the map and the gift list, and RSVP with their allergies and a song.",
-          "Names are examples, and the photo and venues are blurred.",
-        ],
-        src: "/projects/invitacion/recorrido.mp4",
-        poster: "/projects/invitacion/recorrido-poster.jpg",
-        alt: "Video walkthrough of the invitation on a phone",
-      },
-      {
-        type: "phones",
-        eyebrow: "The invitation",
-        title: "From sealed envelope to RSVP",
-        images: [
-          { src: "/projects/invitacion/sobre.jpg", alt: "Sealed envelope with wax seal", caption: "Tap the seal to open." },
-          { src: "/projects/invitacion/tarjeta.jpg", alt: "Card sliding out of the envelope", caption: "The card slides out." },
-          { src: "/projects/invitacion/portada.jpg", alt: "Invitation cover", caption: "Custom watercolour illustrations." },
-          { src: "/projects/invitacion/fecha.jpg", alt: "Date and countdown", caption: "The date and a countdown." },
-          { src: "/projects/invitacion/itinerario.jpg", alt: "Schedule of the day", caption: "The schedule at a glance." },
-          { src: "/projects/invitacion/dresscode.jpg", alt: "Dress code with colours to avoid", caption: "Dress code and colours to avoid." },
-          { src: "/projects/invitacion/confirmar.jpg", alt: "RSVP form", caption: "Typing your name is all it takes." },
-          { src: "/projects/invitacion/confirmar-busqueda.jpg", alt: "Name not found message", caption: "Clear messages when a name isn't found." },
-        ],
-      },
-      {
-        type: "video",
-        eyebrow: "The couple's dashboard",
-        title: "Every answer in one place",
-        body: [
-          "The couple sign in with their email and see who confirmed, who is pending and who can't come.",
-          "From there they add or fix guests and see what each one answered.",
-        ],
-        src: "/projects/invitacion/panel.mp4",
-        poster: "/projects/invitacion/panel-poster.jpg",
-        alt: "Video of the couple's dashboard",
-      },
-      {
-        type: "phones",
-        eyebrow: "The dashboard",
-        title: "The guest list, always up to date",
-        body: "Here the couple see who is coming and what each guest asked for, and keep the list tidy without spreadsheets.",
-        images: [
-          { src: "/projects/invitacion/admin-ingreso.jpg", alt: "Sign-in to the couple's dashboard", caption: "Sign in with email and password." },
-          { src: "/projects/invitacion/admin-resumen.jpg", alt: "Answer summary and add-guest field", caption: "A summary of answers and a field to add guests." },
-          { src: "/projects/invitacion/admin-respuestas.jpg", alt: "Guest cards with allergies and song", caption: "Each guest with their allergies and song." },
-          { src: "/projects/invitacion/admin-editar.jpg", alt: "Editing a guest's name", caption: "Names are fixed right there." },
-        ],
-      },
-      {
-        type: "code",
-        eyebrow: "Built with code",
-        title: "Designed and built by me",
-        body: [
-          "Behind the opening envelope there’s a complete application: guests RSVP and the couple manages the list from a password-protected dashboard.",
-          "I built it to work with two different databases, Supabase in the cloud or MySQL on its own server, without changing the rest of the code. These are real excerpts.",
-        ],
-        stack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "MySQL", "Tailwind CSS 4", `${DIGITAL_LINEAS.toLocaleString("en-US")} lines of code`],
-        files: [
-          { label: "Opening envelope", name: "src/components/EnvelopeCover.tsx", code: DIGITAL_CODE.sobre, caption: "The timing of the envelope animation: the seal, the flap, the card rising and the fade. The flap and pocket shapes are cut with polygons." },
-          { label: "GuestsRepository", name: "src/lib/db/types.ts", code: DIGITAL_CODE.repo, caption: "A single list of database actions: find, respond, add, edit and remove guests. That way the invitation works the same on Supabase or MySQL." },
-          { label: "proxy()", name: "src/proxy.ts", code: DIGITAL_CODE.proxy, caption: "Guards the couple’s dashboard: anyone who arrives without signing in is sent to the login screen." },
-          { label: "localSignIn()", name: "src/lib/auth/local-auth.ts", code: DIGITAL_CODE.login, caption: "The couple’s sign-in: the password is compared hashed (never stored as is) and the session lives in a secure cookie for 7 days." },
-        ],
-      },
-      {
-        type: "list",
-        eyebrow: "Design decisions",
-        title: "Every detail has a reason",
-        items: [
-          { title: "Search by name", body: "Each guest can only find themselves. Nobody can see the whole list." },
-          { title: "Clear messages", body: "If a surname is missing or the name isn't there, the invitation says so kindly." },
-          { title: "Dashboard on the phone", body: "Each guest is an easy-to-read card, with no tables spilling off the screen." },
-          { title: "Original illustration", body: "Watercolour eucalyptus branches, each one different." },
-        ],
-      },
-      {
-        type: "quote",
-        text: "The goal: the couple never had to chase RSVPs on WhatsApp.",
-      },
-      {
-        type: "quote",
-        text: "It turned out great, the design is really lovely. It's exactly what I needed.",
         author: "The bride",
       },
     ],

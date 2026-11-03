@@ -25,8 +25,8 @@ export default function About() {
         <FadeUp>
           <p>
             {t({
-              en: "Hi, I'm Consuelo, a UX/UI designer and front-end developer based in Chile. I come from graphic design, where I learned to build brands and consistent visual systems. Today I design clear, accessible, human-centered digital products, and build them myself with React, Next.js and Supabase.",
-              es: "Hola, soy Consuelo, diseñadora UX/UI y desarrolladora front-end en Chile. Vengo del diseño gráfico, donde aprendí a construir marcas y sistemas visuales consistentes. Hoy diseño productos digitales claros, accesibles y centrados en las personas, y los construyo yo misma con React, Next.js y Supabase.",
+              en: "Hi, I'm Consuelo, a UX/UI designer based in Chile. I come from graphic design, where I learned to build brands and consistent visual systems. Today I design clear, accessible, human-centered digital products, and turn them into working apps with AI (Claude Code), React, Next.js and Supabase: I decide what gets built and how it behaves, and review every detail.",
+              es: "Hola, soy Consuelo, diseñadora UX/UI en Chile. Vengo del diseño gráfico, donde aprendí a construir marcas y sistemas visuales consistentes. Hoy diseño productos digitales claros, accesibles y centrados en las personas, y los llevo a apps que funcionan con IA (Claude Code), React, Next.js y Supabase: yo decido qué se construye y cómo se comporta, y reviso cada detalle.",
             })}
           </p>
         </FadeUp>

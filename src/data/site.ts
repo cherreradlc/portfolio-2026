@@ -4,7 +4,7 @@ import type { T } from "@/i18n/lang";
 export const SITE = {
   name: "Consuelo Herrera De La Calle",
   shortName: "Consuelo Herrera",
-  role: "UX/UI Designer & Front-end Developer",
+  role: "UX/UI Designer who builds with AI",
   location: "Coquimbo, Chile",
   timezone: "America/Santiago",
   email: "contact.consudesign@gmail.com",
@@ -46,70 +46,23 @@ export const SERVICES: { title: T; body: T; tags: T[] }[] = [
     ],
   },
   {
-    title: { en: "Front-end", es: "Front-end" },
+    title: { en: "Front-end with AI", es: "Front-end con IA" },
     body: {
-      en: "Responsive web apps built with React, Next.js and TypeScript, connected to real data and ready to use.",
-      es: "Aplicaciones web responsivas con React, Next.js y TypeScript, conectadas a datos reales y listas para usar.",
+      en: "I turn my designs into working, responsive web apps, built with AI (Claude Code) on React, Next.js and Supabase. I decide what gets built and how it behaves, then review and test it until it works as designed.",
+      es: "Llevo mis diseños a aplicaciones web que funcionan, construidas con IA (Claude Code) sobre React, Next.js y Supabase. Yo decido qué se construye y cómo se comporta, y lo reviso y pruebo hasta que funciona como lo diseñé.",
     },
     tags: [
-      { en: "React", es: "React" },
-      { en: "Next.js", es: "Next.js" },
-      { en: "TypeScript", es: "TypeScript" },
+      { en: "Claude Code", es: "Claude Code" },
+      { en: "React · Next.js", es: "React · Next.js" },
       { en: "Supabase", es: "Supabase" },
+      { en: "Testing", es: "Pruebas" },
     ],
-  },
-  {
-    title: { en: "Branding", es: "Branding" },
-    body: {
-      en: "Visual identities with a concept: logo, color, typography and brand guidelines ready to use.",
-      es: "Identidades visuales con concepto: logo, color, tipografía y manuales de marca listos para aplicar.",
-    },
-    tags: [
-      { en: "Logo", es: "Logo" },
-      { en: "Brand guidelines", es: "Manual de marca" },
-      { en: "Packaging", es: "Packaging" },
-    ],
-  },
-];
-
-export const PROCESS: { n: string; title: T; body: T }[] = [
-  {
-    n: "01",
-    title: { en: "Research", es: "Investigar" },
-    body: {
-      en: "I listen to users and study the context: what they need, what frustrates them, what already exists.",
-      es: "Escucho a las personas usuarias y reviso el contexto: qué necesitan, qué les frustra, qué ya existe.",
-    },
-  },
-  {
-    n: "02",
-    title: { en: "Define", es: "Definir" },
-    body: {
-      en: "I turn findings into personas, journeys and concrete problems worth solving.",
-      es: "Ordeno los hallazgos en personas, journeys y problemas concretos que vale la pena resolver.",
-    },
-  },
-  {
-    n: "03",
-    title: { en: "Design", es: "Diseñar" },
-    body: {
-      en: "Sketches, wireframes and prototypes that grow in fidelity as decisions are validated.",
-      es: "Bocetos, wireframes y prototipos que crecen en fidelidad a medida que las decisiones se validan.",
-    },
-  },
-  {
-    n: "04",
-    title: { en: "Validate", es: "Validar" },
-    body: {
-      en: "I test with users and heuristics, measure, adjust and test again. Design is iteration.",
-      es: "Pruebo con usuarios y heurísticas, mido, ajusto y vuelvo a probar. Diseñar es iterar.",
-    },
   },
 ];
 
 export const DESIGN_TOOLS = ["Figma", "Illustrator", "Photoshop", "InDesign"];
 
-export const CODE_TOOLS = ["React", "Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Git", "Vercel"];
+export const CODE_TOOLS = ["Claude Code", "React", "Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Git", "Vercel"];
 
 export const SKILLS: T[] = [
   { en: "UX Research", es: "UX Research" },

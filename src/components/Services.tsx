@@ -10,10 +10,9 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 /** One board of real work per service, on a light wash of colour. */
 const BOARDS = [
-  { src: "/projects/ux4all/wireframe-dashboard.jpg", alt: "UX4ALL dashboard sketch", tint: "#eee8f5", maxHeight: 560 },
+  { src: "/projects/fresco/nuevo-pedido.jpg", alt: "Fresco new order screen, designed for one hand", tint: "#eee8f5", maxHeight: 560 },
   { src: "/projects/invitacion-verano/portada.jpg", alt: "Summer wedding invitation cover", tint: "#f3e9f0", maxHeight: 560 },
   { src: "/projects/fresco/inicio.jpg", alt: "Fresco sales app home screen", tint: "#eef1e6", maxHeight: 560 },
-  { src: "/projects/hila/portada.jpg", alt: "Hila brand guidelines cover", tint: "#f7e6ec", maxHeight: 560 },
 ];
 
 /**
@@ -55,7 +54,7 @@ export default function Services() {
       <div className="bg-paper-2">
         <div className="flex flex-col justify-center px-4 py-20 sm:px-9 md:sticky md:top-0 md:h-[100svh] md:py-0 lg:px-16">
           <p className="border-b border-ink/15 pb-5 font-mono text-[12.5px] tracking-wide uppercase">
-            {t({ en: "Services overview", es: "Servicios" })}
+            {t({ en: "What I do", es: "Lo que hago" })}
           </p>
           <ul>
             {SERVICES.map((s, i) => {
