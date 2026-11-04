@@ -9,6 +9,7 @@ import { FadeUp, SplitWords } from "../Reveal";
 import SizedImage, { isSmall, maxCssWidth } from "../SizedImage";
 import ManualViewer from "./ManualViewer";
 import CodeWindow from "./CodeWindow";
+import Annotated from "./Annotated";
 import { useLang } from "@/i18n/lang";
 import { ChapterIndex, ChapterProvider, ChapterTab, Eyebrow, chapterId, chaptersOf } from "./Chapters";
 
@@ -220,6 +221,9 @@ function BlockView({ block: b, onZoom, flip = false }: { block: Block; onZoom: (
 
     case "phones":
       return <PhoneRail block={b} onZoom={onZoom} />;
+
+    case "notes":
+      return <Annotated block={b} />;
 
     case "code":
       return <CodeWindow block={b} />;

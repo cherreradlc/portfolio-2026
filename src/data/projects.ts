@@ -40,7 +40,16 @@ export type Block =
       files: { label: string; name: string; code: string; caption: string; lang?: "sql" }[];
     }
   | { type: "video"; eyebrow: string; title: string; body: string[]; src: string; poster: string; alt: string }
-  | { type: "manual"; eyebrow: string; title: string; folder: string; pages: number; lowRes?: number[] };
+  | { type: "manual"; eyebrow: string; title: string; folder: string; pages: number; lowRes?: number[] }
+  | { type: "notes"; eyebrow: string; title: string; body?: string; screens: NotedScreen[] };
+
+/** A real screen with design notes; x, y, w, h are % of the screenshot. */
+export type NotedScreen = {
+  src: string;
+  alt: string;
+  label: string;
+  notes: { x: number; y: number; w: number; h: number; title: string; body: string }[];
+};
 
 export type Project = {
   slug: string;
@@ -159,14 +168,42 @@ export const PROJECTS: Project[] = [
         ],
       },
       {
-        type: "list",
+        type: "notes",
         eyebrow: "Decisiones de diseño",
         title: "Pensada para una mano y poco tiempo",
-        items: [
-          { title: "Botones grandes", body: "Todo se toca con el pulgar, incluso con guantes o apurado." },
-          { title: "Estados que se leen solos", body: "Entrega y pago por separado: “Pagó $20.000 · debe $14.500”." },
-          { title: "Reglas del negocio adentro", body: "El precio mayorista depende de la cantidad, y la app lo calcula." },
-          { title: "Funciona sin señal", body: "Se instala como app y guarda todo en el celular." },
+        body: "Cada decisión, marcada sobre la pantalla real. Toca una nota para ver dónde está.",
+        screens: [
+          {
+            src: "/projects/fresco/inicio.jpg",
+            alt: "Pantalla de inicio de Fresco",
+            label: "Inicio",
+            notes: [
+              { x: 5.1, y: 12.7, w: 89.8, h: 17.2, title: "Lo urgente, arriba", body: "Lo primero que ve es cuánto le deben, con un botón para cobrar. Es lo que más se le olvidaba con el cuaderno." },
+              { x: 9.6, y: 61, w: 36.4, h: 2.6, title: "Entrega y pago, por separado", body: "Un pedido puede estar entregado y no pagado. La etiqueta lo dice sin abrir el pedido." },
+              { x: 46.7, y: 56.3, w: 43.7, h: 5.6, title: "Un toque, con el pulgar", body: "“Marcar entregado” es grande y queda a la derecha: se usa con una mano mientras reparte." },
+            ],
+          },
+          {
+            src: "/projects/fresco/nuevo-pedido.jpg",
+            alt: "Pantalla para anotar un pedido nuevo",
+            label: "Nuevo pedido",
+            notes: [
+              { x: 5.1, y: 8.1, w: 89.8, h: 8, title: "Primero, el cliente", body: "Así la app sabe si es mayorista y qué precio le toca, sin preguntar." },
+              { x: 56.7, y: 27.2, w: 33.8, h: 5.3, title: "Cantidades sin teclado", body: "Con + y − se anota un pedido sin abrir el teclado del celular." },
+              { x: 9.6, y: 34.6, w: 68.2, h: 2.1, title: "Ayuda a vender más", body: "Avisa cuánto falta para el precio por mayor. Es una regla del negocio que antes calculaba de memoria." },
+              { x: 5.1, y: 81.5, w: 89.6, h: 5.8, title: "Dos opciones, no un calendario", body: "Casi todo se entrega hoy o mañana, así que basta con dos botones grandes." },
+            ],
+          },
+          {
+            src: "/projects/fresco/cobrar.jpg",
+            alt: "Pantalla con quién le debe y botones para cobrar",
+            label: "Cobrar",
+            notes: [
+              { x: 56, y: 24.4, w: 34.4, h: 2.5, title: "La deuda más vieja, primero", body: "Ordenados por antigüedad, con un aviso cuando pasa una semana." },
+              { x: 9.6, y: 28.4, w: 39.3, h: 5.7, title: "Cobrar sin escribir", body: "Abre WhatsApp con el mensaje ya escrito: el monto y el pedido pendiente." },
+              { x: 51.1, y: 28.4, w: 39.3, h: 5.7, title: "Pagos a medias", body: "Registra lo que le pagaron, aunque no sea todo. La deuda se actualiza sola." },
+            ],
+          },
         ],
       },
       {

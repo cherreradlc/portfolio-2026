@@ -99,14 +99,42 @@ export const PROJECTS_EN: Project[] = [
         ],
       },
       {
-        type: "list",
+        type: "notes",
         eyebrow: "Design decisions",
         title: "Made for one hand and little time",
-        items: [
-          { title: "Big buttons", body: "Everything works with a thumb, even in a hurry." },
-          { title: "Self-explaining status", body: "Delivery and payment shown apart: “Paid $20,000 · owes $14,500”." },
-          { title: "Business rules built in", body: "Wholesale price depends on quantity, and the app works it out." },
-          { title: "Works offline", body: "Installs like an app and keeps everything on the phone." },
+        body: "Each decision, marked on the real screen. Tap a note to see where it is.",
+        screens: [
+          {
+            src: "/projects/fresco/inicio.jpg",
+            alt: "Fresco home screen",
+            label: "Home",
+            notes: [
+              { x: 5.1, y: 12.7, w: 89.8, h: 17.2, title: "What’s urgent, on top", body: "The first thing he sees is what he’s owed, with a button to collect. It’s what he forgot most with the notebook." },
+              { x: 9.6, y: 61, w: 36.4, h: 2.6, title: "Delivery and payment, apart", body: "An order can be delivered and still unpaid. The label says so without opening the order." },
+              { x: 46.7, y: 56.3, w: 43.7, h: 5.6, title: "One tap, with the thumb", body: "“Mark delivered” is big and on the right: he uses it one-handed while delivering." },
+            ],
+          },
+          {
+            src: "/projects/fresco/nuevo-pedido.jpg",
+            alt: "Screen to log a new order",
+            label: "New order",
+            notes: [
+              { x: 5.1, y: 8.1, w: 89.8, h: 8, title: "The client first", body: "So the app knows if they’re a wholesaler and which price applies, without asking." },
+              { x: 56.7, y: 27.2, w: 33.8, h: 5.3, title: "Quantities without a keyboard", body: "With + and − an order is logged without opening the phone’s keyboard." },
+              { x: 9.6, y: 34.6, w: 68.2, h: 2.1, title: "Helps him sell more", body: "It shows how much is missing for the wholesale price: a business rule he used to work out in his head." },
+              { x: 5.1, y: 81.5, w: 89.6, h: 5.8, title: "Two options, not a calendar", body: "Almost everything is delivered today or tomorrow, so two big buttons are enough." },
+            ],
+          },
+          {
+            src: "/projects/fresco/cobrar.jpg",
+            alt: "Screen showing who owes and buttons to collect",
+            label: "Collect",
+            notes: [
+              { x: 56, y: 24.4, w: 34.4, h: 2.5, title: "Oldest debt first", body: "Sorted by age, with a warning once a week has passed." },
+              { x: 9.6, y: 28.4, w: 39.3, h: 5.7, title: "Collect without typing", body: "Opens WhatsApp with the message already written: the amount and the pending order." },
+              { x: 51.1, y: 28.4, w: 39.3, h: 5.7, title: "Partial payments", body: "Logs what he was paid, even if it isn’t everything. The debt updates itself." },
+            ],
+          },
         ],
       },
       {
