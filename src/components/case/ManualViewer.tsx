@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { IMAGE_SIZES } from "@/data/image-sizes";
 import { FadeUp, SplitWords } from "../Reveal";
 import { useLang } from "@/i18n/lang";
+import { Eyebrow } from "./Chapters";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -70,7 +71,7 @@ export default function ManualViewer({
   return (
     <section ref={section}>
       <FadeUp>
-        <p className="text-[13px] tracking-[0.22em] text-muted">{eyebrow.toUpperCase()}</p>
+        <Eyebrow text={eyebrow} />
       </FadeUp>
       <div className="mt-5 mb-10 flex flex-wrap items-end justify-between gap-4">
         <SplitWords

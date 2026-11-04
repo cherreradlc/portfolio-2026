@@ -4,6 +4,7 @@ import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import type { Block } from "@/data/projects";
 import { FadeUp, SplitWords } from "../Reveal";
+import { Eyebrow } from "./Chapters";
 import { useLang } from "@/i18n/lang";
 
 type CodeBlock = Extract<Block, { type: "code" }>;
@@ -79,7 +80,7 @@ export default function CodeWindow({ block: b }: { block: CodeBlock }) {
     <section>
       <div className="grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
         <FadeUp>
-          <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
+          <Eyebrow text={b.eyebrow} />
         </FadeUp>
         <div>
           <SplitWords

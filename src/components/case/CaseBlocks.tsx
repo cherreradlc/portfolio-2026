@@ -10,6 +10,7 @@ import SizedImage, { isSmall, maxCssWidth } from "../SizedImage";
 import ManualViewer from "./ManualViewer";
 import CodeWindow from "./CodeWindow";
 import { useLang } from "@/i18n/lang";
+import { ChapterIndex, ChapterProvider, ChapterTab, Eyebrow, chapterId, chaptersOf } from "./Chapters";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -17,6 +18,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 export default function CaseBlocks({ blocks }: { blocks: Block[] }) {
   const { t } = useLang();
   const [zoom, setZoom] = useState<Img | null>(null);
+  const chapters = chaptersOf(blocks);
 
   useEffect(() => {
     if (!zoom) return;
@@ -28,10 +30,20 @@ export default function CaseBlocks({ blocks }: { blocks: Block[] }) {
   return (
     <>
       <div className="flex flex-col gap-28 md:gap-40">
-        {blocks.map((b, i) => (
-          <BlockView key={i} block={b} onZoom={setZoom} flip={blocks.slice(0, i).filter((x) => x.type === "video").length % 2 === 1} />
-        ))}
+        <ChapterIndex chapters={chapters} />
+        {blocks.map((b, i) => {
+          const chapter = chapters.find((c) => c.block === i);
+          return (
+            <ChapterProvider key={i} value={chapter?.n ?? null}>
+              <div id={chapter ? chapterId(chapter.n) : undefined} className={chapter ? "scroll-mt-28" : undefined}>
+                <BlockView block={b} onZoom={setZoom} flip={blocks.slice(0, i).filter((x) => x.type === "video").length % 2 === 1} />
+              </div>
+            </ChapterProvider>
+          );
+        })}
       </div>
+
+      <ChapterTab chapters={chapters} />
 
       <AnimatePresence>
         {zoom && (
@@ -81,7 +93,7 @@ function BlockView({ block: b, onZoom, flip = false }: { block: Block; onZoom: (
       return (
         <section className="grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
           <FadeUp>
-            <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
+            <Eyebrow text={b.eyebrow} />
           </FadeUp>
           <div>
             <SplitWords
@@ -103,7 +115,7 @@ function BlockView({ block: b, onZoom, flip = false }: { block: Block; onZoom: (
       return (
         <section>
           <FadeUp>
-            <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
+            <Eyebrow text={b.eyebrow} />
           </FadeUp>
           <SplitWords
             as="h2"
@@ -175,7 +187,7 @@ function BlockView({ block: b, onZoom, flip = false }: { block: Block; onZoom: (
         <section>
           {b.eyebrow && (
             <FadeUp>
-              <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
+              <Eyebrow text={b.eyebrow} />
             </FadeUp>
           )}
           {b.title && (
@@ -221,7 +233,7 @@ function BlockView({ block: b, onZoom, flip = false }: { block: Block; onZoom: (
         <section className={`grid items-center gap-12 md:gap-20 ${flip ? "md:grid-cols-[auto_1fr]" : "md:grid-cols-[1fr_auto]"}`}>
           <div className={flip ? "md:order-2" : ""}>
             <FadeUp>
-              <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
+              <Eyebrow text={b.eyebrow} />
             </FadeUp>
             <SplitWords
               as="h2"
@@ -388,7 +400,7 @@ function PhoneRail({
     <section className="-mx-4 sm:-mx-6">
       <div className="mb-10 flex items-end justify-between gap-6 px-4 sm:px-6">
         <div>
-          <p className="text-[13px] tracking-[0.22em] text-muted">{b.eyebrow.toUpperCase()}</p>
+          <Eyebrow text={b.eyebrow} />
           <SplitWords
             as="h2"
             text={b.title}

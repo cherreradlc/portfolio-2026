@@ -253,7 +253,7 @@ export const PROJECTS: Project[] = [
       },
       {
         type: "phones",
-        eyebrow: "El panel",
+        eyebrow: "La lista de invitados",
         title: "La lista de invitados, ordenada",
         body: "Aquí los novios saben quién viene y qué pidió cada uno, sin buscar en toda la lista.",
         images: [
